@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 여러 Mapper 가 공유하는 SQL 조각 (다른 namespace 에서 include refid="ed.common.paging" 로 사용) -->
+<mapper namespace="ed.common">
+    <sql id="pagingHead">SELECT * FROM (SELECT ROWNUM AS RN, T.* FROM (</sql>
+    <sql id="pagingTail">) T) WHERE RN BETWEEN #{firstIndex} AND #{lastIndex}</sql>
+</mapper>

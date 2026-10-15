@@ -1,0 +1,468 @@
+// 전역 스타일 — 토스·노션풍 클린 벤토 (2026-10)
+// 원칙: 웜 그레이 바탕 + 순백 카드(테두리 대신 면 구분), 넉넉한 여백, 큰 숫자, 둥근 모서리(입력·버튼 12 / 카드 20 / 대화상자 24 / 칩 pill)
+// 폐쇄망 전제: Pretendard 는 npm 패키지를 번들한다(외부 CDN 없음). 동적 서브셋이라 쓰는 글자 범위의 woff2 만 내려받는다.
+// (폰트 CSS 는 main.ts 에서 import — Vite 가 woff2 경로를 번들 자산으로 바꾼다)
+
+:root {
+  --pmsx-font: 'Pretendard Variable', 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  --pmsx-mono: 'D2Coding', Consolas, 'SFMono-Regular', Menlo, monospace;
+  --pmsx-radius-sm: 8px;
+  --pmsx-radius: 12px;
+  --pmsx-radius-card: 20px;
+  --pmsx-radius-dialog: 24px;
+  --pmsx-shadow-soft: 0 1px 2px rgba(0, 23, 51, 0.04), 0 6px 20px rgba(0, 23, 51, 0.04);
+  --pmsx-shadow-pop: 0 12px 40px rgba(0, 23, 51, 0.12);
+}
+
+[data-theme='dark'] {
+  --pmsx-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --pmsx-shadow-pop: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+html,
+body {
+  font-family: var(--pmsx-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.v-application {
+  font-family: var(--pmsx-font);
+  background: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-background));
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+}
+
+// Vuetify 타이포 클래스의 영문 자간을 한글에 맞게 정리
+.v-application [class*='text-h'],
+.v-application .text-subtitle-1,
+.v-application .text-subtitle-2,
+.v-application .text-body-1,
+.v-application .text-body-2,
+.v-application .text-caption,
+.v-application .text-overline,
+.v-application .text-button {
+  font-family: var(--pmsx-font) !important;
+  letter-spacing: -0.01em !important;
+}
+
+.v-application .text-overline {
+  text-transform: none;
+  font-weight: 600;
+}
+
+.font-mono {
+  font-family: var(--pmsx-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+.tabular-nums,
+.v-table td,
+.v-data-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.text-muted {
+  color: rgb(var(--v-theme-muted)) !important;
+}
+
+.border-line {
+  border-color: rgb(var(--v-theme-line)) !important;
+}
+
+.iconify-v-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ─────────── 페이지 공통 ───────────
+// 페이지 제목 (AppPageHeader 등)
+.pmsx-page-title {
+  font-size: clamp(1.375rem, 1.1rem + 0.6vw, 1.625rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.pmsx-page-subtitle {
+  font-size: 0.875rem;
+  color: rgb(var(--v-theme-muted));
+  margin-top: 4px;
+}
+
+// 큰 KPI 숫자
+.pmsx-kpi {
+  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.375rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pmsx-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgb(var(--v-theme-muted));
+}
+
+// ─────────── 카드: 테두리 대신 면으로 구분 ───────────
+.v-card {
+  border-radius: var(--pmsx-radius-card);
+}
+
+// 바깥 카드는 회색 바탕 위 흰 면으로 충분 → 테두리 제거
+.v-main .v-card.border,
+.v-main .v-card--variant-outlined {
+  border-color: transparent !important;
+  box-shadow: var(--pmsx-shadow-soft);
+}
+
+// 카드 안의 카드(소분류 블록)는 연회색 면으로
+.v-card .v-card.border,
+.v-card .v-card--variant-outlined,
+.v-card .v-card--variant-tonal {
+  background: rgb(var(--v-theme-surface-2)) !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  border-radius: 16px;
+}
+
+.v-card-title {
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+// ─────────── 대화상자 ───────────
+.v-dialog > .v-overlay__content > .v-card,
+.v-dialog > .v-overlay__content > form > .v-card {
+  border-radius: var(--pmsx-radius-dialog) !important;
+  box-shadow: var(--pmsx-shadow-pop) !important;
+  padding: 8px 4px 4px;
+}
+
+.v-overlay__scrim {
+  background: rgb(10, 20, 35);
+}
+
+// 메뉴·드롭다운
+.v-menu > .v-overlay__content > .v-list,
+.v-menu > .v-overlay__content > .v-card,
+.v-select__content,
+.v-autocomplete__content {
+  border-radius: 16px !important;
+  box-shadow: var(--pmsx-shadow-pop) !important;
+}
+
+.v-overlay__content .v-list {
+  padding: 6px;
+}
+
+.v-overlay__content .v-list-item {
+  border-radius: 10px;
+}
+
+// ─────────── 버튼 ───────────
+.v-btn {
+  letter-spacing: 0 !important;
+}
+
+// 보조(tonal) 버튼은 연회색 채움
+.v-btn--variant-tonal:not([class*='text-']) {
+  background: rgb(var(--v-theme-surface-2));
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.v-btn--variant-tonal:not([class*='text-']) > .v-btn__overlay {
+  opacity: 0;
+}
+
+.v-btn--variant-tonal:not([class*='text-']):hover > .v-btn__overlay {
+  opacity: 0.06;
+}
+
+// 세그먼트 컨트롤 (VBtnToggle) — 회색 트랙 + 흰 선택 칩
+.v-btn-toggle.v-btn-group {
+  background: rgb(var(--v-theme-surface-2));
+  border: 0 !important;
+  border-radius: var(--pmsx-radius) !important;
+  padding: 3px;
+  height: auto !important;
+  gap: 2px;
+}
+
+.v-btn-toggle.v-btn-group > .v-btn {
+  border: 0 !important;
+  border-radius: 9px !important;
+  height: 30px !important;
+  color: rgb(var(--v-theme-muted));
+  background: transparent;
+}
+
+.v-btn-toggle.v-btn-group > .v-btn.v-btn--active {
+  background: rgb(var(--v-theme-surface));
+  color: rgb(var(--v-theme-on-surface));
+  box-shadow: 0 1px 3px rgba(0, 23, 51, 0.1);
+}
+
+.v-btn-toggle.v-btn-group > .v-btn.v-btn--active > .v-btn__overlay {
+  opacity: 0;
+}
+
+// ─────────── 입력: 채움형 회색 면 + 포커스 블루 링 ───────────
+.v-field--variant-filled {
+  border-radius: var(--pmsx-radius) !important;
+  background: rgb(var(--v-theme-surface-2));
+  transition: box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.v-field--variant-filled .v-field__overlay {
+  opacity: 0 !important;
+}
+
+.v-field--variant-filled .v-field__outline {
+  display: none;
+}
+
+.v-field--variant-filled:hover {
+  background: rgba(var(--v-theme-on-surface), 0.07);
+}
+
+.v-field--variant-filled.v-field--focused {
+  background: rgb(var(--v-theme-surface));
+  box-shadow: 0 0 0 2px rgb(var(--v-theme-primary));
+}
+
+.v-field--variant-filled.v-field--error:not(.v-field--disabled) {
+  box-shadow: 0 0 0 2px rgb(var(--v-theme-error));
+}
+
+// 흰 카드 안 입력은 회색 면, 회색 면(카드 안 카드) 위 입력은 흰 면
+.v-card .v-card .v-field--variant-filled {
+  background: rgb(var(--v-theme-surface));
+}
+
+.v-field--variant-solo-filled {
+  border-radius: var(--pmsx-radius) !important;
+}
+
+.v-label.v-field-label {
+  letter-spacing: -0.01em;
+}
+
+// ─────────── 칩 ───────────
+.v-chip {
+  letter-spacing: -0.01em;
+}
+
+.v-chip--label {
+  border-radius: var(--pmsx-radius-sm) !important;
+}
+
+.v-chip.v-chip--variant-outlined {
+  border-color: rgb(var(--v-theme-line));
+}
+
+// ─────────── 표 ───────────
+.v-table {
+  background: transparent;
+}
+
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  // 좁은 열에서도 낱말 중간에서 쪼개지지 않게 (예: "위험도" → 위/험/도). 낱말 사이 줄바꿈은 허용
+  word-break: keep-all;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: rgb(var(--v-theme-muted)) !important;
+  background: transparent;
+  border-bottom: 1px solid rgb(var(--v-theme-line)) !important;
+  white-space: nowrap;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  border-bottom: 1px solid rgba(var(--v-theme-line), 0.7) !important;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr:last-child > td {
+  border-bottom: 0 !important;
+}
+
+.v-table.v-table--hover > .v-table__wrapper > table > tbody > tr:hover > td,
+.v-data-table .v-data-table__tr:hover > td,
+.v-table tbody tr[tabindex='0']:hover > td {
+  background: rgba(var(--v-theme-on-surface), 0.035);
+}
+
+.v-table.border,
+.v-data-table.border {
+  border-color: rgb(var(--v-theme-line)) !important;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+// ─────────── 탭: 밑줄 대신 pill (밑줄이 필요하면 .pmsx-underline-tabs) ───────────
+.v-tabs:not(.v-tabs--vertical) .v-tab {
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.v-tabs.v-tabs--horizontal:not(.pmsx-underline-tabs) .v-slide-group__content {
+  gap: 4px;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.v-tabs.v-tabs--horizontal:not(.pmsx-underline-tabs) .v-tab {
+  border-radius: 999px !important;
+  min-width: 0;
+  height: 34px !important;
+  padding: 0 14px;
+  color: rgb(var(--v-theme-muted));
+}
+
+.v-tabs.v-tabs--horizontal:not(.pmsx-underline-tabs) .v-tab--selected {
+  background: rgb(var(--v-theme-pastel-blue));
+  color: rgb(var(--v-theme-primary));
+}
+
+.v-tabs.v-tabs--horizontal:not(.pmsx-underline-tabs) .v-tab__slider {
+  display: none;
+}
+
+// ─────────── 알림 배너 ───────────
+.v-alert {
+  border-radius: 16px;
+}
+
+.v-alert--variant-tonal .v-alert__underlay {
+  opacity: 0.1;
+}
+
+// ─────────── 내비게이션 ───────────
+.v-navigation-drawer {
+  background: rgb(var(--v-theme-background)) !important;
+}
+
+.v-navigation-drawer .v-list-item {
+  border-radius: var(--pmsx-radius) !important;
+  min-height: 40px !important;
+}
+
+.v-navigation-drawer .v-list-item--active {
+  background: rgb(var(--v-theme-pastel-blue));
+  color: rgb(var(--v-theme-primary));
+  font-weight: 600;
+}
+
+.v-navigation-drawer .v-list-item--active > .v-list-item__overlay {
+  opacity: 0 !important;
+}
+
+// 접힌(rail) 상태에서는 그룹의 하위 메뉴를 숨긴다 (아이콘 없는 빈 하이라이트 방지)
+.v-navigation-drawer--rail:not(.v-navigation-drawer--is-hovering) .v-list-group__items {
+  display: none;
+}
+
+.v-navigation-drawer .v-list-item-title {
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+}
+
+// ─────────── 빈 상태 ───────────
+.pmsx-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 16px;
+  text-align: center;
+  color: rgb(var(--v-theme-muted));
+}
+
+.pmsx-empty__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: rgb(var(--v-theme-surface-2));
+  font-size: 28px;
+}
+
+// ─────────── 토스트: 하단 중앙 다크 pill ───────────
+.pmsx-toast .v-snackbar__wrapper {
+  border-radius: 999px !important;
+  background: #191f28 !important;
+  color: #fff !important;
+  box-shadow: var(--pmsx-shadow-pop);
+  min-width: 0 !important;
+  padding: 0 6px;
+}
+
+[data-theme='dark'] .pmsx-toast .v-snackbar__wrapper {
+  background: #3a3a46 !important;
+}
+
+// ─────────── Vue Flow (ERD·화면 이동 맵) ───────────
+// 미니맵 — 라이브러리 기본색(밝은 회색)이 다크 테마에서 떠 보이지 않게 테마 토큰으로 맞춘다
+.vue-flow__minimap {
+  background-color: rgb(var(--v-theme-surface));
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--pmsx-shadow-soft);
+}
+
+.vue-flow__minimap-mask {
+  fill: rgba(var(--v-theme-on-surface), 0.06);
+}
+
+.vue-flow__minimap-node {
+  fill: rgba(var(--v-theme-on-surface), 0.28);
+  stroke: none;
+}
+
+.vue-flow__controls {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--pmsx-shadow-soft);
+}
+
+// ─────────── 접근성 ───────────
+// 키보드로 고른 표 행 (utils/a11y.ts)
+tr[tabindex='0']:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: -2px;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// 스크롤바 — 얇고 은은하게
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--v-theme-on-surface), 0.18) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,40 @@
+# ⚠ 미검증 (Docker 미설치 환경에서 작성). 비밀번호·JWT 비밀키는 .env 파일로 넘긴다.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pmsx
+      POSTGRES_USER: pmsx
+      POSTGRES_PASSWORD: ${PMSX_DB_PASSWORD:?PMSX_DB_PASSWORD 를 .env 에 지정하세요}
+      TZ: Asia/Seoul
+    volumes:
+      - pmsx-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pmsx -d pmsx"]
+      interval: 10s
+      retries: 10
+
+  app:
+    image: pmsx-server:${PMSX_VERSION:-latest}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMSX_DB_URL: jdbc:postgresql://db:5432/pmsx
+      PMSX_DB_USER: pmsx
+      PMSX_DB_PASSWORD: ${PMSX_DB_PASSWORD}
+      PMSX_JWT_SECRET: ${PMSX_JWT_SECRET:?PMSX_JWT_SECRET 를 .env 에 지정하세요}
+      PMSX_COOKIE_SECURE: ${PMSX_COOKIE_SECURE:-true}
+      PMSX_ADMIN_PASSWORD: ${PMSX_ADMIN_PASSWORD:-}
+    ports:
+      - "8080:8080"
+    volumes:
+      - pmsx-data:/opt/pmsx/data
+      - pmsx-logs:/opt/pmsx/logs
+
+volumes:
+  pmsx-db:
+  pmsx-data:
+  pmsx-logs:

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.bw.req.service.impl.WelfareReqMapper">
+
+    <select id="selectReqList" parameterType="map" resultType="egovMap">
+        SELECT R.REQ_NO, R.EMP_NO, E.EMP_NM, R.REQ_TYPE, R.REQ_AMT, R.STATUS
+          FROM TB_WELFARE_REQ R
+          JOIN TB_EMP E ON E.EMP_NO = R.EMP_NO
+         WHERE 1 = 1
+        <if test="EMP_NM != null and EMP_NM != ''">AND E.EMP_NM LIKE '%' || #{EMP_NM} || '%'</if>
+        <if test="REQ_TYPE != null and REQ_TYPE != ''">AND R.REQ_TYPE = #{REQ_TYPE}</if>
+        <if test="FROM_DT != null and FROM_DT != ''">AND R.REQ_DT &gt;= TO_DATE(#{FROM_DT}, 'YYYYMMDD')</if>
+         ORDER BY R.REQ_NO DESC
+    </select>
+
+    <insert id="insertReq" parameterType="map">
+        INSERT INTO TB_WELFARE_REQ (REQ_NO, EMP_NO, REQ_TYPE, REQ_AMT, STATUS, REQ_DT)
+        VALUES (SEQ_WELFARE_REQ.NEXTVAL, #{EMP_NO}, #{REQ_TYPE}, #{REQ_AMT}, 'REQ', SYSDATE)
+    </insert>
+
+    <update id="updateReq" parameterType="map">
+        UPDATE TB_WELFARE_REQ
+           SET REQ_TYPE = #{REQ_TYPE}, REQ_AMT = #{REQ_AMT}, UPD_DT = SYSDATE
+         WHERE REQ_NO = #{REQ_NO}
+    </update>
+
+    <delete id="deleteReq" parameterType="map">
+        DELETE FROM TB_WELFARE_REQ WHERE REQ_NO = #{REQ_NO}
+    </delete>
+
+    <insert id="insertReqHist" parameterType="map">
+        INSERT INTO TB_WELFARE_REQ_HIST (REQ_NO, CHG_DT, ROW_STATUS, REQ_AMT)
+        SELECT REQ_NO, SYSDATE, #{rowStatus}, REQ_AMT FROM TB_WELFARE_REQ WHERE REQ_NO = #{REQ_NO}
+    </insert>
+</mapper>

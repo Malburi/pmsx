@@ -1,0 +1,39 @@
+-- =============================================================
+-- 발령 확정 프로시저
+-- =============================================================
+CREATE OR REPLACE PROCEDURE SP_APPT_CONFIRM (
+    P_APPT_NO    IN  VARCHAR2,
+    P_USER_ID    IN  VARCHAR2,
+    P_RESULT_CD  OUT VARCHAR2
+) AS
+    V_EMP_NO   TB_APPOINT.EMP_NO%TYPE;
+    V_TO_DEPT  TB_APPOINT.TO_DEPT_CD%TYPE;
+BEGIN
+    SELECT EMP_NO, TO_DEPT_CD
+      INTO V_EMP_NO, V_TO_DEPT
+      FROM TB_APPOINT
+     WHERE APPT_NO = P_APPT_NO
+       AND STATUS = 'R';
+
+    UPDATE TB_EMP
+       SET DEPT_CD = V_TO_DEPT
+         , UPD_DT = SYSDATE
+         , UPD_ID = P_USER_ID
+     WHERE EMP_NO = V_EMP_NO;
+
+    INSERT INTO TB_EMP_HIST (HIST_SEQ, EMP_NO, CHG_DT, CHG_ID, CHG_TYPE, BEFORE_JSON)
+    VALUES (SEQ_EMP_HIST.NEXTVAL, V_EMP_NO, SYSDATE, P_USER_ID, 'A', P_APPT_NO);
+
+    UPDATE TB_APPOINT
+       SET STATUS = 'C'
+     WHERE APPT_NO = P_APPT_NO;
+
+    P_RESULT_CD := 'OK';
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        P_RESULT_CD := 'NOT_FOUND';
+    WHEN OTHERS THEN
+        ROLLBACK;
+        P_RESULT_CD := 'ERROR';
+END SP_APPT_CONFIRM;
+/

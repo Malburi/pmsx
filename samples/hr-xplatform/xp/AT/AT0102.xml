@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window>
+  <Form Height="600" Id="AT0102" Left="0" PidAttrib="7" Title="근태승인" Top="0" Ver="1.0" Width="1000" WorkArea="true"
+        OnLoadCompleted="AT0102_OnLoadCompleted">
+    <Datasets>
+      <Dataset DataSetType="Dataset" Id="ds_cond">
+        <Contents>
+          <colinfo id="APPR_STATUS" size="10" type="STRING"/>
+          <colinfo id="DEPT_CD" size="10" type="STRING"/>
+        </Contents>
+      </Dataset>
+      <Dataset DataSetType="Dataset" Id="ds_appr">
+        <Contents>
+          <colinfo id="CHK" size="1" type="STRING"/>
+          <colinfo id="REQ_NO" size="20" type="STRING"/>
+          <colinfo id="EMP_NM" size="50" type="STRING"/>
+          <colinfo id="ATT_TYPE" size="10" type="STRING"/>
+          <colinfo id="REQ_DT" size="8" type="STRING"/>
+          <colinfo id="APPR_STATUS" size="10" type="STRING"/>
+        </Contents>
+      </Dataset>
+    </Datasets>
+    <Static Height="26" Id="st_title" Left="10" Text="근태승인" Top="8" Width="300"/>
+    <Static Height="22" Id="st_status" Left="10" Text="결재상태" Top="46" Width="60"/>
+    <Combo BindDataset="ds_cond" Column="APPR_STATUS" Height="24" Id="cbo_status" Left="74" Top="45" Width="140"
+           InnerDataset="ds_status" CodeColumn="CODE" DataColumn="CODE_NM" OnChanged="cbo_status_OnChanged"/>
+    <Static Height="22" Id="st_dept" Left="240" Text="부서" Top="46" Width="40"/>
+    <Edit BindDataset="ds_cond" Column="DEPT_CD" Height="24" Id="edt_dept" Left="284" Top="45" Width="120"/>
+    <Button Height="26" Id="btn_search" Left="910" OnClick="btn_search_OnClick" Text="조회" Top="44" Width="70"/>
+    <Tab Height="420" Id="tab_appr" Left="10" Top="84" Width="980">
+      <Contents>
+        <TabPage Height="394" Id="tp_wait" Left="2" Text="대기" Top="24" Width="976">
+          <Grid BindDataset="ds_appr" Height="340" Id="grd_appr" Left="6" Top="6" Width="964" OnCellDBLClick="grd_appr_OnCellDblClick">
+            <contents>
+              <format id="Default">
+                <columns>
+                  <col width="40"/>
+                  <col width="140"/>
+                  <col width="160"/>
+                  <col width="120"/>
+                  <col width="120"/>
+                  <col width="120"/>
+                </columns>
+                <head>
+                  <cell col="0" display="checkbox" text=""/>
+                  <cell col="1" display="text" text="신청번호"/>
+                  <cell col="2" display="text" text="사원명"/>
+                  <cell col="3" display="text" text="근태구분"/>
+                  <cell col="4" display="text" text="일자"/>
+                  <cell col="5" display="text" text="상태"/>
+                </head>
+                <body>
+                  <cell col="0" colid="CHK" display="checkbox" edit="checkbox"/>
+                  <cell col="1" colid="REQ_NO" display="text"/>
+                  <cell col="2" colid="EMP_NM" display="text"/>
+                  <cell col="3" colid="ATT_TYPE" display="text"/>
+                  <cell col="4" colid="REQ_DT" display="date"/>
+                  <cell col="5" colid="APPR_STATUS" display="text"/>
+                </body>
+              </format>
+            </contents>
+          </Grid>
+          <Button Height="26" Id="btn_reject" Left="824" OnClick="btn_reject_OnClick" Text="반려" Top="356" Width="70"/>
+          <Button Height="26" Id="btn_approve" Left="900" OnClick="btn_approve_OnClick" Text="승인" Top="356" Width="70"/>
+        </TabPage>
+        <TabPage Height="394" Id="tp_done" Left="2" Text="처리완료" Top="24" Width="976">
+          <Grid BindDataset="ds_done" Height="380" Id="grd_done" Left="6" Top="6" Width="964"/>
+        </TabPage>
+      </Contents>
+    </Tab>
+  </Form>
+  <Script><![CDATA[#include "lib::comLib.js";
+
+function AT0102_OnLoadCompleted(obj)
+{
+    fn_search();
+}
+
+function fn_search()
+{
+    Transaction("svcAppr", "svc::at/appr/selectList.do", "ds_cond=ds_cond", "ds_appr=output", "", "fn_callback");
+}
+
+function btn_search_OnClick(obj)
+{
+    fn_search();
+}
+
+function cbo_status_OnChanged(obj, strCode, strText, nOldIndex, nNewIndex)
+{
+    fn_search();
+}
+
+function btn_approve_OnClick(obj)
+{
+    if (!Confirm("선택한 신청을 승인하시겠습니까?")) return;
+    Transaction("svcApprove", "svc::at/appr/approve.do", "ds_appr=ds_appr:U", "", "", "fn_callback");
+}
+
+function btn_reject_OnClick(obj)
+{
+    Transaction("svcReject", "svc::at/appr/reject.do", "ds_appr=ds_appr:U", "", "", "fn_callback");
+}
+
+function grd_appr_OnCellDblClick(obj, nRow, nCell, nX, nY)
+{
+    Dialog("AT::AT0101P01.xfdl", "");
+}
+
+function fn_callback(svcId, errCode, errMsg)
+{
+    if (svcId != "svcAppr") fn_search();
+}
+]]></Script>
+</Window>

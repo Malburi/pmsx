@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="kr.go.a.emp.EmpMapper">
+    <select id="selectName" resultType="string">SELECT EMP_NM FROM TB_A_EMP WHERE EMP_ID = #{id}</select>
+</mapper>

@@ -1,0 +1,131 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'kr.pmsx'
+version = '1.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+    implementation 'org.flywaydb:flyway-database-oracle'
+    implementation 'org.flywaydb:flyway-sqlserver'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    implementation 'com.networknt:json-schema-validator:1.5.3'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    implementation 'org.apache.poi:poi-ooxml:5.3.0'
+    implementation 'org.springframework.ldap:spring-ldap-core'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'com.unboundid:unboundid-ldapsdk'
+    testImplementation 'io.zonky.test:embedded-postgres:2.0.7'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform {
+        excludeTags 'perf'
+    }
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+// 성능 측정 (docs/11 §6): ./gradlew perfTest  → build/perf/perf-{h2,postgresql}.md
+tasks.register('perfTest', Test) {
+    group = 'verification'
+    description = '대규모 합성 데이터(화면 5천·엣지 100만) 조회 성능 측정'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform {
+        includeTags 'perf'
+    }
+    maxHeapSize = '4g'
+    systemProperty 'file.encoding', 'UTF-8'
+    outputs.upToDateWhen { false }
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+// 벤더 SQL 검증용 캡처: H2 호환 모드 시나리오가 실행한 SQL 을 실 DB 문법으로 build/sql-capture/{mssql,oracle,tibero}/*.sql 에 기록
+//   ./gradlew sqlCapture  →  python tools/db/mssql_replay.py (실 SQL Server 재생) / python tools/db/oracle_sql_check.py (정적 검사)
+tasks.register('sqlCapture', Test) {
+    group = 'verification'
+    description = '벤더 호환 모드 통합 테스트의 실행 SQL 캡처'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching 'kr.pmsx.Mssql*'
+        includeTestsMatching 'kr.pmsx.Oracle*'
+        includeTestsMatching 'kr.pmsx.Tibero*'
+    }
+    systemProperty 'pmsx.sqlCapture', layout.buildDirectory.dir('sql-capture').get().asFile.absolutePath
+    systemProperty 'file.encoding', 'UTF-8'
+    outputs.upToDateWhen { false }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+// ── 설치 패키지용: 웹 빌드 결과(dist)를 jar 의 정적 리소스(static/)로 포함 ──
+//   ./gradlew bootJar -PwebDist=../pmsx-web/dist
+def webDist = project.findProperty('webDist')
+tasks.named('processResources') {
+    if (webDist) {
+        inputs.dir(webDist)
+        from(webDist) { into 'static' }
+    }
+}
+
+tasks.named('bootJar') {
+    archiveFileName = 'pmsx-server.jar'
+    manifest {
+        // PropertiesLauncher: 설치 폴더 lib/ 의 추가 JDBC 드라이버(예: Tibero)를 -Dloader.path=lib 로 읽는다
+        attributes('Implementation-Version': project.version,
+                'Main-Class': 'org.springframework.boot.loader.launch.PropertiesLauncher')
+    }
+}
+
+springBoot {
+    buildInfo()
+}
+
+// ── 라이선스 발급 도구: 의존성 없는 단독 jar ──
+tasks.register('licenseToolJar', Jar) {
+    group = 'build'
+    description = '라이선스 키 발급 도구(pmsx-license-tool.jar)'
+    archiveFileName = 'pmsx-license-tool.jar'
+    from(sourceSets.main.output) {
+        include 'kr/pmsx/tools/**'
+    }
+    manifest {
+        attributes('Main-Class': 'kr.pmsx.tools.LicenseTool')
+    }
+    dependsOn 'classes'
+}

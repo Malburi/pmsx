@@ -1,0 +1,48 @@
+# hr-struts 샘플 수집 설정 (정적 분석)
+system:
+  code: HS
+  name: 인사(Struts)
+  uiTech: [jsp-jquery]
+  serverTech: [struts1]
+  dbType: oracle
+
+source:
+  root: .
+  webapp: web
+  jsp: web/WEB-INF/jsp
+  java: src
+  includeSnippets: true
+  jspIncludes: true
+  keepQueryParams: [method]
+  queryParamIgnoreCase: true
+  popupPattern: '(?i)pop'
+  jspVars: { JS_PATH: /html/js/ }
+  scriptRoots: { "/html/": client/html }
+  commonScripts: [/html/js/common/]
+
+struts:
+  webXml: web/WEB-INF/web.xml
+  beanConfigs: ["web/WEB-INF/config/beans.xml"]
+  workerActions:
+    - { type: kr.sample.fw.WorkerAction, serviceAttr: command, methodPrefix: do }
+  queryCalls: { methods: [query, update, call], receivers: [dataAccesser] }
+
+queryXml:
+  files: ["web/WEB-INF/config/query/*.xml"]
+
+frontNavigations:
+  popupWindow: { urlArg: 0 }
+
+menu:
+  directory: { maxDepth: 2, labels: { hr: 인사, emp: 사원, dept: 부서 } }
+
+db:
+  schema: HS
+
+capture:
+  enabled: false
+
+inference:
+  minEvidence: 1
+
+output: out

@@ -1,0 +1,5 @@
+MENU_ID,UP_MENU_ID,MENU_NM,MENU_URL,SORT_ORD
+B01,,복리후생,,1
+B0101,B01,복지포인트 신청,/ui/BW/BW0101.xml,1
+B0102,B01,복지포인트 기준관리,/ui/BW/BW0102.xml,2
+B0104,B01,복지포인트 정산,/ui/BW/BW0104.xml,3

@@ -1,0 +1,10 @@
+# Oracle 저장소 (12c 이상, 19c 기준). 11g 는 PMSX_DB_LEGACY_PAGING=true (ROWNUM 페이징).
+# DB 문자셋 AL32UTF8 권장. 사용자 권한: CREATE SESSION, CREATE TABLE (+ 테이블스페이스 QUOTA). 설치가이드 참고.
+spring:
+  datasource:
+    url: ${PMSX_DB_URL:jdbc:oracle:thin:@//localhost:1521/PMSX}
+    username: ${PMSX_DB_USER:PMSX}
+    password: ${PMSX_DB_PASSWORD:}
+pmsx:
+  db:
+    vendor: oracle

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+  <bean id="EmpService" class="kr.sample.hr.emp.EmpService"/>
+  <bean id="CodeService" class="kr.sample.hr.code.CodeService"/>
+</beans>

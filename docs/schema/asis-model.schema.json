@@ -1,0 +1,710 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pmsx/asis-model/v0.2",
+  "title": "PMS-X As-Is 중간모델 (collector → server)",
+  "type": "object",
+  "required": [
+    "manifest",
+    "system",
+    "screens",
+    "elements",
+    "edges"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "manifest": {
+      "type": "object",
+      "required": [
+        "modelVersion",
+        "collectorVersion",
+        "runId",
+        "collectedAt"
+      ],
+      "properties": {
+        "modelVersion": {
+          "enum": [
+            "0.1",
+            "0.2"
+          ]
+        },
+        "collectorVersion": {
+          "type": "string"
+        },
+        "runId": {
+          "type": "string",
+          "description": "수집 회차 ID"
+        },
+        "collectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "parsers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stats": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "system": {
+      "type": "object",
+      "required": [
+        "key",
+        "code",
+        "name"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^sys:"
+        },
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "uiTech": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/uiTech"
+          }
+        },
+        "serverTech": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dbType": {
+          "enum": [
+            "oracle",
+            "tibero",
+            "mssql",
+            "postgresql",
+            "mysql",
+            "mariadb",
+            "other"
+          ]
+        }
+      }
+    },
+    "menus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "name"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^menu:"
+          },
+          "parentKey": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "screenKey": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "screens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "screenId",
+          "name"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^scr:"
+          },
+          "screenId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "page",
+              "popup",
+              "tab",
+              "dialog",
+              "form"
+            ]
+          },
+          "uiTech": {
+            "$ref": "#/$defs/uiTech"
+          },
+          "sourceFile": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "captures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "file",
+                "width",
+                "height"
+              ],
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "description": "패키지 내 상대 경로 captures/*.png"
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "state": {
+                  "type": "string",
+                  "description": "예: 초기, 조회후, 탭2"
+                },
+                "masked": {
+                  "type": "boolean"
+                },
+                "scale": {
+                  "type": "number",
+                  "default": 1,
+                  "description": "이미지 픽셀 / CSS 픽셀 배율 (devicePixelRatio). elements.box 는 CSS 픽셀 기준"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "screenKey",
+          "elementId",
+          "type"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^el:"
+          },
+          "screenKey": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "button",
+              "input",
+              "combo",
+              "check",
+              "radio",
+              "date",
+              "grid",
+              "tab",
+              "tree",
+              "popup",
+              "link",
+              "file",
+              "other"
+            ]
+          },
+          "box": {
+            "type": "object",
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number"
+              },
+              "h": {
+                "type": "number"
+              },
+              "captureIndex": {
+                "type": "integer",
+                "default": 0
+              }
+            },
+            "description": "전체 페이지 캡처 기준 CSS 픽셀 좌표"
+          },
+          "binding": {
+            "type": "string",
+            "description": "Dataset/모델/컬럼 바인딩 표현"
+          },
+          "danger": {
+            "type": "boolean",
+            "description": "위험 버튼으로 동적 클릭 제외됨"
+          },
+          "matched": {
+            "enum": [
+              "full",
+              "static-only",
+              "dynamic-only"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "codeUnits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "lang",
+          "file",
+          "name"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^fn:"
+          },
+          "lang": {
+            "enum": [
+              "js",
+              "ts",
+              "java",
+              "cs",
+              "vb",
+              "jsp",
+              "xfdl",
+              "xml",
+              "sql",
+              "plsql",
+              "tsql",
+              "other"
+            ]
+          },
+          "file": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lineStart": {
+            "type": "integer"
+          },
+          "lineEnd": {
+            "type": "integer"
+          },
+          "snippet": {
+            "type": "string",
+            "description": "보안 정책상 허용 시에만 포함"
+          },
+          "common": {
+            "type": "boolean",
+            "description": "공통 함수 여부"
+          }
+        }
+      }
+    },
+    "apis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "method",
+          "path"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^api:"
+          },
+          "method": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "serviceId": {
+            "type": "string",
+            "description": "Nexacro/WebSquare 서비스 ID 등"
+          },
+          "observedParams": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "동적 수집 시 관측된 파라미터 키 (값은 저장 안 함)"
+          }
+        }
+      }
+    },
+    "sqlStatements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "kind"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^(sql|sp):"
+          },
+          "kind": {
+            "enum": [
+              "select",
+              "insert",
+              "update",
+              "delete",
+              "merge",
+              "procedure",
+              "function",
+              "other"
+            ]
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string",
+            "description": "Mapper 전체 네임스페이스(예: kr.go.hr.emp.service.impl.EmpMapper). 키는 끝 이름을 쓰되 충돌 시 collector가 전체 이름으로 키를 만든다"
+          }
+        }
+      }
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "schema",
+          "name"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^tbl:"
+          },
+          "schema": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "table",
+              "view",
+              "synonym"
+            ]
+          },
+          "rowCount": {
+            "type": "integer"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "dataType"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "dataType": {
+                  "type": "string"
+                },
+                "nullable": {
+                  "type": "boolean"
+                },
+                "pk": {
+                  "type": "boolean"
+                },
+                "default": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "comment": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "indexes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "columns": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "unique": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "columns",
+          "kind"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "자식 테이블 key"
+          },
+          "to": {
+            "type": "string",
+            "description": "부모 테이블 key"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "kind": {
+            "enum": [
+              "fk",
+              "inferred"
+            ]
+          },
+          "evidenceCount": {
+            "type": "integer",
+            "description": "추정 근거 JOIN 횟수"
+          },
+          "confidence": {
+            "$ref": "#/$defs/confidence"
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "kind",
+          "source",
+          "confidence"
+        ],
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "event",
+              "calls",
+              "request",
+              "handles",
+              "executes",
+              "accesses",
+              "navigates",
+              "binds"
+            ]
+          },
+          "event": {
+            "type": "string",
+            "description": "kind=event일 때 이벤트명 (click, change, onload…)"
+          },
+          "order": {
+            "type": "integer",
+            "description": "같은 from 안에서의 호출 순서"
+          },
+          "condition": {
+            "type": "string",
+            "description": "분기 조건 요약 (예: rowStatus == 'I', confirm 취소)"
+          },
+          "crud": {
+            "type": "string",
+            "pattern": "^[CRUD]{1,4}$"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "enum": [
+              "static",
+              "dynamic",
+              "manual"
+            ]
+          },
+          "confidence": {
+            "$ref": "#/$defs/confidence"
+          },
+          "evidence": {
+            "type": "string",
+            "description": "근거 위치 file:line 또는 관측 요청"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "kind=event 의 from 은 요소 키(el:) 또는 화면 키(scr:, 화면 로드 시 실행 흐름). SQL→프로시저 호출은 kind=calls(from sql:, to sp:)."
+    },
+    "blockedRequests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "elementKey": {
+            "type": "string",
+            "description": "차단을 일으킨 요소 키. 화면 로드 중 차단이면 화면 키(scr:)"
+          },
+          "method": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "enum": [
+              "menu",
+              "capture",
+              "parse",
+              "db",
+              "merge"
+            ]
+          },
+          "target": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "uiTech": {
+      "enum": [
+        "jsp-jquery",
+        "nexacro",
+        "miplatform",
+        "xplatform",
+        "websquare",
+        "vue",
+        "react",
+        "winforms",
+        "aspnet-webforms",
+        "aspnet-mvc",
+        "other"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

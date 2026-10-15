@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TypeDefinition version="1.0">
+  <Services>
+    <Service prefixid="AT" type="form" url="./AT/" version="0" communicationversion="0"/>
+    <Service prefixid="lib" type="js" url="./lib/" version="0" communicationversion="0"/>
+    <Service prefixid="svc" type="JSP" url="http://hr-dev.example.local/" version="0" communicationversion="0"/>
+  </Services>
+</TypeDefinition>

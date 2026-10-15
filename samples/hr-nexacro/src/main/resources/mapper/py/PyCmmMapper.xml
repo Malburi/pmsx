@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.py.cmm.service.impl.PyCmmMapper">
+
+    <select id="selectDeptList" resultType="egovMap">
+        SELECT DEPT_CD, DEPT_NM FROM TB_DEPT WHERE USE_YN = 'Y' ORDER BY SORT_ORD
+    </select>
+
+    <select id="selectEmpPopList" parameterType="string" resultType="egovMap">
+        SELECT E.EMP_NO, E.EMP_NM, D.DEPT_NM
+          FROM TB_EMP E
+          JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD
+         WHERE E.EMP_NM LIKE '%' || #{value} || '%'
+    </select>
+
+    <select id="selectCodeList" parameterType="string" resultType="egovMap">
+        SELECT CD, CD_NM FROM TB_CODE WHERE GRP_CD = #{value} ORDER BY SORT_ORD
+    </select>
+</mapper>

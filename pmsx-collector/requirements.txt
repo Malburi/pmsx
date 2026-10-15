@@ -1,0 +1,19 @@
+# pmsx-collector 런타임 의존성 (고정 버전)
+# 브라우저는 번들하지 않는다 — 고객 PC의 Chrome/Edge 사용 (playwright install 불필요)
+tree-sitter==0.26.0
+tree-sitter-java==0.23.5
+tree-sitter-javascript==0.25.0
+tree-sitter-typescript==0.23.2   # Vue(lang=ts)·React(TSX)
+tree-sitter-c-sharp==0.23.5      # WinForms·ASP.NET·.NET 데이터 접근 (R3)
+sqlglot==30.22.0
+PyYAML==6.0.3
+jsonschema==4.26.0
+playwright==1.64.0
+pillow==12.3.0                   # Nexacro XFDL 와이어프레임 PNG
+# DB 메타 직접 수집 (읽기 전용) — 쓰는 DB 드라이버만 있어도 동작
+oracledb==26.0.1            # Oracle (thin 모드, Oracle Client 불필요)
+psycopg[binary]==3.3.6      # PostgreSQL
+pyodbc==5.3.0               # MSSQL·Tibero (ODBC 드라이버는 OS에 설치)
+PyMySQL==1.2.3              # MySQL·MariaDB
+# 데스크톱 캡처 (WinForms·MiPlatform/XPlatform 런타임 — Windows 전용, UI Automation)
+pywinauto==0.6.9; sys_platform == "win32"

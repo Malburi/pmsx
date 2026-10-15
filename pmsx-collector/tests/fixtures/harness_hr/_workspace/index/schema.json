@@ -1,0 +1,646 @@
+{
+  "_meta": {
+    "generated_at": "2026-10-15T02:33:21+09:00",
+    "generator": "deterministic-indexer",
+    "version": "1.8.0",
+    "source_root": "C:\\Users\\onlys\\AppData\\Local\\Temp\\claude\\C--Users-onlys-OneDrive-----------AI-Lab\\b5f37aec-3208-4379-8060-fa95b8bdc414\\scratchpad\\harness-hr",
+    "mode": "init",
+    "git_commit": null,
+    "sampled": false,
+    "files_scanned": 46,
+    "files_total": 46,
+    "relation_count": 13,
+    "source": "ddl"
+  },
+  "tables": [
+    {
+      "name": "TB_DEPT",
+      "columns": [
+        {
+          "name": "DEPT_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "DEPT_NM",
+          "type": "VARCHAR2(100)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "UP_DEPT_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "SORT_ORD",
+          "type": "NUMBER(5)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "USE_YN",
+          "type": "CHAR(1)",
+          "nullable": false,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "name": "TB_EMP",
+      "columns": [
+        {
+          "name": "EMP_NO",
+          "type": "VARCHAR2(8)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EMP_NM",
+          "type": "VARCHAR2(50)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "DEPT_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "POS_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "HIRE_DT",
+          "type": "CHAR(8)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "EMAIL",
+          "type": "VARCHAR2(100)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "USE_YN",
+          "type": "CHAR(1)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "REG_DT",
+          "type": "DATE",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "REG_ID",
+          "type": "VARCHAR2(20)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "UPD_DT",
+          "type": "DATE",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "UPD_ID",
+          "type": "VARCHAR2(20)",
+          "nullable": true,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "name": "TB_EMP_HIST",
+      "columns": [
+        {
+          "name": "HIST_SEQ",
+          "type": "NUMBER(12)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EMP_NO",
+          "type": "VARCHAR2(8)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "CHG_DT",
+          "type": "DATE",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "CHG_ID",
+          "type": "VARCHAR2(20)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "CHG_TYPE",
+          "type": "CHAR(1)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "BEFORE_JSON",
+          "type": "VARCHAR2(4000)",
+          "nullable": true,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [
+        {
+          "name": "FK_TB_EMP_HIST_01",
+          "columns": [
+            "EMP_NO"
+          ],
+          "references_table": "TB_EMP",
+          "references_columns": [
+            "EMP_NO"
+          ],
+          "origin": "deterministic-indexer",
+          "confidence": "HIGH"
+        }
+      ],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "name": "TB_APPOINT",
+      "columns": [
+        {
+          "name": "APPT_NO",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EMP_NO",
+          "type": "VARCHAR2(8)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "APPT_TYPE",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "FROM_DEPT_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "TO_DEPT_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "APPT_DT",
+          "type": "CHAR(8)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "STATUS",
+          "type": "CHAR(1)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "REG_DT",
+          "type": "DATE",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "REG_ID",
+          "type": "VARCHAR2(20)",
+          "nullable": true,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "name": "TB_CODE",
+      "columns": [
+        {
+          "name": "GRP_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "CD",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "CD_NM",
+          "type": "VARCHAR2(100)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "SORT_ORD",
+          "type": "NUMBER(5)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "USE_YN",
+          "type": "CHAR(1)",
+          "nullable": true,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "name": "TB_MENU",
+      "columns": [
+        {
+          "name": "MENU_ID",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "UP_MENU_ID",
+          "type": "VARCHAR2(10)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "MENU_NM",
+          "type": "VARCHAR2(100)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "MENU_URL",
+          "type": "VARCHAR2(200)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "SORT_ORD",
+          "type": "NUMBER(5)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "SYS_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "name": "TB_EDU_HIST",
+      "columns": [
+        {
+          "name": "EDU_SEQ",
+          "type": "NUMBER(12)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EMP_NO",
+          "type": "VARCHAR2(8)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EDU_TYPE_CD",
+          "type": "VARCHAR2(10)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EDU_NM",
+          "type": "VARCHAR2(200)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EDU_YEAR",
+          "type": "CHAR(4)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "EDU_HOURS",
+          "type": "NUMBER(5)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "INST_NM",
+          "type": "VARCHAR2(100)",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "USE_YN",
+          "type": "CHAR(1)",
+          "nullable": false,
+          "primary_key": false
+        },
+        {
+          "name": "REG_DT",
+          "type": "DATE",
+          "nullable": true,
+          "primary_key": false
+        },
+        {
+          "name": "REG_ID",
+          "type": "VARCHAR2(20)",
+          "nullable": true,
+          "primary_key": false
+        }
+      ],
+      "primary_key": [],
+      "foreign_keys": [],
+      "indexes": [],
+      "source_file": "db/ddl.sql",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "relations": [
+    {
+      "type": "foreign_key",
+      "name": "FK_TB_EMP_HIST_01",
+      "from_table": "TB_EMP_HIST",
+      "from_columns": [
+        "EMP_NO"
+      ],
+      "to_table": "TB_EMP",
+      "to_columns": [
+        "EMP_NO"
+      ],
+      "file": "db/ddl.sql",
+      "line": null,
+      "evidence": "FK_TB_EMP_HIST_01",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_EMP",
+      "from_columns": [
+        "EMP_NO"
+      ],
+      "to_table": "TB_APPOINT",
+      "to_columns": [
+        "EMP_NO"
+      ],
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 11,
+      "evidence": "E.EMP_NO = A.EMP_NO",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_DEPT",
+      "from_columns": [
+        "DEPT_CD"
+      ],
+      "to_table": "TB_APPOINT",
+      "to_columns": [
+        "FROM_DEPT_CD"
+      ],
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 12,
+      "evidence": "FD.DEPT_CD = A.FROM_DEPT_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_DEPT",
+      "from_columns": [
+        "DEPT_CD"
+      ],
+      "to_table": "TB_APPOINT",
+      "to_columns": [
+        "TO_DEPT_CD"
+      ],
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 13,
+      "evidence": "TD.DEPT_CD = A.TO_DEPT_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_CODE",
+      "from_columns": [
+        "CD"
+      ],
+      "to_table": "TB_APPOINT",
+      "to_columns": [
+        "APPT_TYPE"
+      ],
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 14,
+      "evidence": "T.CD = A.APPT_TYPE",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_DEPT",
+      "from_columns": [
+        "DEPT_CD"
+      ],
+      "to_table": "TB_DEPT",
+      "to_columns": [
+        "UP_DEPT_CD"
+      ],
+      "sql_id": "kr.go.hr.dept.service.impl.DeptMapper.selectDeptList",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 8,
+      "evidence": "U.DEPT_CD = D.UP_DEPT_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_EMP",
+      "from_columns": [
+        "EMP_NO"
+      ],
+      "to_table": "TB_EDU_HIST",
+      "to_columns": [
+        "EMP_NO"
+      ],
+      "sql_id": "selectEduList",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 10,
+      "evidence": "M.EMP_NO = H.EMP_NO",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_CODE",
+      "from_columns": [
+        "CD"
+      ],
+      "to_table": "TB_EDU_HIST",
+      "to_columns": [
+        "EDU_TYPE_CD"
+      ],
+      "sql_id": "selectEduList",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 11,
+      "evidence": "C.CD = H.EDU_TYPE_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_EMP",
+      "from_columns": [
+        "EMP_NO"
+      ],
+      "to_table": "TB_EDU_HIST",
+      "to_columns": [
+        "EMP_NO"
+      ],
+      "sql_id": "selectEduSummary",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 23,
+      "evidence": "M.EMP_NO = H.EMP_NO",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_DEPT",
+      "from_columns": [
+        "DEPT_CD"
+      ],
+      "to_table": "TB_EMP",
+      "to_columns": [
+        "DEPT_CD"
+      ],
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 14,
+      "evidence": "D.DEPT_CD = E.DEPT_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_CODE",
+      "from_columns": [
+        "CD"
+      ],
+      "to_table": "TB_EMP",
+      "to_columns": [
+        "POS_CD"
+      ],
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 15,
+      "evidence": "C.CD = E.POS_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_EMP",
+      "from_columns": [
+        "DEPT_CD"
+      ],
+      "to_table": "TB_DEPT",
+      "to_columns": [
+        "DEPT_CD"
+      ],
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpPopList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 36,
+      "evidence": "E.DEPT_CD = D.DEPT_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "type": "query_join",
+      "from_table": "TB_DEPT",
+      "from_columns": [
+        "DEPT_CD"
+      ],
+      "to_table": "TB_EMP",
+      "to_columns": [
+        "DEPT_CD"
+      ],
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 46,
+      "evidence": "D.DEPT_CD = E.DEPT_CD",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "views": [],
+  "procedures": [],
+  "functions": [],
+  "triggers": []
+}

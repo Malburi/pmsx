@@ -1,0 +1,37 @@
+# PMS-X 수집기 설정 - 샘플 복리후생(BW, WebSquare 5 + Spring + MyBatis + Oracle)
+# 상대 경로는 이 파일 위치 기준
+system:
+  code: BW
+  name: 복리후생
+  uiTech: [websquare]
+  serverTech: [spring, mybatis]
+  dbType: oracle
+
+source:
+  root: .
+  websquare: ui                       # WebSquare 화면 XML 루트
+  java: src/main/java
+  mapper: src/main/resources/mapper
+  includeSnippets: true
+
+websquare:
+  urlPrefix: /ui                      # w2xPath 접두어: ui/BW/BW0101.xml → /ui/BW/BW0101.xml
+  commonScripts: [cm/js/gcm.js]       # 모든 화면이 로드하는 공통 스크립트 (websquare 루트 기준)
+  submissionCallers:                  # 서브미션 id 를 인자로 받는 공통 래퍼 → 호출 지점에서 서브미션 해석
+    gcm.executeSubmission: 0
+  wireframe: true
+
+db:
+  schema: BW
+  ddlFiles: [db/ddl.sql]
+
+menu:
+  csv: db/menu.csv
+
+capture:
+  enabled: false                      # WebSquare 엔진 없이 와이어프레임 사용 (엔진이 있는 테스트계면 Playwright 캡처 가능)
+
+inference:
+  minEvidence: 1
+
+output: out

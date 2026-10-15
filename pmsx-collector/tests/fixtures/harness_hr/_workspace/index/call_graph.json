@@ -1,0 +1,2594 @@
+{
+  "_meta": {
+    "generated_at": "2026-10-15T02:33:21+09:00",
+    "generator": "deterministic-indexer",
+    "version": "1.8.0",
+    "source_root": "C:\\Users\\onlys\\AppData\\Local\\Temp\\claude\\C--Users-onlys-OneDrive-----------AI-Lab\\b5f37aec-3208-4379-8060-fa95b8bdc414\\scratchpad\\harness-hr",
+    "mode": "init",
+    "git_commit": null,
+    "sampled": false,
+    "files_scanned": 46,
+    "files_total": 46,
+    "node_count": 178,
+    "edge_count": 83
+  },
+  "nodes": [
+    {
+      "id": "kr.go.cmm.code.service.CmmCodeService",
+      "type": "interface",
+      "file": "src/main/java/kr/go/cmm/code/service/CmmCodeService.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.CodeVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/cmm/code/service/CodeVO.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.CodeVO.getCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/service/CodeVO.java",
+      "line": 12,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.CodeVO.setCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/service/CodeVO.java",
+      "line": 13,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.CodeVO.getCdNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/service/CodeVO.java",
+      "line": 14,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.CodeVO.setCdNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/service/CodeVO.java",
+      "line": 15,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.impl.CmmCodeMapper",
+      "type": "interface",
+      "file": "src/main/java/kr/go/cmm/code/service/impl/CmmCodeMapper.java",
+      "line": 8,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl",
+      "type": "class",
+      "file": "src/main/java/kr/go/cmm/code/service/impl/CmmCodeServiceImpl.java",
+      "line": 13,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl.selectDeptCodeList",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/service/impl/CmmCodeServiceImpl.java",
+      "line": 20,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl.selectCodeList",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/service/impl/CmmCodeServiceImpl.java",
+      "line": 25,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.web.CmmCodeController",
+      "type": "class",
+      "file": "src/main/java/kr/go/cmm/code/web/CmmCodeController.java",
+      "line": 18,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.web.CmmCodeController.GetMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/code/web/CmmCodeController.java",
+      "line": 24,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.session.LoginUser",
+      "type": "class",
+      "file": "src/main/java/kr/go/cmm/session/LoginUser.java",
+      "line": 7,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.session.LoginUser.getUserId",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/session/LoginUser.java",
+      "line": 15,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.session.LoginUser.setUserId",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/session/LoginUser.java",
+      "line": 16,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.session.LoginUser.getUserNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/session/LoginUser.java",
+      "line": 17,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.session.LoginUser.setUserNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/session/LoginUser.java",
+      "line": 18,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 7,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO.getRowStatus",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 16,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO.setRowStatus",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 17,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO.getRegId",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 18,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO.setRegId",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 19,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO.getRegDt",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 20,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.vo.BaseVO.setRegDt",
+      "type": "method",
+      "file": "src/main/java/kr/go/cmm/vo/BaseVO.java",
+      "line": 21,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointService",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointService.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getApptNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 20,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setApptNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 21,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getEmpNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 22,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setEmpNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 23,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getEmpNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 24,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setEmpNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 25,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getApptType",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 26,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setApptType",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 27,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getFromDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 28,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setFromDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 29,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getToDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 30,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setToDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 31,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getApptDt",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 32,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setApptDt",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 33,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getStatus",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 34,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setStatus",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 35,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getApptFrom",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 36,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setApptFrom",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 37,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.getApptTo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 38,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.AppointVO.setApptTo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 39,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointMapper",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointMapper.java",
+      "line": 9,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointServiceImpl",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 16,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointServiceImpl.selectAppointList",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 23,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointServiceImpl.insertAppoint",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 29,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointServiceImpl.confirmAppoint",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 37,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.web.AppointController",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 22,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.web.AppointController.RequestMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 28,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.web.AppointController.PostMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 33,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptService",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptService.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.getDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 16,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.setDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 17,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.getDeptNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 18,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.setDeptNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 19,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.getUpDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 20,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.setUpDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 21,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.getUpDeptNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 22,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.setUpDeptNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 23,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.getSortOrd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 24,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.setSortOrd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 25,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.getUseYn",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 26,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.DeptVO.setUseYn",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 27,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptMapper",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptMapper.java",
+      "line": 8,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptServiceImpl",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptServiceImpl.java",
+      "line": 14,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptServiceImpl.selectDeptList",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptServiceImpl.java",
+      "line": 21,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptServiceImpl.saveDept",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptServiceImpl.java",
+      "line": 27,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptServiceImpl.updateSortOrder",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptServiceImpl.java",
+      "line": 33,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.web.DeptController",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/dept/web/DeptController.java",
+      "line": 19,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.web.DeptController.RequestMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/dept/web/DeptController.java",
+      "line": 25,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduService",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/edu/service/EduService.java",
+      "line": 5,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 6,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getEduSeq",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 17,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setEduSeq",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 18,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getEmpNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 19,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setEmpNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 20,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getEduTypeCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 21,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setEduTypeCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 22,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getEduNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 23,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setEduNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 24,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getEduYear",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 25,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setEduYear",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 26,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getEduHours",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 27,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setEduHours",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 28,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getInstNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 29,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setInstNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 30,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.getRows",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 31,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.EduVO.setRows",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 32,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduDAO",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 14,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduDAO.SuppressWarnings",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 17,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduDAO.insertEdu",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 27,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduDAO.updateEdu",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 31,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduServiceImpl",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 19,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduList",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 26,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduSummary",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 31,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 37,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.web.EduController",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 21,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.web.EduController.EduController",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 26,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.web.EduController.GetMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 31,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.edu.web.EduController.PostMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 37,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpSaveVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpSaveVO.java",
+      "line": 8,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpSaveVO.getRows",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpSaveVO.java",
+      "line": 15,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpSaveVO.setRows",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpSaveVO.java",
+      "line": 16,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpService",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpService.java",
+      "line": 7,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 7,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getEmpNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 24,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setEmpNo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 25,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getEmpNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 26,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setEmpNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 27,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 28,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setDeptCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 29,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getDeptNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 30,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setDeptNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 31,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getPosCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 32,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setPosCd",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 33,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getPosNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 34,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setPosNm",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 35,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getHireDt",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 36,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setHireDt",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 37,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getEmail",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 38,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setEmail",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 39,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getUseYn",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 40,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setUseYn",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 41,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getHireFrom",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 42,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setHireFrom",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 43,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.getHireTo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 44,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.EmpVO.setHireTo",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 45,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper",
+      "type": "interface",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpMapper.java",
+      "line": 11,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpServiceImpl",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 17,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmpList",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 24,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmpPopList",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 29,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmp",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 34,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpServiceImpl.saveEmp",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 40,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpServiceImpl.deleteEmp",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 56,
+      "visibility": "public",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.web.EmpController",
+      "type": "class",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 25,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "type": "method",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 32,
+      "visibility": "package",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 8,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_setCombo",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 26,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_bindGrid",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 37,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_addRow",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 54,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_getChangedRows",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 65,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_getSelectedRow",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 76,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_getRowData",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 81,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_validate",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 86,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_popup",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 99,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_closePopup",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 106,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_excel",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 114,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_getParam",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 118,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.gfn_today",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 123,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.cmm.common.serializeObject",
+      "type": "method",
+      "file": "src/main/webapp/js/cmm/common.js",
+      "line": 129,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_initCombo",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 22,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_search",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 26,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_new",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 34,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_save",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 38,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_delete",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 53,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_excel",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 63,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_openEmpPopup",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 67,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101.fn_grdDblClick",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 74,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101P01.fn_popSearch",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101P01.js",
+      "line": 11,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0101P01.fn_select",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0101P01.js",
+      "line": 17,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0103.fn_search",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 15,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0103.fn_regist",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 21,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0103.fn_confirmAppt",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 40,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0105.fn_eduStat",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0105.js",
+      "line": 37,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0105.fn_reset",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0105.js",
+      "line": 31,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "src.main.webapp.js.hr.HR0105.fn_eduExcel",
+      "type": "method",
+      "file": "src/main/webapp/js/hr/HR0105.js",
+      "line": 43,
+      "visibility": "module",
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "view:src/main/webapp/WEB-INF/jsp/hr/appoint/HR0103.jsp",
+      "type": "view",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/appoint/HR0103.jsp",
+      "line": 1,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "view:src/main/webapp/WEB-INF/jsp/hr/dept/HR0104.jsp",
+      "type": "view",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/dept/HR0104.jsp",
+      "line": 1,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "view:src/main/webapp/WEB-INF/jsp/hr/edu/HR0105.jsp",
+      "type": "view",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/edu/HR0105.jsp",
+      "line": 1,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "view:src/main/webapp/WEB-INF/jsp/hr/emp/HR0101.jsp",
+      "type": "view",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/emp/HR0101.jsp",
+      "line": 1,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "view:src/main/webapp/WEB-INF/jsp/hr/emp/HR0101P01.jsp",
+      "type": "view",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/emp/HR0101P01.jsp",
+      "line": 1,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "view:src/main/webapp/WEB-INF/jsp/hr/emp/HR0102.jsp",
+      "type": "view",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/emp/HR0102.jsp",
+      "line": 1,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "trigger:src/main/webapp/WEB-INF/jsp/hr/emp/HR0101.jsp#button.fn_search",
+      "type": "trigger",
+      "file": "src/main/webapp/WEB-INF/jsp/hr/emp/HR0101.jsp",
+      "line": 32,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    }
+  ],
+  "edges": [
+    {
+      "from": "kr.go.cmm.code.web.CmmCodeController.GetMapping",
+      "to": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl.selectDeptCodeList",
+      "type": "call",
+      "file": "src/main/java/kr/go/cmm/code/web/CmmCodeController.java",
+      "line": 25,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.cmm.code.web.CmmCodeController.GetMapping",
+      "to": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl.selectCodeList",
+      "type": "call",
+      "file": "src/main/java/kr/go/cmm/code/web/CmmCodeController.java",
+      "line": 31,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.appoint.service.impl.AppointServiceImpl.insertAppoint",
+      "to": "kr.go.cmm.vo.BaseVO.setRegId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 30,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.service.impl.AppointServiceImpl.insertAppoint",
+      "to": "kr.go.hr.appoint.service.AppointVO.setStatus",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 31,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.web.AppointController.PostMapping",
+      "to": "kr.go.hr.appoint.service.impl.AppointServiceImpl.selectAppointList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 34,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.appoint.web.AppointController.PostMapping",
+      "to": "kr.go.hr.appoint.service.impl.AppointServiceImpl.insertAppoint",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 40,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.appoint.web.AppointController.PostMapping",
+      "to": "kr.go.cmm.session.LoginUser.getUserId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 41,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.web.AppointController.PostMapping",
+      "to": "kr.go.hr.appoint.service.impl.AppointServiceImpl.confirmAppoint",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 47,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.dept.web.DeptController.RequestMapping",
+      "to": "kr.go.hr.dept.service.impl.DeptServiceImpl.selectDeptList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/dept/web/DeptController.java",
+      "line": 31,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.dept.web.DeptController.RequestMapping",
+      "to": "kr.go.hr.dept.service.impl.DeptServiceImpl.saveDept",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/dept/web/DeptController.java",
+      "line": 37,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.dept.web.DeptController.RequestMapping",
+      "to": "kr.go.hr.dept.service.impl.DeptServiceImpl.updateSortOrder",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/dept/web/DeptController.java",
+      "line": 44,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduDAO.SuppressWarnings",
+      "to": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 18,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduDAO.SuppressWarnings",
+      "to": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduSummary",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 23,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "to": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmp",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 39,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "to": "kr.go.cmm.vo.BaseVO.setRegId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 43,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "to": "kr.go.cmm.vo.BaseVO.getRowStatus",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 44,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "to": "kr.go.hr.edu.service.impl.EduDAO.insertEdu",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 45,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "to": "kr.go.hr.edu.service.impl.EduDAO.updateEdu",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 47,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.web.EduController.PostMapping",
+      "to": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 38,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.edu.web.EduController.PostMapping",
+      "to": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduSummary",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 45,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.edu.web.EduController.PostMapping",
+      "to": "kr.go.hr.edu.service.impl.EduServiceImpl.saveEdu",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 52,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.edu.web.EduController.PostMapping",
+      "to": "kr.go.hr.emp.service.EmpSaveVO.getRows",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 53,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.web.EduController.PostMapping",
+      "to": "kr.go.cmm.session.LoginUser.getUserId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 53,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.web.EduController.GetMapping",
+      "to": "kr.go.hr.edu.service.impl.EduServiceImpl.selectEduList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/edu/web/EduController.java",
+      "line": 60,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl.saveEmp",
+      "to": "kr.go.cmm.vo.BaseVO.setRegId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 42,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl.saveEmp",
+      "to": "kr.go.cmm.vo.BaseVO.getRowStatus",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 43,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl.deleteEmp",
+      "to": "kr.go.hr.emp.service.EmpVO",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 57,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl.deleteEmp",
+      "to": "kr.go.cmm.vo.BaseVO.setRegId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 59,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl.deleteEmp",
+      "to": "kr.go.cmm.vo.BaseVO.setRowStatus",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 60,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmpList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 52,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmpPopList",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 59,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.impl.EmpServiceImpl.selectEmp",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 66,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.impl.EmpServiceImpl.saveEmp",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 73,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.EmpSaveVO.getRows",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 74,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.cmm.session.LoginUser.getUserId",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 74,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.impl.EmpServiceImpl.deleteEmp",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 80,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController.RequestMapping",
+      "to": "kr.go.hr.emp.service.EmpVO.getEmpNo",
+      "type": "call",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 81,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_initCombo",
+      "to": "src.main.webapp.js.cmm.common.gfn_setCombo",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 23,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_search",
+      "to": "src.main.webapp.js.cmm.common.serializeObject",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 27,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_search",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 28,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_search",
+      "to": "src.main.webapp.js.cmm.common.gfn_bindGrid",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 29,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_new",
+      "to": "src.main.webapp.js.cmm.common.gfn_addRow",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 35,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_new",
+      "to": "src.main.webapp.js.cmm.common.gfn_today",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 35,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_save",
+      "to": "src.main.webapp.js.cmm.common.gfn_getChangedRows",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 39,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_save",
+      "to": "src.main.webapp.js.cmm.common.gfn_validate",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 44,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_save",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 47,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_delete",
+      "to": "src.main.webapp.js.cmm.common.gfn_getSelectedRow",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 54,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_delete",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 60,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_excel",
+      "to": "src.main.webapp.js.cmm.common.gfn_excel",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 64,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_excel",
+      "to": "src.main.webapp.js.cmm.common.serializeObject",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 64,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_openEmpPopup",
+      "to": "src.main.webapp.js.cmm.common.gfn_popup",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 68,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_grdDblClick",
+      "to": "src.main.webapp.js.cmm.common.gfn_getRowData",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 75,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101.fn_grdDblClick",
+      "to": "src.main.webapp.js.cmm.common.gfn_popup",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101.js",
+      "line": 76,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101P01.fn_popSearch",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101P01.js",
+      "line": 12,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101P01.fn_popSearch",
+      "to": "src.main.webapp.js.cmm.common.gfn_bindGrid",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101P01.js",
+      "line": 13,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101P01.fn_select",
+      "to": "src.main.webapp.js.cmm.common.gfn_getSelectedRow",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101P01.js",
+      "line": 18,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0101P01.fn_select",
+      "to": "src.main.webapp.js.cmm.common.gfn_closePopup",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0101P01.js",
+      "line": 23,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0103.fn_search",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 16,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0103.fn_search",
+      "to": "src.main.webapp.js.cmm.common.serializeObject",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 16,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0103.fn_search",
+      "to": "src.main.webapp.js.cmm.common.gfn_bindGrid",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 17,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0103.fn_regist",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 33,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0103.fn_confirmAppt",
+      "to": "src.main.webapp.js.cmm.common.gfn_getSelectedRow",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 41,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0103.fn_confirmAppt",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0103.js",
+      "line": 47,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0105.fn_eduStat",
+      "to": "src.main.webapp.js.cmm.common.gfn_ajax",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0105.js",
+      "line": 38,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0105.fn_eduExcel",
+      "to": "src.main.webapp.js.cmm.common.gfn_excel",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0105.js",
+      "line": 44,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "src.main.webapp.js.hr.HR0105.fn_eduExcel",
+      "to": "src.main.webapp.js.cmm.common.serializeObject",
+      "type": "call",
+      "file": "src/main/webapp/js/hr/HR0105.js",
+      "line": 44,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "from": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl",
+      "to": "kr.go.cmm.code.service.impl.CmmCodeMapper",
+      "type": "inject",
+      "file": "src/main/java/kr/go/cmm/code/service/impl/CmmCodeServiceImpl.java",
+      "line": 16,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.cmm.code.web.CmmCodeController",
+      "to": "kr.go.cmm.code.service.CmmCodeService",
+      "type": "inject",
+      "file": "src/main/java/kr/go/cmm/code/web/CmmCodeController.java",
+      "line": 21,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.service.impl.AppointServiceImpl",
+      "to": "kr.go.hr.appoint.service.impl.AppointMapper",
+      "type": "inject",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 19,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.web.AppointController",
+      "to": "kr.go.hr.appoint.service.AppointService",
+      "type": "inject",
+      "file": "src/main/java/kr/go/hr/appoint/web/AppointController.java",
+      "line": 25,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.dept.service.impl.DeptServiceImpl",
+      "to": "kr.go.hr.dept.service.impl.DeptMapper",
+      "type": "inject",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptServiceImpl.java",
+      "line": 17,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.dept.web.DeptController",
+      "to": "kr.go.hr.dept.service.DeptService",
+      "type": "inject",
+      "file": "src/main/java/kr/go/hr/dept/web/DeptController.java",
+      "line": 22,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl",
+      "to": "kr.go.hr.emp.service.impl.EmpMapper",
+      "type": "inject",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 20,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.web.EmpController",
+      "to": "kr.go.hr.emp.service.EmpService",
+      "type": "inject",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java",
+      "line": 28,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.cmm.code.service.impl.CmmCodeServiceImpl",
+      "to": "kr.go.cmm.code.service.CmmCodeService",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/cmm/code/service/impl/CmmCodeServiceImpl.java",
+      "line": 13,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.service.AppointVO",
+      "to": "kr.go.cmm.vo.BaseVO",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/appoint/service/AppointVO.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.appoint.service.impl.AppointServiceImpl",
+      "to": "kr.go.hr.appoint.service.AppointService",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/appoint/service/impl/AppointServiceImpl.java",
+      "line": 16,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.dept.service.DeptVO",
+      "to": "kr.go.cmm.vo.BaseVO",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/dept/service/DeptVO.java",
+      "line": 4,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.dept.service.impl.DeptServiceImpl",
+      "to": "kr.go.hr.dept.service.DeptService",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/dept/service/impl/DeptServiceImpl.java",
+      "line": 14,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.service.EduVO",
+      "to": "kr.go.cmm.vo.BaseVO",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/edu/service/EduVO.java",
+      "line": 6,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.edu.service.impl.EduServiceImpl",
+      "to": "kr.go.hr.edu.service.EduService",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduServiceImpl.java",
+      "line": 19,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.EmpVO",
+      "to": "kr.go.cmm.vo.BaseVO",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/emp/service/EmpVO.java",
+      "line": 7,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "from": "kr.go.hr.emp.service.impl.EmpServiceImpl",
+      "to": "kr.go.hr.emp.service.EmpService",
+      "type": "inherit",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java",
+      "line": 17,
+      "workspace": "root",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    }
+  ]
+}

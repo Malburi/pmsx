@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nexacro 14 형식 (position 속성 좌표: absolute left top right bottom) -->
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="PY0101P01" classname="PY0101P01" inheritanceid="" position="absolute 0 0 600 450" titletext="사원선택" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="sta_nm" taborder="0" text="성명" position="absolute 15 15 60 39"/>
+        <Edit id="edt_nm" taborder="1" position="absolute 65 15 245 39" onkeyup="edt_nm_onkeyup"/>
+        <Button id="btn_find" taborder="2" text="검색" position="absolute 255 15 315 39" onclick="btn_find_onclick"/>
+        <Grid id="grd_emp" taborder="3" binddataset="ds_emp" position="absolute 15 50 585 390" oncelldblclick="grd_emp_oncelldblclick">
+          <Formats>
+            <Format id="default">
+              <Columns><Column size="120"/><Column size="150"/><Column size="200"/></Columns>
+              <Rows><Row size="26" band="head"/><Row size="24"/></Rows>
+              <Band id="head"><Cell text="사번"/><Cell col="1" text="성명"/><Cell col="2" text="부서"/></Band>
+              <Band id="body"><Cell text="bind:EMP_NO"/><Cell col="1" text="bind:EMP_NM"/><Cell col="2" text="bind:DEPT_NM"/></Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn_ok" taborder="4" text="선택" position="absolute 455 400 515 426" onclick="btn_ok_onclick"/>
+        <Button id="btn_cancel" taborder="5" text="닫기" position="absolute 525 400 585 426" onclick="btn_cancel_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_emp">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="10"/>
+          <Column id="EMP_NM" type="STRING" size="50"/>
+          <Column id="DEPT_NM" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.0"><![CDATA[include "Lib::lib_comm.xjs";
+
+function form_onload(obj:Form, e:LoadEventInfo)
+{
+	edt_nm.value = this.parent.empNm;
+	fn_find();
+}
+
+function fn_find()
+{
+	var sArg = "empNm=" + wrapQuote(edt_nm.value);
+	gfn_transaction("find", "svc::py/cmm/selectEmpPopList.do", "", "ds_emp=ds_emp", sArg, "fn_callback");
+}
+
+function btn_find_onclick(obj:Button,  e:ClickEventInfo)
+{
+	fn_find();
+}
+
+function edt_nm_onkeyup(obj:Edit, e:KeyEventInfo)
+{
+	if (e.keycode == 13) fn_find();
+}
+
+function grd_emp_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{
+	btn_ok_onclick();
+}
+
+function btn_ok_onclick(obj:Button,  e:ClickEventInfo)
+{
+	this.close(ds_emp.getColumn(ds_emp.rowposition, "EMP_NM"));
+}
+
+function btn_cancel_onclick(obj:Button,  e:ClickEventInfo)
+{
+	this.close();
+}
+
+function fn_callback(svcId, errCd, errMsg)
+{
+}
+]]></Script>
+  </Form>
+</FDL>

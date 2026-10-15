@@ -1,0 +1,40 @@
+# 시연용 (설치 패키지 bin/start-demo). 운영 데이터와 분리된 H2 파일 DB(${PMSX_HOME}/data-demo) 에
+# 데모 계정·프로젝트·WBS·품질·SM 데이터와 동봉 As-Is 수집 결과(${PMSX_HOME}/demo/*.zip)를 자동으로 채운다.
+# 운영에는 쓰지 말 것 (개발용 JWT 키·라이선스 검사 생략·공개된 데모 비밀번호).
+spring:
+  datasource:
+    url: jdbc:h2:file:${PMSX_HOME:.}/data-demo/db/pmsx;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;AUTO_SERVER=TRUE
+    username: sa
+    password:
+  servlet:
+    multipart:
+      location: ${PMSX_HOME:.}/run/tmp
+
+server:
+  port: ${PMSX_PORT:8080}
+  compression:
+    enabled: true
+
+springdoc:
+  swagger-ui:
+    enabled: false
+  api-docs:
+    enabled: false
+
+logging:
+  file:
+    name: ${PMSX_HOME:.}/logs/pmsx-demo.log
+
+pmsx:
+  storage:
+    dir: ${PMSX_HOME:.}/data-demo/files
+  cors:
+    allowed-origins: []
+  seed:
+    enabled: true
+    demo: true
+  license:
+    enforce: false
+  demo:
+    asis-packages:
+      - ${PMSX_HOME:.}/demo

@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-10-15T02:33:21+09:00",
+  "generator": "deterministic-indexer",
+  "version": "1.8.0",
+  "source_root": "C:\\Users\\onlys\\AppData\\Local\\Temp\\claude\\C--Users-onlys-OneDrive-----------AI-Lab\\b5f37aec-3208-4379-8060-fa95b8bdc414\\scratchpad\\harness-hr",
+  "mode": "init",
+  "git_commit": null,
+  "sampled": false,
+  "files_scanned": 46,
+  "files_total": 46,
+  "source_file_count": 46,
+  "latest_source_commit": null,
+  "latest_source_mtime": "2026-10-15T02:33:20+09:00",
+  "tier": "Standard",
+  "indexes": [
+    "symbols",
+    "call_graph",
+    "sql_usage",
+    "transactions",
+    "external_io",
+    "schema",
+    "api_contract",
+    "dead_code"
+  ],
+  "init_layout": "single-root",
+  "include_paths": [
+    "."
+  ],
+  "workspace_mode": false,
+  "workspaces": [
+    {
+      "id": "root",
+      "path": "",
+      "kind": "unknown",
+      "stack": "unknown",
+      "calls_backend_api": false
+    }
+  ],
+  "unresolved_count": 9,
+  "encoding": {
+    "default_encoding": "utf-8",
+    "legacy_fallback": "euc-kr",
+    "by_encoding": {
+      "utf-8": 46
+    },
+    "declared_non_utf8_count": 0,
+    "declared_non_utf8": [],
+    "guessed_count": 0,
+    "guessed": []
+  },
+  "excluded_sources": {
+    "count": 0,
+    "by_reason": {},
+    "bytes": 0,
+    "files": []
+  },
+  "complexity": {
+    "score": 96,
+    "signals": {
+      "source_files": 46,
+      "db_or_orm": 30,
+      "legacy_stack": 0,
+      "multi_module": 0,
+      "external_system": 20
+    },
+    "recommended_tier": "Standard",
+    "selected_tier": "Standard",
+    "selection": "deterministic-auto"
+  },
+  "adapter_coverage": {
+    "status": "PARTIAL",
+    "decision": "HOLD",
+    "full_files": 35,
+    "partial_files": 11,
+    "unsupported_files": [],
+    "partial_targets": [],
+    "extensions": [
+      {
+        "extension": ".java",
+        "level": "FULL",
+        "files": 28,
+        "adapter": "jvm"
+      },
+      {
+        "extension": ".js",
+        "level": "FULL",
+        "files": 5,
+        "adapter": "javascript"
+      },
+      {
+        "extension": ".jsp",
+        "level": "PARTIAL",
+        "files": 6,
+        "adapter": "legacy-web"
+      },
+      {
+        "extension": ".sql",
+        "level": "FULL",
+        "files": 2,
+        "adapter": "sql"
+      },
+      {
+        "extension": ".xml",
+        "level": "PARTIAL",
+        "files": 5,
+        "adapter": "legacy-web"
+      }
+    ],
+    "active_adapters": [
+      {
+        "id": "javascript",
+        "files": 5
+      },
+      {
+        "id": "jvm",
+        "files": 28
+      },
+      {
+        "id": "legacy-web",
+        "files": 11
+      },
+      {
+        "id": "sql",
+        "files": 2
+      }
+    ],
+    "rule": "PARTIAL 또는 unsupported 대상 변경은 명시적 수동 검증 전까지 HOLD"
+  },
+  "analysis_budget": {
+    "initial_ai_calls_per_target": 2,
+    "targeted_retries_per_target": 1,
+    "unresolved_batch_size": 200,
+    "large_index_direct_read": false
+  }
+}

@@ -1,0 +1,19 @@
+// Vuetify Sass 변수 (design-system §2-2 "Sass 변수") — vite-plugin-vuetify styles.configFile 로 연결
+// 방향: 토스·노션풍 클린 벤토 — 둥근 모서리(입력·버튼 12, 카드 20), 대문자/자간 없는 버튼, Pretendard
+@use 'vuetify/settings' with (
+  $body-font-family: ('Pretendard Variable', 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif),
+  $border-radius-root: 12px,
+  $rounded: (
+    'sm': 8px,
+    'lg': 16px,
+    'xl': 20px,
+  ),
+  $button-text-transform: none,
+  $button-text-letter-spacing: 0,
+  $button-font-weight: 600,
+  $chip-font-weight: 600,
+  $card-title-font-size: 1.0625rem,
+  $card-title-font-weight: 700,
+  $card-title-letter-spacing: 0,
+  $navigation-drawer-border-thin-width: 0,
+);

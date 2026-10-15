@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.py.allow.service.impl.AllowMapper">
+
+    <select id="selectAllowList" parameterType="map" resultType="egovMap">
+        SELECT ALLOW_CD, ALLOW_NM, ALLOW_TYPE, BASE_AMT, USE_YN
+          FROM TB_ALLOW
+        <where>
+            <if test="ALLOW_TYPE != null and ALLOW_TYPE != ''">ALLOW_TYPE = #{ALLOW_TYPE}</if>
+            <if test="USE_YN == 'Y'">AND USE_YN = 'Y'</if>
+        </where>
+         ORDER BY ALLOW_CD
+    </select>
+
+    <insert id="insertAllow" parameterType="map">
+        INSERT INTO TB_ALLOW (ALLOW_CD, ALLOW_NM, ALLOW_TYPE, BASE_AMT, USE_YN, REG_DT)
+        VALUES (#{ALLOW_CD}, #{ALLOW_NM}, #{ALLOW_TYPE}, #{BASE_AMT}, #{USE_YN}, SYSDATE)
+    </insert>
+
+    <update id="updateAllow" parameterType="map">
+        UPDATE TB_ALLOW
+        <set>
+            ALLOW_NM = #{ALLOW_NM},
+            ALLOW_TYPE = #{ALLOW_TYPE},
+            BASE_AMT = #{BASE_AMT},
+            USE_YN = #{USE_YN},
+        </set>
+         WHERE ALLOW_CD = #{ALLOW_CD}
+    </update>
+
+    <delete id="deleteAllow" parameterType="map">
+        DELETE FROM TB_ALLOW WHERE ALLOW_CD = #{ALLOW_CD}
+    </delete>
+
+    <insert id="insertAllowHist" parameterType="map">
+        INSERT INTO TB_ALLOW_HIST (ALLOW_CD, CHG_DT, ROW_TYPE, BASE_AMT)
+        VALUES (#{ALLOW_CD}, SYSDATE, #{_RowType_}, #{BASE_AMT})
+    </insert>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.hr.emp.service.impl.EmpMapper">
+
+    <sql id="empColumns">
+        E.EMP_NO, E.EMP_NM, E.DEPT_CD, D.DEPT_NM, E.POS_CD, E.HIRE_DT, E.EMAIL
+    </sql>
+
+    <!-- 사원 목록 조회 -->
+    <select id="selectEmpList" parameterType="empVO" resultType="empVO">
+        SELECT <include refid="empColumns"/>
+             , C.CD_NM AS POS_NM
+          FROM TB_EMP E
+          JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD
+          LEFT OUTER JOIN TB_CODE C ON C.GRP_CD = 'POS' AND C.CD = E.POS_CD
+         WHERE E.USE_YN = 'Y'
+        <if test="empNm != null and empNm != ''">
+           AND E.EMP_NM LIKE '%' || #{empNm} || '%'
+        </if>
+        <if test="deptCd != null and deptCd != ''">
+           AND E.DEPT_CD = #{deptCd}
+        </if>
+        <if test="hireFrom != null and hireFrom != ''">
+           AND E.HIRE_DT &gt;= REPLACE(#{hireFrom}, '-', '')
+        </if>
+        <if test="hireTo != null and hireTo != ''">
+           AND E.HIRE_DT &lt;= REPLACE(#{hireTo}, '-', '')
+        </if>
+         ORDER BY E.EMP_NO
+    </select>
+
+    <!-- 사원검색 팝업 (구식 조인) -->
+    <select id="selectEmpPopList" parameterType="empVO" resultType="empVO">
+        SELECT E.EMP_NO, E.EMP_NM, D.DEPT_NM
+          FROM TB_EMP E, TB_DEPT D
+         WHERE E.DEPT_CD = D.DEPT_CD
+           AND E.USE_YN = 'Y'
+        <if test="empNm != null and empNm != ''">
+           AND (E.EMP_NM LIKE '%' || #{empNm} || '%' OR E.EMP_NO = #{empNm})
+        </if>
+    </select>
+
+    <select id="selectEmp" parameterType="string" resultType="empVO">
+        SELECT <include refid="empColumns"/>
+          FROM TB_EMP E
+          JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD
+         WHERE E.EMP_NO = #{empNo}
+    </select>
+
+    <select id="selectNextEmpNo" resultType="string">
+        SELECT TO_CHAR(SYSDATE, 'YYYY') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0') FROM DUAL
+    </select>
+
+    <insert id="insertEmp" parameterType="empVO">
+        INSERT INTO TB_EMP (
+               EMP_NO, EMP_NM, DEPT_CD, POS_CD, HIRE_DT, EMAIL, USE_YN, REG_DT, REG_ID
+        ) VALUES (
+               #{empNo}, #{empNm}, #{deptCd}, #{posCd}, REPLACE(#{hireDt}, '-', ''), #{email}, 'Y', SYSDATE, #{regId}
+        )
+    </insert>
+
+    <update id="updateEmp" parameterType="empVO">
+        UPDATE TB_EMP
+        <set>
+            <if test="empNm != null">EMP_NM = #{empNm},</if>
+            <if test="deptCd != null">DEPT_CD = #{deptCd},</if>
+            <if test="posCd != null">POS_CD = #{posCd},</if>
+            <if test="hireDt != null">HIRE_DT = REPLACE(#{hireDt}, '-', ''),</if>
+            UPD_DT = SYSDATE,
+            UPD_ID = #{regId},
+        </set>
+         WHERE EMP_NO = #{empNo}
+    </update>
+
+    <!-- 논리 삭제 -->
+    <update id="deleteEmp" parameterType="empVO">
+        UPDATE TB_EMP
+           SET USE_YN = 'N'
+             , UPD_DT = SYSDATE
+             , UPD_ID = #{regId}
+         WHERE EMP_NO = #{empNo}
+    </update>
+
+    <insert id="insertEmpHist" parameterType="empVO">
+        INSERT INTO TB_EMP_HIST (HIST_SEQ, EMP_NO, CHG_DT, CHG_ID, CHG_TYPE, BEFORE_JSON)
+        SELECT SEQ_EMP_HIST.NEXTVAL, E.EMP_NO, SYSDATE, #{regId}, #{rowStatus}, E.EMP_NM || '|' || E.DEPT_CD || '|' || E.POS_CD
+          FROM TB_EMP E
+         WHERE E.EMP_NO = #{empNo}
+    </insert>
+</mapper>

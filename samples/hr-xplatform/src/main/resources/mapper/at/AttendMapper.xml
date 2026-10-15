@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.at.req.service.impl.AttendMapper">
+
+    <select id="selectReqList" resultType="egovMap">
+        SELECT R.REQ_NO, R.EMP_NO, R.ATT_TYPE, R.REQ_DT, R.REASON
+          FROM TB_ATT_REQ R
+          JOIN TB_EMP E ON E.EMP_NO = R.EMP_NO
+         WHERE E.EMP_NM LIKE '%' || #{EMP_NM} || '%'
+        <if test="ATT_TYPE != null and ATT_TYPE != ''">AND R.ATT_TYPE = #{ATT_TYPE}</if>
+         ORDER BY R.REQ_DT DESC
+    </select>
+
+    <insert id="insertReq">
+        INSERT INTO TB_ATT_REQ (REQ_NO, EMP_NO, ATT_TYPE, REQ_DT, REASON, STATUS)
+        VALUES (SEQ_ATT_REQ.NEXTVAL, #{EMP_NO}, #{ATT_TYPE}, #{REQ_DT}, #{REASON}, 'DRAFT')
+    </insert>
+
+    <update id="updateReq">
+        UPDATE TB_ATT_REQ SET ATT_TYPE = #{ATT_TYPE}, REQ_DT = #{REQ_DT}, REASON = #{REASON} WHERE REQ_NO = #{REQ_NO}
+    </update>
+
+    <update id="updateReqStatus">
+        UPDATE TB_ATT_REQ SET STATUS = 'REQ' WHERE REQ_NO = #{REQ_NO}
+    </update>
+
+    <insert id="insertAppr">
+        INSERT INTO TB_ATT_APPR (REQ_NO, APPR_STATUS, REQ_TM) VALUES (#{REQ_NO}, 'WAIT', SYSDATE)
+    </insert>
+
+    <select id="selectApprList" resultType="egovMap">
+        SELECT A.REQ_NO, E.EMP_NM, R.ATT_TYPE, R.REQ_DT, A.APPR_STATUS
+          FROM TB_ATT_APPR A
+          JOIN TB_ATT_REQ R ON R.REQ_NO = A.REQ_NO
+          JOIN TB_EMP E ON E.EMP_NO = R.EMP_NO
+         WHERE A.APPR_STATUS = NVL(#{APPR_STATUS}, A.APPR_STATUS)
+           AND E.DEPT_CD = NVL(#{DEPT_CD}, E.DEPT_CD)
+    </select>
+
+    <update id="approve">
+        UPDATE TB_ATT_APPR SET APPR_STATUS = 'OK', APPR_TM = SYSDATE WHERE REQ_NO = #{REQ_NO}
+    </update>
+
+    <update id="reject">
+        UPDATE TB_ATT_APPR SET APPR_STATUS = 'NO', APPR_TM = SYSDATE WHERE REQ_NO = #{REQ_NO}
+    </update>
+</mapper>

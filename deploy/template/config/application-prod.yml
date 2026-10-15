@@ -1,0 +1,45 @@
+# ─────────────────────────────────────────────────────────────────────
+#  PMS-X 운영 설정 (설치 폴더/config/application-prod.yml)
+#  jar 안의 기본값(application-prod.yml)을 덮어쓴다. 값은 환경 변수로도 줄 수 있다(PMSX_*).
+#  내장 H2 로 바로 써 보려면 examples/application-prod-h2.yml 내용을 이 파일에 복사한다.
+# ─────────────────────────────────────────────────────────────────────
+
+spring:
+  datasource:
+    # DB 종류는 URL 로 자동 판별 (설치가이드 3-2절)
+    #   PostgreSQL : jdbc:postgresql://localhost:5432/pmsx
+    #   Oracle     : jdbc:oracle:thin:@//localhost:1521/ORCLPDB1     (11g 는 아래 pmsx.db.legacy-paging: true)
+    #   Tibero     : jdbc:tibero:thin:@localhost:8629:tibero          (+ driver-class-name, lib/ 에 드라이버 jar)
+    #   SQL Server : jdbc:sqlserver://localhost:1433;databaseName=pmsx;encrypt=true;trustServerCertificate=true
+    url: ${PMSX_DB_URL:jdbc:postgresql://localhost:5432/pmsx}
+    username: ${PMSX_DB_USER:pmsx}
+    password: ${PMSX_DB_PASSWORD:change-me}
+    # driver-class-name: com.tmax.tibero.jdbc.TbDriver      # Tibero 만
+
+server:
+  port: ${PMSX_PORT:8080}
+
+pmsx:
+  db:
+    vendor: auto                 # auto | postgresql | oracle | tibero | mssql
+    # legacy-paging: true        # Oracle 11g (Tibero 는 기본 true)
+  jwt:
+    # 비워 두면 최초 기동 시 data/jwt-secret.key 를 자동 생성한다(권장). 직접 지정하려면 Base64 32바이트 이상.
+    secret: ${PMSX_JWT_SECRET:}
+    # HTTPS(nginx TLS) 뒤에서 운영하면 true, 사내 HTTP 로만 쓰면 false
+    cookie-secure: ${PMSX_COOKIE_SECURE:true}
+  storage:
+    dir: ./data/files
+  license:
+    enforce: true
+    # 라이선스 키는 관리자 화면(라이선스·시스템 정보)에서 적용하거나 여기에 넣는다
+    # key: <발급받은 키>
+  auth:
+    max-failures: 5
+    ldap:
+      enabled: false
+      # url: ldap://ad.customer.local:389
+      # base-dn: dc=customer,dc=local
+      # user-search-filter: (sAMAccountName={0})      # AD 는 sAMAccountName, OpenLDAP 은 (uid={0})
+      # bind-dn: cn=pmsx-bind,ou=service,dc=customer,dc=local
+      # bind-password: ${PMSX_LDAP_BIND_PASSWORD:}

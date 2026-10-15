@@ -1,0 +1,22 @@
+/**
+ * XPlatform 공통 라이브러리 (include "lib::comLib.xjs")
+ */
+
+/** 서비스 호출 래퍼 — 세션 체크 후 transaction */
+function gfn_transaction(svcId, url, inDs, outDs, args, callback)
+{
+    transaction(svcId, url, inDs, outDs, args, callback);
+}
+
+/** 공통코드 조회 */
+function gfn_getCode(grpCd, dsId)
+{
+    transaction("svcCode", "svc::at/cmm/code/list.do", "", dsId + "=output", "GRP_CD=" + quote(grpCd), "");
+}
+
+/** 팝업 열기 (showModal) */
+function gfn_openPopup(id, url, args, callback)
+{
+    var nRet = Dialog(url, args);
+    if (callback) eval(callback + "('" + id + "', '" + nRet + "')");
+}

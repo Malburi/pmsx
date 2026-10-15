@@ -1,0 +1,12 @@
+# Tibero 저장소 (6/7, Oracle 호환). JDBC 드라이버(tibero7-jdbc.jar 등)는 Maven 중앙에 없으므로
+# 설치 폴더 lib/ 에 넣는다(bin/start 가 loader.path=lib 로 읽음). Flyway 미지원 → 내장 실행기가 oracle 스크립트를 실행.
+spring:
+  datasource:
+    url: ${PMSX_DB_URL:jdbc:tibero:thin:@localhost:8629:tibero}
+    username: ${PMSX_DB_USER:PMSX}
+    password: ${PMSX_DB_PASSWORD:}
+    driver-class-name: ${PMSX_DB_DRIVER:com.tmax.tibero.jdbc.TbDriver}
+pmsx:
+  db:
+    vendor: tibero
+    legacy-paging: ${PMSX_DB_LEGACY_PAGING:true}

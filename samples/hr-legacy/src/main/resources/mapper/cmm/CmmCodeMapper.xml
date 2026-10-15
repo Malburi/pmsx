@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.cmm.code.service.impl.CmmCodeMapper">
+
+    <select id="selectDeptCodeList" parameterType="string" resultType="codeVO">
+        SELECT DEPT_CD AS CD, DEPT_NM AS CD_NM
+          FROM TB_DEPT
+        <where>
+            <if test="value != null and value != ''">USE_YN = #{value}</if>
+        </where>
+         ORDER BY SORT_ORD
+    </select>
+
+    <select id="selectCodeList" parameterType="string" resultType="codeVO">
+        SELECT CD, CD_NM
+          FROM TB_CODE
+         WHERE GRP_CD = #{grpCd}
+           AND USE_YN = 'Y'
+         ORDER BY SORT_ORD
+    </select>
+</mapper>

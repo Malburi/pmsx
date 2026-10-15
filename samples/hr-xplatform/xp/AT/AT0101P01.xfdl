@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.2">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="AT0101P01" classname="AT0101P01" position="absolute 0 0 500 400" titletext="사원선택">
+    <Static id="st_kw" text="사원명" position="absolute 10 12 60 34"/>
+    <Edit id="edt_kw" taborder="0" position="absolute 64 10 300 34"/>
+    <Button id="btn_find" taborder="1" text="검색" position="absolute 306 9 376 35" onclick="btn_find_onclick"/>
+    <Grid id="grd_emp" taborder="2" binddataset="ds_emp" position="absolute 10 44 490 350" oncelldblclick="grd_emp_oncelldblclick">
+      <Formats>
+        <Format id="default">
+          <Columns>
+            <Column size="140"/>
+            <Column size="200"/>
+          </Columns>
+          <Band id="head">
+            <Cell text="사번"/>
+            <Cell col="1" text="사원명"/>
+          </Band>
+          <Band id="body">
+            <Cell text="bind:EMP_NO"/>
+            <Cell col="1" text="bind:EMP_NM"/>
+          </Band>
+        </Format>
+      </Formats>
+    </Grid>
+    <Button id="btn_close" taborder="3" text="닫기" position="absolute 420 360 490 386" onclick="btn_close_onclick"/>
+    <Objects>
+      <Dataset id="ds_emp">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="10"/>
+          <Column id="EMP_NM" type="STRING" size="50"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript4.0"><![CDATA[function btn_find_onclick(obj:Button, e:ClickEventInfo)
+{
+    transaction("svcEmp", "svc::at/cmm/emp/selectList.do", "", "ds_emp=output", "KEYWORD=" + quote(edt_kw.value), "");
+}
+
+function grd_emp_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{
+    close(ds_emp.getColumn(ds_emp.rowposition, "EMP_NM"));
+}
+
+function btn_close_onclick(obj:Button, e:ClickEventInfo)
+{
+    close();
+}
+]]></Script>
+  </Form>
+</FDL>

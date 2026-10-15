@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 명세·수당·공통 Mapper 를 한 파일에 둔 경우가 아니라 파일별 namespace 를 쓰는 일반 구성을 흉내 낸다 -->
+<mapper namespace="kr.go.py.stmt.service.impl.PayStmtMapper">
+
+    <select id="selectAllowList" parameterType="map" resultType="egovMap">
+        SELECT A.ALLOW_NM AS ITEM_NM, I.AMT, I.RMK
+          FROM TB_PAY_ITEM I
+          JOIN TB_ALLOW A ON A.ALLOW_CD = I.ITEM_CD
+         WHERE I.PAY_YM = #{PAY_YM}
+           AND I.EMP_NO = #{EMP_NO}
+           AND I.ITEM_TYPE = 'A'
+    </select>
+
+    <select id="selectDeductList" parameterType="map" resultType="egovMap">
+        SELECT I.ITEM_CD AS ITEM_NM, I.AMT
+          FROM TB_PAY_ITEM I
+         WHERE I.PAY_YM = #{PAY_YM}
+           AND I.EMP_NO = #{EMP_NO}
+           AND I.ITEM_TYPE = 'D'
+    </select>
+
+    <insert id="insertMailQueue" parameterType="map">
+        INSERT INTO TB_MAIL_QUEUE (MAIL_ID, EMP_NO, MAIL_TYPE, REG_DT)
+        VALUES (SEQ_MAIL.NEXTVAL, #{EMP_NO}, 'PAY_STMT', SYSDATE)
+    </insert>
+</mapper>

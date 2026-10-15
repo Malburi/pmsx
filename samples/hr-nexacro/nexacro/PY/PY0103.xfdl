@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PY0103" width="1280" height="720" titletext="수당관리" onload="form_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="sta_title" taborder="0" text="수당관리" left="20" top="10" width="300" height="30" cssclass="sta_WF_title"/>
+        <Div id="div_search" taborder="1" left="20" top="50" right="20" height="50" cssclass="div_WF_search">
+          <Layouts>
+            <Layout>
+              <Static id="sta_type" taborder="0" text="수당구분" left="10" top="13" width="70" height="24"/>
+              <Combo id="cbo_allowType" taborder="1" left="85" top="13" width="150" height="24" innerdataset="ds_type" codecolumn="CD" datacolumn="CD_NM" onitemchanged="cbo_allowType_onitemchanged"/>
+              <CheckBox id="chk_useYn" taborder="2" text="사용중만" left="260" top="13" width="90" height="24" value="Y"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_search" taborder="2" text="조회" left="1200" top="110" width="60" height="26" onclick="btn_search_onclick"/>
+        <Grid id="grd_allow" taborder="3" left="20" top="142" right="20" bottom="70" binddataset="ds_allow">
+          <Formats>
+            <Format id="default">
+              <Columns><Column size="100"/><Column size="200"/><Column size="120"/><Column size="120"/><Column size="80"/></Columns>
+              <Rows><Row size="26" band="head"/><Row size="24"/></Rows>
+              <Band id="head"><Cell text="코드"/><Cell col="1" text="수당명"/><Cell col="2" text="구분"/><Cell col="3" text="기준금액"/><Cell col="4" text="사용"/></Band>
+              <Band id="body"><Cell text="bind:ALLOW_CD"/><Cell col="1" text="bind:ALLOW_NM" edittype="normal"/><Cell col="2" text="bind:ALLOW_TYPE" displaytype="combocontrol"/><Cell col="3" text="bind:BASE_AMT" edittype="normal"/><Cell col="4" text="bind:USE_YN" displaytype="checkboxcontrol"/></Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn_add" taborder="4" text="행추가" left="1004" top="660" width="60" height="26" onclick="btn_add_onclick"/>
+        <Button id="btn_del" taborder="5" text="행삭제" left="1070" top="660" width="60" height="26" onclick="btn_del_onclick"/>
+        <Button id="btn_save" taborder="6" text="저장" left="1136" top="660" width="60" height="26" onclick="btn_save_onclick"/>
+        <Button id="btn_hist" taborder="7" text="변경이력" left="1202" top="660" width="58" height="26" onclick="btn_hist_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_search">
+        <ColumnInfo><Column id="ALLOW_TYPE" type="STRING" size="10"/><Column id="USE_YN" type="STRING" size="1"/></ColumnInfo>
+        <Rows><Row/></Rows>
+      </Dataset>
+      <Dataset id="ds_allow">
+        <ColumnInfo>
+          <Column id="ALLOW_CD" type="STRING" size="10"/>
+          <Column id="ALLOW_NM" type="STRING" size="100"/>
+          <Column id="ALLOW_TYPE" type="STRING" size="10"/>
+          <Column id="BASE_AMT" type="BIGDECIMAL" size="15"/>
+          <Column id="USE_YN" type="STRING" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_type">
+        <ColumnInfo><Column id="CD" type="STRING" size="10"/><Column id="CD_NM" type="STRING" size="100"/></ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div_search.form.cbo_allowType" propid="value" datasetid="ds_search" columnid="ALLOW_TYPE"/>
+      <BindItem id="item1" compid="div_search.form.chk_useYn" propid="value" datasetid="ds_search" columnid="USE_YN"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+include "Lib::lib_comm.xjs";
+
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+    this.gfn_initForm(obj);
+    this.gfn_getCommCode("ALLOW_TYPE", this.ds_type);
+    this.fn_search();
+};
+
+this.fn_search = function()
+{
+    this.gfn_transaction("selectAllow", "svc::py/allow/selectList.do", "ds_search=ds_search", "ds_allow=ds_allow", "", "fn_callback");
+};
+
+this.btn_search_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo) { this.fn_search(); };
+this.cbo_allowType_onitemchanged = function(obj:nexacro.Combo, e:nexacro.ItemChangeEventInfo) { this.fn_search(); };
+
+this.btn_add_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    var nRow = this.ds_allow.addRow();
+    this.ds_allow.setColumn(nRow, "USE_YN", "Y");
+};
+
+this.btn_del_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.ds_allow.deleteRow(this.ds_allow.rowposition);
+};
+
+this.btn_save_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    if (!this.confirm("저장하시겠습니까?")) return;
+    this.gfn_transaction("saveAllow", "svc::py/allow/save.do", "ds_allow=ds_allow:U", "", "", "fn_callback");
+};
+
+this.btn_hist_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.gfn_openPopup("histPop", "PY::PY0103P01.xfdl", {allowCd: this.ds_allow.getColumn(this.ds_allow.rowposition, "ALLOW_CD")}, "");
+};
+
+this.fn_callback = function(svcId, errCd, errMsg)
+{
+    if (errCd < 0) { this.gfn_alert(errMsg); return; }
+    if (svcId == "saveAllow") this.fn_search();
+};
+]]></Script>
+  </Form>
+</FDL>

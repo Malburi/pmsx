@@ -1,0 +1,43 @@
+# 운영(설치 패키지) 기본값. 고객사별 값은 설치 폴더의 config/application-prod.yml 로 덮어쓴다.
+# PMSX_HOME 은 bin/start 스크립트가 설치 폴더로 지정한다.
+spring:
+  datasource:
+    url: ${PMSX_DB_URL:jdbc:postgresql://localhost:5432/pmsx}
+    username: ${PMSX_DB_USER:pmsx}
+    password: ${PMSX_DB_PASSWORD:}
+  servlet:
+    multipart:
+      location: ${PMSX_HOME:.}/run/tmp
+
+server:
+  port: ${PMSX_PORT:8080}
+  forward-headers-strategy: framework     # nginx 리버스 프록시 뒤 (X-Forwarded-*)
+  compression:
+    enabled: true
+
+springdoc:
+  swagger-ui:
+    enabled: ${PMSX_SWAGGER:false}
+  api-docs:
+    enabled: ${PMSX_SWAGGER:false}
+
+logging:
+  file:
+    name: ${PMSX_HOME:.}/logs/pmsx.log
+  logback:
+    rollingpolicy:
+      max-history: 30
+
+pmsx:
+  jwt:
+    # 비우면 ${PMSX_HOME}/data/jwt-secret.key 를 자동 생성·사용 (설치마다 다른 키). 개발용 기본 키는 쓰지 않는다.
+    secret: ${PMSX_JWT_SECRET:}
+    cookie-secure: ${PMSX_COOKIE_SECURE:true}
+  storage:
+    dir: ${PMSX_STORAGE_DIR:${PMSX_HOME:.}/data/files}
+  cors:
+    allowed-origins: []        # 같은 출처(단일 jar)로 서비스하므로 CORS 불필요
+  seed:
+    enabled: false
+  license:
+    enforce: ${PMSX_LICENSE_ENFORCE:true}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.ed.cert.service.impl.CertMapper">
+    <select id="selectCertList" parameterType="map" resultType="map">
+        SELECT CERT_ID, CERT_NM, ISSUER, ACQ_DT FROM TB_CERT
+        <where><if test="keyword != null and keyword != ''">CERT_NM LIKE '%' || #{keyword} || '%'</if></where>
+    </select>
+    <insert id="insertCert" parameterType="map">
+        INSERT INTO TB_CERT (CERT_ID, CERT_NM, ISSUER, ACQ_DT, EMP_NO) VALUES (SEQ_CERT.NEXTVAL, #{certNm}, #{issuer}, #{acqDt}, #{loginEmpNo})
+    </insert>
+</mapper>

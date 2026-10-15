@@ -1,0 +1,47 @@
+# PMS-X 수집기 설정 - 샘플 교육관리시스템(ED, Vue3 SPA + React 일부)
+system:
+  code: ED
+  name: 교육관리시스템
+  uiTech: [vue, react]
+  serverTech: [spring, mybatis]
+  dbType: oracle
+
+source:
+  root: .
+  vue: web                      # Vue 프로젝트 루트 (alias @ → web/src)
+  react: react                  # React 소스 (정적 분석만)
+  java: src/main/java
+  mapper: src/main/resources/mapper
+  includeSnippets: true
+
+spa:
+  router: web/src/router/index.js       # 생략하면 createRouter 등을 자동 탐색
+  reactRouter: react/src/routes.jsx
+  alias: { "@": src }                   # 각 프로젝트 루트 기준
+  # apiBaseUrl: /api                    # axios.create({ baseURL }) 는 자동 인식
+  # httpClients: [ajax]                 # 기본: axios, http, api, request, $http, instance, client …
+
+db:
+  schema: ED
+  ddlFiles: [db/ddl.sql]
+
+menu:
+  router: true                          # 라우트 meta(title·menuGroup·menuOrder)로 메뉴 트리 생성
+
+capture:
+  enabled: true
+  baseUrl: http://127.0.0.1:8092
+  denyHosts: [edu.example.go.kr]
+  browserChannel: chrome
+  headless: true
+  viewport: { width: 1280, height: 800 }
+  allowRequests: []                     # REST: 조회는 GET, 쓰기(POST/PUT/DELETE)는 전부 차단
+  excludeSelectors: [nav.nav]           # 모든 화면 공통 레이아웃(좌측 메뉴)은 요소에서 제외
+  excludeUrls: [/cert]                  # React 화면은 이 빌드에 없음 → 정적 분석만
+  clickWaitMs: 600
+  pageTimeoutMs: 15000
+
+inference:
+  minEvidence: 1
+
+output: out

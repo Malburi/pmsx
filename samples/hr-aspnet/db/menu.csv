@@ -1,0 +1,4 @@
+MENU_ID,UP_MENU_ID,MENU_NM,MENU_URL,SORT_ORD
+R01,,채용관리,,1
+R0101,R01,채용공고,/Recruit/RecruitList.aspx,1
+R0102,R01,지원자 관리,/Applicant,2

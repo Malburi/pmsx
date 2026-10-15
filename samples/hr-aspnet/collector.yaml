@@ -1,0 +1,31 @@
+# PMS-X 수집기 설정 - 샘플 채용관리(RC): ASP.NET WebForms(RcWeb) + ASP.NET MVC 5(RcMvc) + ADO.NET/Dapper + MSSQL
+# 소스만 있는 샘플 (빌드·실행 불필요). 상대 경로는 이 파일 위치 기준
+system:
+  code: RC
+  name: 채용관리
+  uiTech: [aspnet-webforms, aspnet-mvc]
+  serverTech: [dotnet]
+  dbType: mssql
+
+source:
+  root: .
+  dotnet: src                     # C# 색인 범위 (WebForms 코드비하인드·Biz·Dac, MVC Controller·Service·Repository)
+  webforms: src/RcWeb             # WebForms 웹 루트 → 화면 URL /Recruit/RecruitList.aspx
+  mvc: src/RcMvc                  # MVC 프로젝트 루트 (Views/ 자동 탐색)
+  includeSnippets: true
+
+db:
+  schema: RC
+  dialect: tsql
+  ddlFiles: [db/ddl.sql]
+
+menu:
+  csv: db/menu.csv
+
+capture:
+  enabled: false
+
+inference:
+  minEvidence: 1
+
+output: out

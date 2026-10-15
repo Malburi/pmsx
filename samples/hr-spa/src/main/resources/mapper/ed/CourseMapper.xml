@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.ed.course.service.impl.CourseMapper">
+
+    <sql id="courseCols">C.COURSE_ID, C.COURSE_NM, C.START_DT, C.END_DT, C.CAPACITY, C.DEPT_CD</sql>
+
+    <select id="selectCourseList" parameterType="map" resultType="map">
+        <include refid="ed.common.pagingHead"/>
+        SELECT <include refid="courseCols"/>, D.DEPT_NM
+          FROM TB_EDU_COURSE C
+          LEFT JOIN TB_DEPT D ON D.DEPT_CD = C.DEPT_CD
+        <where>
+            C.EDU_YEAR = #{year}
+            <if test="deptCd != null and deptCd != ''">AND C.DEPT_CD = #{deptCd}</if>
+            <if test="keyword != null and keyword != ''">AND C.COURSE_NM LIKE '%' || #{keyword} || '%'</if>
+        </where>
+         ORDER BY C.START_DT DESC
+        <include refid="ed.common.pagingTail"/>
+    </select>
+
+    <select id="selectCourse" parameterType="string" resultType="map">
+        SELECT <include refid="courseCols"/> FROM TB_EDU_COURSE C WHERE C.COURSE_ID = #{courseId}
+    </select>
+
+    <insert id="insertCourse" parameterType="map">
+        INSERT INTO TB_EDU_COURSE (COURSE_ID, COURSE_NM, START_DT, END_DT, CAPACITY, DEPT_CD, EDU_YEAR)
+        VALUES (#{courseId}, #{courseNm}, #{startDt}, #{endDt}, #{capacity}, #{deptCd}, #{eduYear})
+    </insert>
+
+    <update id="updateCourse" parameterType="map">
+        UPDATE TB_EDU_COURSE
+        <set>
+            <if test="courseNm != null">COURSE_NM = #{courseNm},</if>
+            <if test="startDt != null">START_DT = #{startDt},</if>
+            <if test="endDt != null">END_DT = #{endDt},</if>
+            <if test="capacity != null">CAPACITY = #{capacity},</if>
+        </set>
+         WHERE COURSE_ID = #{courseId}
+    </update>
+
+    <select id="countApply" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM TB_EDU_APPLY A WHERE A.COURSE_ID = #{courseId}
+    </select>
+
+    <delete id="deleteCourse" parameterType="string">
+        DELETE FROM TB_EDU_COURSE WHERE COURSE_ID = #{courseId}
+    </delete>
+</mapper>

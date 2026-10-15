@@ -1,0 +1,66 @@
+//XJS=lib_comm.xjs
+/**
+ * 급여시스템 공통 라이브러리 (Nexacro N)
+ * 화면(Form)에 include 되어 this.gfn_* 메서드로 사용된다.
+ */
+if (this.executeIncludeScript) { this.executeIncludeScript("Lib::lib_util.xjs"); }
+
+/* 화면 초기화 */
+this.gfn_initForm = function(obj)
+{
+    obj.set_scrollbartype("auto");
+};
+
+/**
+ * 공통 트랜잭션 래퍼
+ * @param svcId    서비스 ID
+ * @param url      "svc::py/xxx.do"
+ * @param inDs     입력 Dataset
+ * @param outDs    출력 Dataset
+ * @param args     인자
+ * @param callback 콜백 함수명
+ */
+this.gfn_transaction = function(svcId, url, inDs, outDs, args, callback)
+{
+    var sArgs = (args || "") + " userId=" + nexacro.wrapQuote(nexacro.getApplication().gv_userId);
+    this.transaction(svcId, url, inDs, outDs, sArgs, callback);
+};
+
+/* 공통코드 조회 */
+this.gfn_getCommCode = function(grpCd, ds)
+{
+    this.gfn_transaction("commCode_" + grpCd, "svc::py/cmm/selectCode.do", "", ds.name + "=ds_code", "grpCd=" + nexacro.wrapQuote(grpCd), "");
+};
+
+/* 변경 여부 */
+this.gfn_isUpdated = function(ds)
+{
+    return ds.getRowType(0) != 0 || ds.getDeletedRowCount() > 0;
+};
+
+/* 팝업 열기 */
+this.gfn_openPopup = function(popupId, formUrl, args, callback)
+{
+    var oChild = new ChildFrame(popupId, "absolute", 0, 0, 600, 450, null, null, formUrl);
+    oChild.showModal(this.getOwnerFrame(), args, this, callback);
+};
+
+/* 메뉴 화면 열기 */
+this.gfn_openMenu = function(formUrl, args)
+{
+    nexacro.getApplication().gfn_openWork(formUrl, args);
+};
+
+/* 엑셀 내보내기 */
+this.gfn_exportExcel = function(grid, fileName)
+{
+    var oExport = new ExcelExportObject();
+    oExport.addExportItem(nexacro.ExportItemTypes.GRID, grid, "Sheet1!A1");
+    oExport.set_exporturl("svc::XExportImport");
+    oExport.exportData();
+};
+
+this.gfn_alert = function(msg)
+{
+    this.alert(msg);
+};

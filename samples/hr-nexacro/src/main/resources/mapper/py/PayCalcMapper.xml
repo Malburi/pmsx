@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.py.calc.service.impl.PayCalcMapper">
+
+    <!-- 공통 검색 조건 -->
+    <sql id="searchCond">
+        <where>
+            C.PAY_YM = #{PAY_YM}
+            <if test="DEPT_CD != null and DEPT_CD != ''">
+                AND E.DEPT_CD = #{DEPT_CD}
+            </if>
+            <if test="EMP_NM != null and EMP_NM != ''">
+                AND E.EMP_NM LIKE '%' || #{EMP_NM} || '%'
+            </if>
+        </where>
+    </sql>
+
+    <sql id="amtCols">
+        C.BASE_AMT, C.ALLOW_AMT, C.DEDUCT_AMT, (C.BASE_AMT + C.ALLOW_AMT - C.DEDUCT_AMT) AS NET_AMT
+    </sql>
+
+    <select id="selectPayCalcList" parameterType="map" resultType="egovMap">
+        SELECT C.EMP_NO, E.EMP_NM, D.DEPT_NM, <include refid="amtCols"/>
+          FROM TB_PAY_CALC C
+          JOIN TB_EMP E ON E.EMP_NO = C.EMP_NO
+          JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD
+        <include refid="searchCond"/>
+         ORDER BY
+        <choose>
+            <when test="sortCol != null">${sortCol}</when>
+            <otherwise>C.EMP_NO</otherwise>
+        </choose>
+    </select>
+
+    <delete id="deletePayItem" parameterType="map">
+        DELETE FROM TB_PAY_ITEM
+         WHERE PAY_YM = #{payYm}
+    </delete>
+
+    <!-- 급여계산 프로시저 -->
+    <select id="callPayCalc" parameterType="map" statementType="CALLABLE">
+        { call SP_PAY_CALC(#{payYm, mode=IN, jdbcType=VARCHAR}, #{userId, mode=IN, jdbcType=VARCHAR}) }
+    </select>
+
+    <update id="updatePayCalc" parameterType="map">
+        UPDATE TB_PAY_CALC
+           SET BASE_AMT = #{BASE_AMT}
+             , UPD_ID   = #{userId}
+             , UPD_DT   = SYSDATE
+         WHERE PAY_YM = #{PAY_YM}
+           AND EMP_NO = #{EMP_NO}
+    </update>
+
+    <update id="updateCloseYn" parameterType="map">
+        UPDATE TB_PAY_CALC
+           SET CLOSE_YN = 'Y'
+         WHERE PAY_YM = #{PAY_YM}
+           AND EMP_NO IN
+        <foreach collection="empNos" item="empNo" open="(" separator="," close=")">
+            #{empNo}
+        </foreach>
+    </update>
+
+    <insert id="insertCloseHist" parameterType="map">
+        INSERT INTO TB_PAY_CLOSE_HIST (PAY_YM, CLOSE_DT, CLOSE_ID)
+        SELECT DISTINCT C.PAY_YM, SYSDATE, #{userId}
+          FROM TB_PAY_CALC C
+         WHERE C.PAY_YM = #{PAY_YM}
+    </insert>
+</mapper>

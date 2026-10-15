@@ -1,0 +1,53 @@
+# ── 공개 저장소 제외 (내부 자료·고객 소스·보안) ──────────────────
+# 사내 AI 하네스 (AX추진팀 내부 규칙) 와 자동 생성 진입점
+.skills/
+.cursor/
+.github/copilot-instructions.md
+.junie/
+.windsurf/
+AGENTS.md
+CLAUDE.md
+# 실제 고객 소스 파일럿 결과 (소스 스니펫 포함 — 절대 커밋 금지)
+pilot/
+# 라이선스 발급용 개인키 (개발 키라도 공개 금지)
+**/dev-keys/private*
+*.pem
+*.key
+
+# ── 빌드·실행 산출물 ─────────────────────────────────────────────
+deploy/out/
+**/node_modules/
+pmsx-web/dist/
+pmsx-web/coverage/
+pmsx-collector/.venv/
+pmsx-collector/dist/
+pmsx-collector/build/
+pmsx-collector/wheelhouse/
+pmsx-collector/*.spec.bak
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pmsx-server/build/
+pmsx-server/.gradle/
+pmsx-server/data/
+pmsx-server/data-demo/
+pmsx-server/logs/
+pmsx-server/run/
+.gradle/
+**/bin/Debug/
+**/bin/Release/
+**/obj/
+
+# ── 샘플 수집 결과·런타임 로그 ─────────────────────────────────
+samples/*/out/
+samples/**/writes.log
+samples/hr-spa/web/dist/
+*.log
+
+# ── IDE / OS ─────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini

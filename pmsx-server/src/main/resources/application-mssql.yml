@@ -1,0 +1,11 @@
+# Microsoft SQL Server 저장소 (2016 이상). DB 는 대소문자 구분 데이터 정렬로 만든다:
+#   CREATE DATABASE pmsx COLLATE Korean_100_CS_AS;
+# TCP/IP 프로토콜 사용 필요(SQL Server 구성 관리자). 설치가이드 참고.
+spring:
+  datasource:
+    url: ${PMSX_DB_URL:jdbc:sqlserver://localhost:1433;databaseName=pmsx;encrypt=true;trustServerCertificate=true}
+    username: ${PMSX_DB_USER:pmsx}
+    password: ${PMSX_DB_PASSWORD:}
+pmsx:
+  db:
+    vendor: mssql

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- 샘플 인사 데스크톱(HW) — 수집기 WinForms 파서·데스크톱 캡처 검증용.
+       외부 NuGet 패키지 없이 빌드된다(ADO.NET·Dapper·EF 는 Data/Stubs.cs 의 같은 모양 스텁). DB 에 접속하지 않는다. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>HrWin</RootNamespace>
+    <AssemblyName>HrWin</AssemblyName>
+    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+    <NoWarn>CS0162</NoWarn>   <!-- 목업 분기(AppConfig.UseMock) 뒤 DB 코드는 일부러 남긴 소스 패턴 -->
+  </PropertyGroup>
+
+</Project>

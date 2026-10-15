@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.hr.appoint.service.impl.AppointMapper">
+
+    <select id="selectAppointList" parameterType="appointVO" resultType="appointVO">
+        SELECT A.APPT_NO, A.EMP_NO, E.EMP_NM, A.APPT_TYPE, T.CD_NM AS APPT_TYPE_NM
+             , A.FROM_DEPT_CD, FD.DEPT_NM AS FROM_DEPT_NM
+             , A.TO_DEPT_CD, TD.DEPT_NM AS TO_DEPT_NM
+             , A.APPT_DT, A.STATUS
+          FROM TB_APPOINT A
+          JOIN TB_EMP E ON E.EMP_NO = A.EMP_NO
+          LEFT JOIN TB_DEPT FD ON FD.DEPT_CD = A.FROM_DEPT_CD
+          LEFT JOIN TB_DEPT TD ON TD.DEPT_CD = A.TO_DEPT_CD
+          LEFT JOIN TB_CODE T ON T.GRP_CD = 'APPT' AND T.CD = A.APPT_TYPE
+        <where>
+            <if test="apptType != null and apptType != ''">AND A.APPT_TYPE = #{apptType}</if>
+            <if test="apptFrom != null and apptFrom != ''">AND A.APPT_DT &gt;= REPLACE(#{apptFrom}, '-', '')</if>
+            <if test="apptTo != null and apptTo != ''">AND A.APPT_DT &lt;= REPLACE(#{apptTo}, '-', '')</if>
+        </where>
+         ORDER BY A.APPT_DT DESC
+    </select>
+
+    <insert id="insertAppoint" parameterType="appointVO">
+        <selectKey keyProperty="apptNo" resultType="string" order="BEFORE">
+            SELECT 'AP' || LPAD(SEQ_APPT_NO.NEXTVAL, 8, '0') FROM DUAL
+        </selectKey>
+        INSERT INTO TB_APPOINT (APPT_NO, EMP_NO, APPT_TYPE, FROM_DEPT_CD, TO_DEPT_CD, APPT_DT, STATUS, REG_DT, REG_ID)
+        SELECT #{apptNo}, E.EMP_NO, #{apptType}, E.DEPT_CD, #{toDeptCd}, REPLACE(#{apptDt}, '-', ''), #{status}, SYSDATE, #{regId}
+          FROM TB_EMP E
+         WHERE E.EMP_NO = #{empNo}
+    </insert>
+
+    <!-- 발령 확정 프로시저 -->
+    <update id="callApptConfirmProc" parameterType="map" statementType="CALLABLE">
+        { call SP_APPT_CONFIRM(
+            #{apptNo, mode=IN, jdbcType=VARCHAR},
+            #{userId, mode=IN, jdbcType=VARCHAR},
+            #{resultCd, mode=OUT, jdbcType=VARCHAR}
+        ) }
+    </update>
+</mapper>

@@ -1,0 +1,11 @@
+# 운영/통합: PostgreSQL
+spring:
+  datasource:
+    url: ${PMSX_DB_URL:jdbc:postgresql://localhost:5432/pmsx}
+    username: ${PMSX_DB_USER:pmsx}
+    password: ${PMSX_DB_PASSWORD:}
+pmsx:
+  jwt:
+    cookie-secure: ${PMSX_COOKIE_SECURE:true}
+  seed:
+    enabled: ${PMSX_SEED:false}

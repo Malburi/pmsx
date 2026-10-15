@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.ed.apply.service.impl.ApplyMapper">
+
+    <select id="selectApplyList" parameterType="map" resultType="map">
+        SELECT A.APPLY_ID, C.COURSE_NM, E.EMP_NM, A.STATUS
+          FROM TB_EDU_APPLY A
+          JOIN TB_EDU_COURSE C ON C.COURSE_ID = A.COURSE_ID
+          JOIN TB_EMP E ON E.EMP_NO = A.EMP_NO
+        <where>
+            <if test="status != null and status != ''">A.STATUS = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectMyApplyList" resultType="map">
+        SELECT A.APPLY_ID, C.COURSE_NM, A.STATUS
+          FROM TB_EDU_APPLY A
+          JOIN TB_EDU_COURSE C ON C.COURSE_ID = A.COURSE_ID
+         WHERE A.EMP_NO = #{loginEmpNo}
+    </select>
+
+    <insert id="insertApply" parameterType="map">
+        INSERT INTO TB_EDU_APPLY (APPLY_ID, COURSE_ID, EMP_NO, STATUS, REG_DT)
+        VALUES (SEQ_EDU_APPLY.NEXTVAL, #{courseId}, #{loginEmpNo}, 'REQ', SYSDATE)
+    </insert>
+
+    <update id="updateApplyStatus" parameterType="string">
+        UPDATE TB_EDU_APPLY SET STATUS = 'CANCEL' WHERE APPLY_ID = #{applyId}
+    </update>
+</mapper>

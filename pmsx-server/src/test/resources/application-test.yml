@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pmsx-test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+
+pmsx:
+  storage:
+    dir: ./build/test-files
+  license:
+    enforce: false
+  sm:
+    inbound-mail-key: test-mail-key
+  jobs:
+    # 테스트 중 매분 SLA 스케줄러가 끼어들지 않게 (테스트는 slaAlerts(now) 를 직접 호출)
+    sla-cron: "-"
+    asset-cron: "-"

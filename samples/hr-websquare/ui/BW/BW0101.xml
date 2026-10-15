@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <w2:type>DEFAULT</w2:type>
+    <w2:buildDate/>
+    <xf:model>
+        <w2:dataCollection baseNode="map">
+            <w2:dataMap baseNode="map" id="dma_search">
+                <w2:keyInfo>
+                    <w2:key id="EMP_NM" name="사원명" dataType="text"/>
+                    <w2:key id="REQ_TYPE" name="신청구분" dataType="text"/>
+                    <w2:key id="FROM_DT" name="신청일From" dataType="text"/>
+                </w2:keyInfo>
+            </w2:dataMap>
+            <w2:dataList baseNode="list" repeatNode="map" id="dlt_req">
+                <w2:columnInfo>
+                    <w2:column id="REQ_NO" name="신청번호" dataType="text"/>
+                    <w2:column id="EMP_NO" name="사번" dataType="text"/>
+                    <w2:column id="EMP_NM" name="사원명" dataType="text"/>
+                    <w2:column id="REQ_TYPE" name="구분" dataType="text"/>
+                    <w2:column id="REQ_AMT" name="신청금액" dataType="number"/>
+                    <w2:column id="STATUS" name="상태" dataType="text"/>
+                </w2:columnInfo>
+            </w2:dataList>
+        </w2:dataCollection>
+        <w2:workflowCollection/>
+        <xf:submission id="sbm_search" ref="data:json,dma_search" target="data:json,dlt_req"
+                       action="/bw/req/selectList.do" method="post" mediatype="application/json" encoding="UTF-8"
+                       mode="asynchronous" processMsg="조회 중" ev:submitdone="scwin.sbm_search_submitdone" ev:submiterror=""/>
+        <xf:submission id="sbm_save" ref='data:json,{"id":"dlt_req","action":"modified"}' target=""
+                       action="/bw/req/save.do" method="post" mediatype="application/json" encoding="UTF-8"
+                       mode="asynchronous" ev:submitdone="scwin.sbm_save_submitdone"/>
+        <xf:submission id="sbm_delete" ref='data:json,{"id":"dlt_req","action":"checked"}' target=""
+                       action="/bw/req/delete.do" method="post" mediatype="application/json" encoding="UTF-8"
+                       mode="asynchronous" ev:submitdone="scwin.sbm_search_reload"/>
+    </xf:model>
+    <script type="text/javascript" lazy="false"><![CDATA[
+scwin.onpageload = function() {
+    gcm.loadCode("BW_REQ_TYPE", "sbx_reqType");
+    scwin.fn_search();
+};
+
+scwin.fn_search = function() {
+    $p.executeSubmission("sbm_search");
+};
+
+scwin.btn_search_onclick = function(e) {
+    scwin.fn_search();
+};
+
+scwin.sbm_search_submitdone = function(e) {
+    tbx_totCnt.setValue(dlt_req.getRowCount());
+};
+
+scwin.sbm_search_reload = function(e) {
+    scwin.fn_search();
+};
+
+scwin.btn_emp_onclick = function(e) {
+    $p.openPopup("/ui/BW/BW0101P01.xml", { id: "pop_emp", popupName: "사원검색", width: 600, height: 450,
+        callbackFn: "scwin.popup_emp_callback" });
+};
+
+scwin.popup_emp_callback = function(ret) {
+    ibx_empNm.setValue(ret.EMP_NM);
+    scwin.fn_search();
+};
+
+scwin.btn_new_onclick = function(e) {
+    dlt_req.insertRow();
+};
+
+scwin.btn_save_onclick = function(e) {
+    if (dlt_req.getModifiedIndex().length == 0) {
+        gcm.alert("변경된 내용이 없습니다.");
+        return;
+    }
+    if (!confirm("저장하시겠습니까?")) return;
+    gcm.executeSubmission("sbm_save");
+};
+
+scwin.sbm_save_submitdone = function(e) {
+    gcm.alert("저장되었습니다.");
+    scwin.fn_search();
+};
+
+scwin.btn_delete_onclick = function(e) {
+    if (confirm("선택한 신청을 삭제하시겠습니까?")) {
+        $p.executeSubmission("sbm_delete");
+    }
+};
+
+scwin.btn_excel_onclick = function(e) {
+    gcm.excelDownload(grd_req, "복지포인트신청목록");
+};
+
+scwin.grd_req_oncelldblclick = function(row, col) {
+    $p.openPopup("/ui/BW/BW0103P01.xml", { id: "pop_hist", width: 700, height: 500 });
+};
+]]></script>
+</head>
+<body ev:onpageload="scwin.onpageload">
+    <w2:textbox id="tbx_title" label="복지포인트 신청" class="tit" style="position:absolute;left:10px;top:8px;width:300px;height:26px;"/>
+    <xf:group id="grp_search" class="search_box" style="position:absolute;left:10px;top:40px;width:960px;height:44px;">
+        <w2:textbox id="tbx_empNm" label="사원명" style="position:absolute;left:12px;top:11px;width:50px;height:22px;"/>
+        <xf:input id="ibx_empNm" ref="data:dma_search.EMP_NM" style="position:absolute;left:66px;top:9px;width:140px;height:24px;" ev:onkeyup="scwin.btn_search_onclick"/>
+        <xf:trigger id="btn_emp" type="button" style="position:absolute;left:210px;top:9px;width:26px;height:24px;" ev:onclick="scwin.btn_emp_onclick">
+            <xf:label><![CDATA[…]]></xf:label>
+        </xf:trigger>
+        <w2:textbox id="tbx_reqType" label="신청구분" style="position:absolute;left:260px;top:11px;width:60px;height:22px;"/>
+        <xf:select1 id="sbx_reqType" appearance="minimal" ref="data:dma_search.REQ_TYPE" chooseOption="true" chooseOptionLabel="전체"
+                    style="position:absolute;left:324px;top:9px;width:140px;height:24px;" ev:onviewchange="scwin.btn_search_onclick">
+            <xf:choices/>
+        </xf:select1>
+        <w2:textbox id="tbx_fromDt" label="신청일" style="position:absolute;left:490px;top:11px;width:50px;height:22px;"/>
+        <w2:inputCalendar id="ica_fromDt" ref="data:dma_search.FROM_DT" style="position:absolute;left:544px;top:9px;width:120px;height:24px;"/>
+        <xf:trigger id="btn_search" type="button" class="btn_search" style="position:absolute;left:880px;top:8px;width:66px;height:26px;" ev:onclick="scwin.btn_search_onclick">
+            <xf:label><![CDATA[조회]]></xf:label>
+        </xf:trigger>
+    </xf:group>
+    <w2:textbox id="tbx_list" label="신청 목록" style="position:absolute;left:10px;top:94px;width:120px;height:22px;"/>
+    <w2:textbox id="tbx_totCnt" label="0" style="position:absolute;left:130px;top:94px;width:60px;height:22px;"/>
+    <xf:trigger id="btn_excel" type="button" style="position:absolute;left:904px;top:92px;width:66px;height:26px;" ev:onclick="scwin.btn_excel_onclick">
+        <xf:label><![CDATA[엑셀]]></xf:label>
+    </xf:trigger>
+    <w2:gridView id="grd_req" dataList="data:dlt_req" scrollByColumn="false" style="position:absolute;left:10px;top:124px;width:960px;height:360px;"
+                 ev:oncelldblclick="scwin.grd_req_oncelldblclick">
+        <w2:header id="header1" style="">
+            <w2:row id="row1">
+                <w2:column id="column1" inputType="text" width="110" value="신청번호"/>
+                <w2:column id="column2" inputType="text" width="100" value="사번"/>
+                <w2:column id="column3" inputType="text" width="120" value="사원명"/>
+                <w2:column id="column4" inputType="text" width="120" value="구분"/>
+                <w2:column id="column5" inputType="text" width="120" value="신청금액"/>
+                <w2:column id="column6" inputType="text" width="100" value="상태"/>
+            </w2:row>
+        </w2:header>
+        <w2:gridBody id="gBody1">
+            <w2:row id="row2">
+                <w2:column id="REQ_NO" inputType="text" width="110"/>
+                <w2:column id="EMP_NO" inputType="text" width="100"/>
+                <w2:column id="EMP_NM" inputType="text" width="120"/>
+                <w2:column id="REQ_TYPE" inputType="select" width="120"/>
+                <w2:column id="REQ_AMT" inputType="text" width="120" dataType="number"/>
+                <w2:column id="STATUS" inputType="text" width="100"/>
+            </w2:row>
+        </w2:gridBody>
+    </w2:gridView>
+    <xf:trigger id="btn_print" type="button" style="position:absolute;left:688px;top:494px;width:66px;height:26px;">
+        <xf:label><![CDATA[인쇄]]></xf:label>
+    </xf:trigger>
+    <xf:trigger id="btn_new" type="button" style="position:absolute;left:760px;top:494px;width:66px;height:26px;" ev:onclick="scwin.btn_new_onclick">
+        <xf:label><![CDATA[신규]]></xf:label>
+    </xf:trigger>
+    <xf:trigger id="btn_save" type="button" style="position:absolute;left:832px;top:494px;width:66px;height:26px;" ev:onclick="scwin.btn_save_onclick">
+        <xf:label><![CDATA[저장]]></xf:label>
+    </xf:trigger>
+    <xf:trigger id="btn_delete" type="button" style="position:absolute;left:904px;top:494px;width:66px;height:26px;" ev:onclick="scwin.btn_delete_onclick">
+        <xf:label><![CDATA[삭제]]></xf:label>
+    </xf:trigger>
+</body>
+</html>

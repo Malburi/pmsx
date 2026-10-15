@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<sql-statement>
+<query>
+  <id>EMP_LIST_S01</id>
+  <value>
+SELECT E.EMP_NO, E.EMP_NM, D.DEPT_NM
+FROM TB_EMP E, TB_DEPT D
+WHERE D.DEPT_CD = E.DEPT_CD
+  $1{AND E.EMP_NM LIKE '%' || ? || '%'}
+  $2{AND E.DEPT_CD = ?}
+ORDER BY E.EMP_NO
+  </value>
+  <description>사원 목록</description>
+</query>
+<query>
+  <id>EMP_I01</id>
+  <value>INSERT INTO TB_EMP (EMP_NO, EMP_NM, DEPT_CD) VALUES (?, ?, ?)</value>
+</query>
+<query>
+  <id>EMP_U01</id>
+  <value>UPDATE TB_EMP SET EMP_NM = ?, DEPT_CD = ? WHERE EMP_NO = ?</value>
+</query>
+<query>
+  <id>EMP_HIST_I01</id>
+  <value>INSERT INTO TB_EMP_HIST (EMP_NO, CHG_DT) VALUES (?, SYSDATE)</value>
+</query>
+<query>
+  <id>CODE_S01</id>
+  <value>SELECT CD, CD_NM FROM TB_CODE WHERE GRP_CD = ? $1{AND USE_YN = 'Y'}</value>
+</query>
+</sql-statement>

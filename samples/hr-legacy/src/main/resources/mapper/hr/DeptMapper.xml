@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.hr.dept.service.impl.DeptMapper">
+
+    <select id="selectDeptList" parameterType="deptVO" resultType="deptVO">
+        SELECT D.DEPT_CD, D.DEPT_NM, D.UP_DEPT_CD, U.DEPT_NM AS UP_DEPT_NM, D.SORT_ORD, D.USE_YN
+          FROM TB_DEPT D
+          LEFT JOIN TB_DEPT U ON U.DEPT_CD = D.UP_DEPT_CD
+        <where>
+            <if test="deptNm != null and deptNm != ''">AND D.DEPT_NM LIKE '%' || #{deptNm} || '%'</if>
+            <if test="useYn != null and useYn != ''">AND D.USE_YN = #{useYn}</if>
+        </where>
+         ORDER BY D.SORT_ORD, D.DEPT_CD
+    </select>
+
+    <update id="mergeDept" parameterType="deptVO">
+        MERGE INTO TB_DEPT T
+        USING (SELECT #{deptCd} AS DEPT_CD FROM DUAL) S
+           ON (T.DEPT_CD = S.DEPT_CD)
+         WHEN MATCHED THEN
+              UPDATE SET T.DEPT_NM = #{deptNm}, T.UP_DEPT_CD = #{upDeptCd}, T.USE_YN = #{useYn}
+         WHEN NOT MATCHED THEN
+              INSERT (DEPT_CD, DEPT_NM, UP_DEPT_CD, SORT_ORD, USE_YN)
+              VALUES (#{deptCd}, #{deptNm}, #{upDeptCd}, 99, #{useYn})
+    </update>
+
+    <!-- 정렬순서 일괄 변경 (Oracle 익명 블록) -->
+    <update id="updateSortOrd" parameterType="list">
+        <foreach collection="list" item="row" open="BEGIN" close="; END;" separator=";">
+            UPDATE TB_DEPT
+               SET SORT_ORD = #{row.sortOrd}
+             WHERE DEPT_CD = #{row.deptCd}
+        </foreach>
+    </update>
+</mapper>

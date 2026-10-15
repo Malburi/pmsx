@@ -1,0 +1,437 @@
+{
+  "_meta": {
+    "generated_at": "2026-10-15T02:33:21+09:00",
+    "generator": "deterministic-indexer",
+    "version": "1.8.0",
+    "source_root": "C:\\Users\\onlys\\AppData\\Local\\Temp\\claude\\C--Users-onlys-OneDrive-----------AI-Lab\\b5f37aec-3208-4379-8060-fa95b8bdc414\\scratchpad\\harness-hr",
+    "mode": "init",
+    "git_commit": null,
+    "sampled": false,
+    "files_scanned": 46,
+    "files_total": 46
+  },
+  "sqls": [
+    {
+      "id": "kr.go.cmm.code.service.impl.CmmCodeMapper.selectDeptCodeList",
+      "file": "src/main/resources/mapper/cmm/CmmCodeMapper.xml",
+      "line": 5,
+      "type": "select",
+      "tables": [
+        "TB_DEPT"
+      ],
+      "text_preview": "SELECT DEPT_CD AS CD, DEPT_NM AS CD_NM FROM TB_DEPT <where> <if test=\"value != null and value != ''\">USE_YN = #{value}</if> </where> ORDER BY SORT_ORD",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.cmm.code.service.impl.CmmCodeMapper.selectCodeList",
+      "file": "src/main/resources/mapper/cmm/CmmCodeMapper.xml",
+      "line": 14,
+      "type": "select",
+      "tables": [
+        "TB_CODE"
+      ],
+      "text_preview": "SELECT CD, CD_NM FROM TB_CODE WHERE GRP_CD = #{grpCd} AND USE_YN = 'Y' ORDER BY SORT_ORD",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 5,
+      "type": "select",
+      "tables": [
+        "TB_APPOINT",
+        "TB_EMP",
+        "TB_DEPT",
+        "TB_CODE"
+      ],
+      "text_preview": "SELECT A.APPT_NO, A.EMP_NO, E.EMP_NM, A.APPT_TYPE, T.CD_NM AS APPT_TYPE_NM , A.FROM_DEPT_CD, FD.DEPT_NM AS FROM_DEPT_NM , A.TO_DEPT_CD, TD.DEPT_NM AS TO_DEPT_NM , A.APPT_DT, A.STATUS FROM TB_APPOINT A JOIN TB_EMP E ON E.EMP_NO = A.EMP_NO LE",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointMapper.insertAppoint",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 23,
+      "type": "insert",
+      "tables": [
+        "TB_APPOINT",
+        "TB_EMP",
+        "E.EMP_NO",
+        "E.DEPT_CD",
+        "REPLACE"
+      ],
+      "text_preview": "<selectKey keyProperty=\"apptNo\" resultType=\"string\" order=\"BEFORE\"> SELECT 'AP' || LPAD(SEQ_APPT_NO.NEXTVAL, 8, '0') FROM DUAL </selectKey> INSERT INTO TB_APPOINT (APPT_NO, EMP_NO, APPT_TYPE, FROM_DEPT_CD, TO_DEPT_CD, APPT_DT, STATUS, REG_D",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.appoint.service.impl.AppointMapper.callApptConfirmProc",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 34,
+      "type": "update",
+      "tables": [],
+      "text_preview": "{ call SP_APPT_CONFIRM( #{apptNo, mode=IN, jdbcType=VARCHAR}, #{userId, mode=IN, jdbcType=VARCHAR}, #{resultCd, mode=OUT, jdbcType=VARCHAR} ) }",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptMapper.selectDeptList",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 5,
+      "type": "select",
+      "tables": [
+        "TB_DEPT"
+      ],
+      "text_preview": "SELECT D.DEPT_CD, D.DEPT_NM, D.UP_DEPT_CD, U.DEPT_NM AS UP_DEPT_NM, D.SORT_ORD, D.USE_YN FROM TB_DEPT D LEFT JOIN TB_DEPT U ON U.DEPT_CD = D.UP_DEPT_CD <where> <if test=\"deptNm != null and deptNm != ''\">AND D.DEPT_NM LIKE '%' || #{deptNm} |",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptMapper.mergeDept",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 16,
+      "type": "update",
+      "tables": [
+        "TB_DEPT",
+        "SET"
+      ],
+      "text_preview": "MERGE INTO TB_DEPT T USING (SELECT #{deptCd} AS DEPT_CD FROM DUAL) S ON (T.DEPT_CD = S.DEPT_CD) WHEN MATCHED THEN UPDATE SET T.DEPT_NM = #{deptNm}, T.UP_DEPT_CD = #{upDeptCd}, T.USE_YN = #{useYn} WHEN NOT MATCHED THEN INSERT (DEPT_CD, DEPT_",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.dept.service.impl.DeptMapper.updateSortOrd",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 28,
+      "type": "update",
+      "tables": [
+        "TB_DEPT"
+      ],
+      "text_preview": "<foreach collection=\"list\" item=\"row\" open=\"BEGIN\" close=\"; END;\" separator=\";\"> UPDATE TB_DEPT SET SORT_ORD = #{row.sortOrd} WHERE DEPT_CD = #{row.deptCd} </foreach>",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "selectEduList",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 6,
+      "type": "select",
+      "tables": [
+        "TB_EDU_HIST",
+        "TB_EMP",
+        "TB_CODE"
+      ],
+      "text_preview": "SELECT H.EDU_SEQ, H.EMP_NO, M.EMP_NM, H.EDU_TYPE_CD, C.CD_NM AS EDU_TYPE_NM, H.EDU_NM, H.EDU_YEAR, H.EDU_HOURS, H.INST_NM FROM TB_EDU_HIST H JOIN TB_EMP M ON M.EMP_NO = H.EMP_NO LEFT JOIN TB_CODE C ON C.GRP_CD = 'EDU' AND C.CD = H.EDU_TYPE_",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "selectEduSummary",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 20,
+      "type": "select",
+      "tables": [
+        "TB_EDU_HIST",
+        "TB_EMP"
+      ],
+      "text_preview": "SELECT COUNT(DISTINCT H.EMP_NO) AS EMP_CNT, NVL(SUM(H.EDU_HOURS), 0) AS TOTAL_HOURS FROM TB_EDU_HIST H JOIN TB_EMP M ON M.EMP_NO = H.EMP_NO WHERE H.EDU_YEAR = #eduYear# AND H.USE_YN = 'Y'",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "insertEdu",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 28,
+      "type": "insert",
+      "tables": [
+        "TB_EDU_HIST"
+      ],
+      "text_preview": "INSERT INTO TB_EDU_HIST (EDU_SEQ, EMP_NO, EDU_TYPE_CD, EDU_NM, EDU_YEAR, EDU_HOURS, INST_NM, REG_DT, REG_ID) VALUES (SEQ_EDU_HIST.NEXTVAL, #empNo#, #eduTypeCd#, #eduNm#, #eduYear#, #eduHours#, #instNm#, SYSDATE, #regId#)",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "updateEdu",
+      "file": "src/main/resources/mapper/hr/EduSqlMap.xml",
+      "line": 33,
+      "type": "update",
+      "tables": [
+        "TB_EDU_HIST"
+      ],
+      "text_preview": "UPDATE TB_EDU_HIST SET EDU_TYPE_CD = #eduTypeCd#, EDU_NM = #eduNm#, EDU_HOURS = #eduHours#, INST_NM = #instNm# WHERE EDU_SEQ = #eduSeq#",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 10,
+      "type": "select",
+      "tables": [
+        "TB_EMP",
+        "TB_DEPT",
+        "TB_CODE"
+      ],
+      "text_preview": "SELECT <include refid=\"empColumns\"/> , C.CD_NM AS POS_NM FROM TB_EMP E JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD LEFT OUTER JOIN TB_CODE C ON C.GRP_CD = 'POS' AND C.CD = E.POS_CD WHERE E.USE_YN = 'Y' <if test=\"empNm != null and empNm != ''\"> ",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpPopList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 33,
+      "type": "select",
+      "tables": [
+        "TB_EMP",
+        "TB_DEPT"
+      ],
+      "text_preview": "SELECT E.EMP_NO, E.EMP_NM, D.DEPT_NM FROM TB_EMP E, TB_DEPT D WHERE E.DEPT_CD = D.DEPT_CD AND E.USE_YN = 'Y' <if test=\"empNm != null and empNm != ''\"> AND (E.EMP_NM LIKE '%' || #{empNm} || '%' OR E.EMP_NO = #{empNm}) </if>",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 43,
+      "type": "select",
+      "tables": [
+        "TB_EMP",
+        "TB_DEPT"
+      ],
+      "text_preview": "SELECT <include refid=\"empColumns\"/> FROM TB_EMP E JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD WHERE E.EMP_NO = #{empNo}",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.selectNextEmpNo",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 50,
+      "type": "select",
+      "tables": [],
+      "text_preview": "SELECT TO_CHAR(SYSDATE, 'YYYY') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0') FROM DUAL",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.insertEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 54,
+      "type": "insert",
+      "tables": [
+        "TB_EMP"
+      ],
+      "text_preview": "INSERT INTO TB_EMP ( EMP_NO, EMP_NM, DEPT_CD, POS_CD, HIRE_DT, EMAIL, USE_YN, REG_DT, REG_ID ) VALUES ( #{empNo}, #{empNm}, #{deptCd}, #{posCd}, REPLACE(#{hireDt}, '-', ''), #{email}, 'Y', SYSDATE, #{regId} )",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.updateEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 62,
+      "type": "update",
+      "tables": [
+        "TB_EMP"
+      ],
+      "text_preview": "UPDATE TB_EMP <set> <if test=\"empNm != null\">EMP_NM = #{empNm},</if> <if test=\"deptCd != null\">DEPT_CD = #{deptCd},</if> <if test=\"posCd != null\">POS_CD = #{posCd},</if> <if test=\"hireDt != null\">HIRE_DT = REPLACE(#{hireDt}, '-', ''),</if> ",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.deleteEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 76,
+      "type": "update",
+      "tables": [
+        "TB_EMP"
+      ],
+      "text_preview": "UPDATE TB_EMP SET USE_YN = 'N' , UPD_DT = SYSDATE , UPD_ID = #{regId} WHERE EMP_NO = #{empNo}",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "kr.go.hr.emp.service.impl.EmpMapper.insertEmpHist",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 84,
+      "type": "insert",
+      "tables": [
+        "TB_EMP_HIST",
+        "TB_EMP"
+      ],
+      "text_preview": "INSERT INTO TB_EMP_HIST (HIST_SEQ, EMP_NO, CHG_DT, CHG_ID, CHG_TYPE, BEFORE_JSON) SELECT SEQ_EMP_HIST.NEXTVAL, E.EMP_NO, SYSDATE, #{regId}, #{rowStatus}, E.EMP_NM || '|' || E.DEPT_CD || '|' || E.POS_CD FROM TB_EMP E WHERE E.EMP_NO = #{empNo",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    }
+  ],
+  "usages": [
+    {
+      "sql_id": "edu.selectEduSummary",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 24,
+      "method": "kr.go.hr.edu.service.impl.EduDAO.insertEdu",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "edu.insertEdu",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 28,
+      "method": "kr.go.hr.edu.service.impl.EduDAO.updateEdu",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "edu.updateEdu",
+      "file": "src/main/java/kr/go/hr/edu/service/impl/EduDAO.java",
+      "line": 32,
+      "method": "unknown",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.cmm.code.service.impl.CmmCodeMapper.selectDeptCodeList",
+      "file": "src/main/resources/mapper/cmm/CmmCodeMapper.xml",
+      "line": 5,
+      "method": "kr.go.cmm.code.service.impl.CmmCodeMapper.selectDeptCodeList",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.cmm.code.service.impl.CmmCodeMapper.selectCodeList",
+      "file": "src/main/resources/mapper/cmm/CmmCodeMapper.xml",
+      "line": 14,
+      "method": "kr.go.cmm.code.service.impl.CmmCodeMapper.selectCodeList",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 5,
+      "method": "kr.go.hr.appoint.service.impl.AppointMapper.selectAppointList",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.insertAppoint",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 23,
+      "method": "kr.go.hr.appoint.service.impl.AppointMapper.insertAppoint",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.appoint.service.impl.AppointMapper.callApptConfirmProc",
+      "file": "src/main/resources/mapper/hr/AppointMapper.xml",
+      "line": 34,
+      "method": "kr.go.hr.appoint.service.impl.AppointMapper.callApptConfirmProc",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.dept.service.impl.DeptMapper.selectDeptList",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 5,
+      "method": "kr.go.hr.dept.service.impl.DeptMapper.selectDeptList",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.dept.service.impl.DeptMapper.mergeDept",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 16,
+      "method": "kr.go.hr.dept.service.impl.DeptMapper.mergeDept",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.dept.service.impl.DeptMapper.updateSortOrd",
+      "file": "src/main/resources/mapper/hr/DeptMapper.xml",
+      "line": 28,
+      "method": "kr.go.hr.dept.service.impl.DeptMapper.updateSortOrd",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 10,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpList",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpPopList",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 33,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.selectEmpPopList",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 43,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.selectEmp",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.selectNextEmpNo",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 50,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.selectNextEmpNo",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.insertEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 54,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.insertEmp",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.updateEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 62,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.updateEmp",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.deleteEmp",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 76,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.deleteEmp",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    },
+    {
+      "sql_id": "kr.go.hr.emp.service.impl.EmpMapper.insertEmpHist",
+      "file": "src/main/resources/mapper/hr/EmpMapper.xml",
+      "line": 84,
+      "method": "kr.go.hr.emp.service.impl.EmpMapper.insertEmpHist",
+      "evidence": "MyBatis mapper namespace + statement id",
+      "origin": "deterministic-indexer",
+      "confidence": "HIGH"
+    }
+  ]
+}

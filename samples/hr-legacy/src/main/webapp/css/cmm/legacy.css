@@ -1,0 +1,21 @@
+/* 레거시 화면 공통 스타일 */
+body { margin: 0; padding: 8px; background: #d9dee7; font: 12px "Gulim", "Malgun Gothic", sans-serif; color: #222; }
+body.popup { background: #eef1f5; }
+.title { background: #3a5a8c; color: #fff; font-weight: bold; padding: 6px 10px; margin: -8px -8px 8px; }
+.search-box, .edit-box { background: #eef1f5; border: 1px solid #9aa5b5; padding: 8px 10px; margin-bottom: 8px; }
+.search-box label, .edit-box label { margin: 0 4px 0 12px; }
+.search-box label:first-child, .edit-box label:first-child { margin-left: 0; }
+input, select { border: 1px solid #8a94a6; height: 22px; padding: 1px 4px; font: inherit; box-sizing: border-box; }
+button { background: linear-gradient(#fdfdfd, #d7dce4); border: 1px solid #7d889a; border-radius: 2px; height: 24px; min-width: 56px; font: inherit; cursor: pointer; }
+button.btn-icon { min-width: 24px; width: 24px; padding: 0; }
+.btn-area { display: flex; align-items: center; margin: 8px 0; }
+.btn-area .right { margin-left: auto; display: flex; gap: 4px; }
+table.grid { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #8a94a6; }
+table.grid th { background: #c9d2df; border: 1px solid #9aa5b5; padding: 4px; font-weight: normal; }
+table.grid td { border: 1px solid #d5dbe4; padding: 4px; text-align: center; }
+table.grid tbody tr:nth-child(odd) td { background: #f5f7fa; }
+table.grid tbody tr.selected td { background: #ffe9a8; }
+table.grid tbody { min-height: 200px; }
+table.form { width: 100%; border-collapse: collapse; background: #fff; }
+table.form th { width: 100px; background: #c9d2df; border: 1px solid #9aa5b5; padding: 6px; }
+table.form td { border: 1px solid #d5dbe4; padding: 6px; }

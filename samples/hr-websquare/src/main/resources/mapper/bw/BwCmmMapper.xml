@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.bw.cmm.BwCmmMapper">
+
+    <select id="selectCodeList" parameterType="map" resultType="egovMap">
+        SELECT CODE, CODE_NM FROM TB_CODE WHERE GRP_CD = #{GRP_CD} AND USE_YN = 'Y' ORDER BY SORT_ORD
+    </select>
+
+    <select id="selectEmpList" parameterType="map" resultType="egovMap">
+        SELECT E.EMP_NO, E.EMP_NM, D.DEPT_NM
+          FROM TB_EMP E
+          LEFT JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD
+         WHERE E.EMP_NM LIKE '%' || #{KEYWORD} || '%'
+    </select>
+</mapper>

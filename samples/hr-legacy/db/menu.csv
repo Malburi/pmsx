@@ -1,0 +1,8 @@
+MENU_ID,UP_MENU_ID,MENU_NM,MENU_URL,SORT_ORD
+M01,,인사관리,,1
+M0101,M01,사원관리,/hr/emp/HR0101.do,1
+M0103,M01,발령관리,/hr/appoint/HR0103.do,2
+M0104,M01,부서관리,/hr/dept/HR0104.do,3
+M0105,M01,교육이력관리,/hr/edu/HR0105.do,4
+M02,,근태관리,,2
+M0201,M02,근태신청,/hr/attend/HR0201.do,1

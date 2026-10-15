@@ -1,0 +1,13 @@
+[project]
+name = "pmsx-collector"
+version = "0.4.0"
+description = "PMS-X As-Is 수집기 — 레거시 화면/소스/DB 분석 + 동적 캡처 → 중간모델 패키지"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+markers = ["capture: Playwright + 설치된 Chrome 이 필요한 통합 테스트"]
+# UI Automation(COM)이 내부에서 처리하는 RPC_E_CANTCALLOUT_ININPUTSYNCCALL(0x8001010d) 을
+# pytest faulthandler 가 '치명적 예외'로 덤프해 로그를 어지럽힌다 — 실제 오류가 아니므로 끈다.
+addopts = "-p no:faulthandler"

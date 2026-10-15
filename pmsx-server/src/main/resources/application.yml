@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: pmsx-server
+  profiles:
+    default: local
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
+  jackson:
+    time-zone: Asia/Seoul
+    serialization:
+      write-dates-as-timestamps: false
+  flyway:
+    # 위치는 DbConfig 가 벤더별로 정한다: H2·PostgreSQL = common + 벤더 폴더, Oracle = oracle, SQL Server = sqlserver
+    locations: classpath:db/migration/common
+
+server:
+  port: 8080
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+pmsx:
+  db:
+    # auto(JDBC 제품명으로 판별) | postgresql | h2 | oracle | tibero | mssql
+    vendor: ${PMSX_DB_VENDOR:auto}
+    # Oracle 11g·Tibero 용 ROWNUM 페이징 (비우면 Tibero 만 true)
+    legacy-paging: ${PMSX_DB_LEGACY_PAGING:}
+  jwt:
+    # 운영 설치 시 반드시 PMSX_JWT_SECRET 환경변수로 교체 (Base64, 32바이트 이상)
+    secret: ${PMSX_JWT_SECRET:cG1zeC1sb2NhbC1kZXYtc2VjcmV0LWNoYW5nZS1tZS0xMjM0NTY3ODkw}
+    access-ttl: 30m
+    refresh-ttl: 14d
+    cookie-secure: false
+  storage:
+    dir: ${PMSX_STORAGE_DIR:./data/files}
+  cors:
+    allowed-origins: http://localhost:5173
+  seed:
+    enabled: true
+    demo: false
+  notification:
+    webhook-url: ${PMSX_NOTIFY_WEBHOOK_URL:}
+    mail-from: ${PMSX_NOTIFY_MAIL_FROM:}
+  mm:
+    hours-per-month: 168
+  sm:
+    # 메일 게이트웨이 접수 API 키 (X-PMSX-KEY). 비우면 /sm/inbound-mail 비활성
+    inbound-mail-key: ${PMSX_SM_INBOUND_MAIL_KEY:}
+    # 변경 CAB: 승인 N건 이상(또는 PM 승인 1건)이면 승인
+    cab-approvals-required: 2
+  file:
+    max-size: ${PMSX_FILE_MAX_SIZE:50MB}
+    allowed-ext: [pdf, hwp, hwpx, doc, docx, xls, xlsx, ppt, pptx, txt, csv, zip, png, jpg, jpeg, gif, bmp, webp, svg, md, json, xml, sql, log]
+  license:
+    # 운영 기본: 검사. local·test 프로필은 false
+    enforce: ${PMSX_LICENSE_ENFORCE:true}
+    public-key: ${PMSX_LICENSE_PUBLIC_KEY:}
+    key: ${PMSX_LICENSE_KEY:}
+  auth:
+    max-failures: 5
+    ldap:
+      enabled: ${PMSX_LDAP_ENABLED:false}
+      url: ${PMSX_LDAP_URL:}
+      base-dn: ${PMSX_LDAP_BASE_DN:}
+      user-search-filter: ${PMSX_LDAP_USER_FILTER:(uid={0})}
+      bind-dn: ${PMSX_LDAP_BIND_DN:}
+      bind-password: ${PMSX_LDAP_BIND_PASSWORD:}

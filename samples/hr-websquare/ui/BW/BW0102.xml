@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>복지포인트 기준관리</title>
+    <xf:model>
+        <w2:dataCollection baseNode="map">
+            <w2:dataList baseNode="list" repeatNode="map" id="dlt_std">
+                <w2:columnInfo>
+                    <w2:column id="GRADE_CD" name="직급" dataType="text"/>
+                    <w2:column id="BASE_POINT" name="기본포인트" dataType="number"/>
+                    <w2:column id="ADD_POINT" name="가산포인트" dataType="number"/>
+                </w2:columnInfo>
+            </w2:dataList>
+            <w2:dataList baseNode="list" repeatNode="map" id="dlt_limit">
+                <w2:columnInfo>
+                    <w2:column id="REQ_TYPE" name="구분" dataType="text"/>
+                    <w2:column id="LIMIT_AMT" name="한도" dataType="number"/>
+                </w2:columnInfo>
+            </w2:dataList>
+            <w2:dataMap baseNode="map" id="dma_year">
+                <w2:keyInfo><w2:key id="STD_YEAR" name="기준년도" dataType="text"/></w2:keyInfo>
+            </w2:dataMap>
+        </w2:dataCollection>
+        <xf:submission id="sbm_std" ref="data:json,dma_year" target="data:json,dlt_std" action="/bw/std/selectStd.do" method="post"
+                       mediatype="application/json" mode="asynchronous"/>
+        <xf:submission id="sbm_limit" ref="data:json,dma_year" target="data:json,dlt_limit" action="/bw/std/selectLimit.do" method="post"
+                       mediatype="application/json" mode="asynchronous"/>
+        <xf:submission id="sbm_stdSave" ref='data:json,{"id":"dlt_std","action":"modified"}' action="/bw/std/saveStd.do" method="post"
+                       mediatype="application/json" mode="asynchronous" ev:submitdone="scwin.fn_reload"/>
+    </xf:model>
+    <script type="text/javascript" lazy="false"><![CDATA[
+scwin.onpageload = function() {
+    scwin.fn_reload();
+};
+
+scwin.fn_reload = function() {
+    $p.executeSubmission("sbm_std");
+    $p.executeSubmission("sbm_limit");
+};
+
+scwin.btn_year_onclick = function(e) {
+    scwin.fn_reload();
+};
+
+scwin.btn_stdSave_onclick = function(e) {
+    if (!confirm("기준을 저장하시겠습니까?")) return;
+    $p.executeSubmission("sbm_stdSave");
+};
+
+scwin.btn_copyYear_onclick = function(e) {
+    $p.ajax({ action: "/bw/std/copyYear.do", method: "post", requestData: { STD_YEAR: ibx_year.getValue() },
+              success: scwin.fn_reload });
+};
+]]></script>
+</head>
+<body ev:onpageload="scwin.onpageload">
+    <w2:textbox id="tbx_title" label="복지포인트 기준관리" class="tit" style="position:absolute;left:10px;top:8px;width:300px;height:26px;"/>
+    <w2:textbox id="tbx_year" label="기준년도" style="position:absolute;left:10px;top:46px;width:60px;height:22px;"/>
+    <xf:input id="ibx_year" ref="data:dma_year.STD_YEAR" style="position:absolute;left:74px;top:44px;width:80px;height:24px;"/>
+    <xf:trigger id="btn_year" type="button" style="position:absolute;left:160px;top:43px;width:66px;height:26px;" ev:onclick="scwin.btn_year_onclick">
+        <xf:label><![CDATA[조회]]></xf:label>
+    </xf:trigger>
+    <xf:trigger id="btn_copyYear" type="button" style="position:absolute;left:232px;top:43px;width:110px;height:26px;" ev:onclick="scwin.btn_copyYear_onclick">
+        <xf:label><![CDATA[전년도 복사]]></xf:label>
+    </xf:trigger>
+    <w2:tabControl id="tac_std" style="position:absolute;left:10px;top:80px;width:760px;height:380px;">
+        <w2:tabs id="tabs1" label="지급기준"/>
+        <w2:tabs id="tabs2" label="한도관리"/>
+        <w2:content id="content1" style="position:absolute;left:0px;top:30px;width:760px;height:350px;">
+            <w2:gridView id="grd_std" dataList="data:dlt_std" style="position:absolute;left:8px;top:8px;width:740px;height:290px;">
+                <w2:header id="h1"><w2:row id="r1">
+                    <w2:column id="hc1" width="200" value="직급"/>
+                    <w2:column id="hc2" width="200" value="기본포인트"/>
+                    <w2:column id="hc3" width="200" value="가산포인트"/>
+                </w2:row></w2:header>
+                <w2:gridBody id="b1"><w2:row id="r2">
+                    <w2:column id="GRADE_CD" width="200"/>
+                    <w2:column id="BASE_POINT" width="200"/>
+                    <w2:column id="ADD_POINT" width="200"/>
+                </w2:row></w2:gridBody>
+            </w2:gridView>
+            <xf:trigger id="btn_stdSave" type="button" style="position:absolute;left:682px;top:308px;width:66px;height:26px;" ev:onclick="scwin.btn_stdSave_onclick">
+                <xf:label><![CDATA[저장]]></xf:label>
+            </xf:trigger>
+        </w2:content>
+        <w2:content id="content2" style="position:absolute;left:0px;top:30px;width:760px;height:350px;">
+            <w2:gridView id="grd_limit" dataList="data:dlt_limit" style="position:absolute;left:8px;top:8px;width:740px;height:320px;">
+                <w2:header id="h2"><w2:row id="r3">
+                    <w2:column id="hc4" width="300" value="구분"/>
+                    <w2:column id="hc5" width="300" value="한도"/>
+                </w2:row></w2:header>
+                <w2:gridBody id="b2"><w2:row id="r4">
+                    <w2:column id="REQ_TYPE" width="300"/>
+                    <w2:column id="LIMIT_AMT" width="300"/>
+                </w2:row></w2:gridBody>
+            </w2:gridView>
+        </w2:content>
+    </w2:tabControl>
+</body>
+</html>

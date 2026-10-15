@@ -1,0 +1,64 @@
+@model RcMvc.Models.ApplicantSearch
+@{
+    ViewBag.Title = "지원자 관리";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>지원자 관리</h2>
+<div class="search">
+    @Html.Label("Name", "지원자명")
+    @Html.TextBoxFor(m => m.Name, new { id = "txtName", @class = "form-control" })
+    <label for="ddlStatus">상태</label>
+    @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "", "APPLY", "PASS", "FAIL" }), new { id = "ddlStatus" })
+    <button type="button" id="btnSearch" class="btn">조회</button>
+</div>
+
+<table id="tblApplicant" class="grid">
+    <thead>
+        <tr>
+            <th data-col="ApplicantId">번호</th>
+            <th data-col="Name">지원자명</th>
+            <th data-col="RecruitTitle">공고</th>
+            <th data-col="Status">상태</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div class="buttons">
+    <button type="button" id="btnPass" class="btn">합격처리</button>
+    @Html.ActionLink("공고 목록", "Index", "Recruit", null, new { id = "lnkRecruit" })
+</div>
+
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/rc/applicant.js")"></script>
+    <script>
+        $(function () {
+            $("#btnSearch").on("click", fn_search);
+            $("#btnPass").on("click", fn_pass);
+            $("#tblApplicant").on("dblclick", "tbody tr", function () {
+                fn_openDetail($(this).data("id"));
+            });
+            fn_search();
+        });
+
+        function fn_search() {
+            $.ajax({
+                url: '@Url.Action("List", "Applicant")',
+                type: "POST",
+                data: { Name: $("#txtName").val(), Status: $("#ddlStatus").val() },
+                success: fn_render
+            });
+        }
+
+        function fn_pass() {
+            var id = $("#tblApplicant tr.selected").data("id");
+            if (!confirm("합격 처리하시겠습니까?")) return;
+            $.post("/applicant/pass/" + id, fn_search);
+        }
+
+        function fn_openDetail(id) {
+            window.open('@Url.Action("Detail")?id=' + id, "detail", "width=600,height=500");
+        }
+    </script>
+}

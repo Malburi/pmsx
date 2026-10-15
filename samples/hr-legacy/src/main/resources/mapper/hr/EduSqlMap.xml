@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- 교육이력 (iBatis 2 sqlMap) -->
+<sqlMap namespace="edu">
+
+    <select id="selectEduList" parameterClass="eduVO" resultClass="eduVO">
+        SELECT H.EDU_SEQ, H.EMP_NO, M.EMP_NM, H.EDU_TYPE_CD, C.CD_NM AS EDU_TYPE_NM,
+               H.EDU_NM, H.EDU_YEAR, H.EDU_HOURS, H.INST_NM
+          FROM TB_EDU_HIST H
+          JOIN TB_EMP M ON M.EMP_NO = H.EMP_NO
+          LEFT JOIN TB_CODE C ON C.GRP_CD = 'EDU' AND C.CD = H.EDU_TYPE_CD
+        <dynamic prepend="WHERE">
+            <isNotEmpty prepend="AND" property="eduTypeCd">H.EDU_TYPE_CD = #eduTypeCd#</isNotEmpty>
+            <isNotEmpty prepend="AND" property="eduYear">H.EDU_YEAR = #eduYear#</isNotEmpty>
+            <isNotEmpty prepend="AND" property="eduNm">H.EDU_NM LIKE '%' || #eduNm# || '%'</isNotEmpty>
+        </dynamic>
+         ORDER BY H.EDU_YEAR DESC, M.EMP_NM
+    </select>
+
+    <select id="selectEduSummary" parameterClass="eduVO" resultClass="java.util.HashMap">
+        SELECT COUNT(DISTINCT H.EMP_NO) AS EMP_CNT, NVL(SUM(H.EDU_HOURS), 0) AS TOTAL_HOURS
+          FROM TB_EDU_HIST H
+          JOIN TB_EMP M ON M.EMP_NO = H.EMP_NO
+         WHERE H.EDU_YEAR = #eduYear#
+           AND H.USE_YN = 'Y'
+    </select>
+
+    <insert id="insertEdu" parameterClass="eduVO">
+        INSERT INTO TB_EDU_HIST (EDU_SEQ, EMP_NO, EDU_TYPE_CD, EDU_NM, EDU_YEAR, EDU_HOURS, INST_NM, REG_DT, REG_ID)
+        VALUES (SEQ_EDU_HIST.NEXTVAL, #empNo#, #eduTypeCd#, #eduNm#, #eduYear#, #eduHours#, #instNm#, SYSDATE, #regId#)
+    </insert>
+
+    <update id="updateEdu" parameterClass="eduVO">
+        UPDATE TB_EDU_HIST
+           SET EDU_TYPE_CD = #eduTypeCd#, EDU_NM = #eduNm#, EDU_HOURS = #eduHours#, INST_NM = #instNm#
+         WHERE EDU_SEQ = #eduSeq#
+    </update>
+</sqlMap>

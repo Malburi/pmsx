@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>사원검색</title>
+    <xf:model>
+        <w2:dataCollection baseNode="map">
+            <w2:dataMap baseNode="map" id="dma_cond">
+                <w2:keyInfo><w2:key id="KEYWORD" name="검색어" dataType="text"/></w2:keyInfo>
+            </w2:dataMap>
+            <w2:dataList baseNode="list" repeatNode="map" id="dlt_emp">
+                <w2:columnInfo>
+                    <w2:column id="EMP_NO" name="사번" dataType="text"/>
+                    <w2:column id="EMP_NM" name="사원명" dataType="text"/>
+                    <w2:column id="DEPT_NM" name="부서" dataType="text"/>
+                </w2:columnInfo>
+            </w2:dataList>
+        </w2:dataCollection>
+        <xf:submission id="sbm_emp" ref="data:json,dma_cond" target="data:json,dlt_emp" action="/bw/cmm/emp/selectList.do"
+                       method="post" mediatype="application/json" mode="asynchronous"/>
+    </xf:model>
+    <script type="text/javascript" lazy="false"><![CDATA[
+scwin.btn_find_onclick = function(e) {
+    $p.executeSubmission("sbm_emp");
+};
+
+scwin.btn_select_onclick = function(e) {
+    var row = grd_emp.getFocusedRowIndex();
+    $p.closePopup({ EMP_NO: dlt_emp.getCellData(row, "EMP_NO"), EMP_NM: dlt_emp.getCellData(row, "EMP_NM") });
+};
+
+scwin.btn_close_onclick = function(e) {
+    $p.closePopup();
+};
+]]></script>
+</head>
+<body>
+    <w2:textbox id="tbx_kw" label="사원명" style="position:absolute;left:12px;top:14px;width:50px;height:22px;"/>
+    <xf:input id="ibx_kw" ref="data:dma_cond.KEYWORD" style="position:absolute;left:66px;top:12px;width:200px;height:24px;"/>
+    <xf:trigger id="btn_find" type="button" style="position:absolute;left:272px;top:11px;width:66px;height:26px;" ev:onclick="scwin.btn_find_onclick">
+        <xf:label><![CDATA[검색]]></xf:label>
+    </xf:trigger>
+    <w2:gridView id="grd_emp" dataList="data:dlt_emp" style="position:absolute;left:12px;top:46px;width:560px;height:300px;"
+                 ev:oncelldblclick="scwin.btn_select_onclick">
+        <w2:header id="header1">
+            <w2:row id="row1">
+                <w2:column id="c1" width="120" value="사번"/>
+                <w2:column id="c2" width="160" value="사원명"/>
+                <w2:column id="c3" width="200" value="부서"/>
+            </w2:row>
+        </w2:header>
+        <w2:gridBody id="gBody1">
+            <w2:row id="row2">
+                <w2:column id="EMP_NO" width="120"/>
+                <w2:column id="EMP_NM" width="160"/>
+                <w2:column id="DEPT_NM" width="200"/>
+            </w2:row>
+        </w2:gridBody>
+    </w2:gridView>
+    <xf:trigger id="btn_select" type="button" style="position:absolute;left:434px;top:356px;width:66px;height:26px;" ev:onclick="scwin.btn_select_onclick">
+        <xf:label><![CDATA[선택]]></xf:label>
+    </xf:trigger>
+    <xf:trigger id="btn_close" type="button" style="position:absolute;left:506px;top:356px;width:66px;height:26px;" ev:onclick="scwin.btn_close_onclick">
+        <xf:label><![CDATA[닫기]]></xf:label>
+    </xf:trigger>
+</body>
+</html>

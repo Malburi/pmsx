@@ -1,0 +1,5 @@
+# 동명 Mapper(EmpMapper) 키 충돌 검증용 최소 설정
+system: { code: T, name: 충돌테스트, uiTech: [], serverTech: [mybatis, spring] }
+source: { root: ., java: java, mapper: mapper, includeSnippets: false }
+db: { schema: T }
+output: out

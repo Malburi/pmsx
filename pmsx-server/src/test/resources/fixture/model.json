@@ -1,0 +1,113 @@
+{
+  "manifest": {
+    "modelVersion": "0.1",
+    "collectorVersion": "fixture",
+    "runId": "fixture-run-1",
+    "collectedAt": "2026-10-14T10:00:00+09:00",
+    "parsers": ["jsp-jquery", "spring", "mybatis-ibatis", "sql"],
+    "stats": { "screens": 2, "elements": 5, "edges": 22 }
+  },
+  "system": {
+    "key": "sys:HR",
+    "code": "HR",
+    "name": "인사시스템",
+    "uiTech": ["jsp-jquery"],
+    "serverTech": ["spring-mybatis"],
+    "dbType": "oracle"
+  },
+  "menus": [
+    { "key": "menu:HR:M01", "parentKey": null, "name": "인사관리", "order": 1, "screenKey": null },
+    { "key": "menu:HR:M0101", "parentKey": "menu:HR:M01", "name": "사원관리", "order": 1, "screenKey": "scr:HR:HR0101", "url": "/hr/emp/HR0101.do" }
+  ],
+  "screens": [
+    {
+      "key": "scr:HR:HR0101", "screenId": "HR0101", "name": "사원관리", "kind": "page", "uiTech": "jsp-jquery",
+      "sourceFile": "/WEB-INF/jsp/hr/emp/HR0101.jsp", "url": "/hr/emp/HR0101.do",
+      "captures": [ { "file": "captures/HR0101.png", "width": 1, "height": 1, "state": "초기" } ]
+    },
+    {
+      "key": "scr:HR:HR0101P01", "screenId": "HR0101P01", "name": "사원검색", "kind": "popup", "uiTech": "jsp-jquery",
+      "sourceFile": "/WEB-INF/jsp/hr/emp/HR0101P01.jsp", "captures": []
+    }
+  ],
+  "elements": [
+    { "key": "el:HR:HR0101#txtEmpNm", "screenKey": "scr:HR:HR0101", "elementId": "txtEmpNm", "label": "사원명", "type": "input",
+      "box": { "x": 90, "y": 46, "w": 150, "h": 24 }, "binding": "검색조건 empNm", "matched": "full" },
+    { "key": "el:HR:HR0101#btnEmpPop", "screenKey": "scr:HR:HR0101", "elementId": "btnEmpPop", "label": "사원찾기", "type": "popup",
+      "box": { "x": 244, "y": 46, "w": 24, "h": 24 }, "matched": "full" },
+    { "key": "el:HR:HR0101#btnSearch", "screenKey": "scr:HR:HR0101", "elementId": "btnSearch", "label": "조회", "type": "button",
+      "box": { "x": 690, "y": 84, "w": 60, "h": 24 }, "matched": "full" },
+    { "key": "el:HR:HR0101#btnSave", "screenKey": "scr:HR:HR0101", "elementId": "btnSave", "label": "저장", "type": "button",
+      "box": { "x": 756, "y": 520, "w": 60, "h": 24 }, "matched": "full", "danger": true },
+    { "key": "el:HR:HR0101P01#btnSelect", "screenKey": "scr:HR:HR0101P01", "elementId": "btnSelect", "label": "선택", "type": "button",
+      "matched": "static-only" }
+  ],
+  "codeUnits": [
+    { "key": "fn:js:/js/hr/HR0101.js#fn_save", "lang": "js", "file": "/js/hr/HR0101.js", "name": "fn_save", "lineStart": 36, "lineEnd": 45,
+      "snippet": "function fn_save(){\n  if(!confirm('저장하시겠습니까?')) return;\n  gfn_ajax('/hr/emp/save.do', {rows: rows}, fn_search);\n}" },
+    { "key": "fn:js:/js/hr/HR0101.js#fn_search", "lang": "js", "file": "/js/hr/HR0101.js", "name": "fn_search", "lineStart": 20, "lineEnd": 27 },
+    { "key": "fn:js:/js/hr/HR0101.js#fn_openEmpPopup", "lang": "js", "file": "/js/hr/HR0101.js", "name": "fn_openEmpPopup", "lineStart": 70 },
+    { "key": "fn:js:/js/cmm/common.js#gfn_ajax", "lang": "js", "file": "/js/cmm/common.js", "name": "gfn_ajax", "lineStart": 5, "common": true },
+    { "key": "fn:java:kr/go/hr/emp/web/EmpController.java#EmpController.saveEmp", "lang": "java",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java", "name": "EmpController.saveEmp", "lineStart": 55 },
+    { "key": "fn:java:kr/go/hr/emp/web/EmpController.java#EmpController.selectEmpList", "lang": "java",
+      "file": "src/main/java/kr/go/hr/emp/web/EmpController.java", "name": "EmpController.selectEmpList", "lineStart": 41 },
+    { "key": "fn:java:kr/go/hr/emp/service/impl/EmpServiceImpl.java#EmpServiceImpl.saveEmp", "lang": "java",
+      "file": "src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java", "name": "EmpServiceImpl.saveEmp", "lineStart": 58 }
+  ],
+  "apis": [
+    { "key": "api:POST /hr/emp/save.do", "method": "POST", "path": "/hr/emp/save.do" },
+    { "key": "api:POST /hr/emp/list.do", "method": "POST", "path": "/hr/emp/list.do", "observedParams": ["empNm", "deptCd"] }
+  ],
+  "sqlStatements": [
+    { "key": "sql:EmpMapper.insertEmp", "kind": "insert", "file": "src/main/resources/mapper/hr/EmpMapper.xml", "line": 20,
+      "text": "INSERT INTO TB_EMP (EMP_NO, EMP_NM, DEPT_CD) VALUES (#{empNo}, #{empNm}, #{deptCd})" },
+    { "key": "sql:EmpMapper.updateEmp", "kind": "update", "file": "src/main/resources/mapper/hr/EmpMapper.xml", "line": 30 },
+    { "key": "sql:EmpMapper.selectEmpList", "kind": "select", "file": "src/main/resources/mapper/hr/EmpMapper.xml", "line": 8 }
+  ],
+  "tables": [
+    { "key": "tbl:HR.TB_EMP", "schema": "HR", "name": "TB_EMP", "comment": "사원", "kind": "table",
+      "columns": [
+        { "name": "EMP_NO", "dataType": "VARCHAR2(10)", "nullable": false, "pk": true, "comment": "사원번호" },
+        { "name": "EMP_NM", "dataType": "VARCHAR2(50)", "nullable": false, "comment": "사원명" },
+        { "name": "DEPT_CD", "dataType": "VARCHAR2(10)", "nullable": true, "comment": "부서코드" }
+      ],
+      "indexes": [ { "name": "PK_TB_EMP", "columns": ["EMP_NO"], "unique": true } ] },
+    { "key": "tbl:HR.TB_DEPT", "schema": "HR", "name": "TB_DEPT", "comment": "부서", "kind": "table",
+      "columns": [
+        { "name": "DEPT_CD", "dataType": "VARCHAR2(10)", "nullable": false, "pk": true },
+        { "name": "DEPT_NM", "dataType": "VARCHAR2(100)", "nullable": false }
+      ] }
+  ],
+  "relations": [
+    { "from": "tbl:HR.TB_EMP", "to": "tbl:HR.TB_DEPT", "columns": [["DEPT_CD", "DEPT_CD"]], "kind": "inferred", "evidenceCount": 4, "confidence": 0.9 }
+  ],
+  "edges": [
+    { "from": "el:HR:HR0101#btnSave", "to": "fn:js:/js/hr/HR0101.js#fn_save", "kind": "event", "event": "click", "source": "static", "confidence": 0.99 },
+    { "from": "fn:js:/js/hr/HR0101.js#fn_save", "to": "fn:js:/js/cmm/common.js#gfn_ajax", "kind": "calls", "order": 1, "source": "static", "confidence": 0.99 },
+    { "from": "fn:js:/js/hr/HR0101.js#fn_save", "to": "api:POST /hr/emp/save.do", "kind": "request", "order": 2, "source": "dynamic", "confidence": 1.0, "evidence": "blocked POST /hr/emp/save.do" },
+    { "from": "fn:js:/js/hr/HR0101.js#fn_save", "to": "fn:js:/js/hr/HR0101.js#fn_search", "kind": "calls", "order": 3, "condition": "저장 성공 후", "source": "static", "confidence": 0.95 },
+    { "from": "api:POST /hr/emp/save.do", "to": "fn:java:kr/go/hr/emp/web/EmpController.java#EmpController.saveEmp", "kind": "handles", "source": "static", "confidence": 0.99 },
+    { "from": "fn:java:kr/go/hr/emp/web/EmpController.java#EmpController.saveEmp", "to": "fn:java:kr/go/hr/emp/service/impl/EmpServiceImpl.java#EmpServiceImpl.saveEmp", "kind": "calls", "source": "static", "confidence": 0.99 },
+    { "from": "fn:java:kr/go/hr/emp/service/impl/EmpServiceImpl.java#EmpServiceImpl.saveEmp", "to": "sql:EmpMapper.insertEmp", "kind": "executes", "order": 1, "condition": "rowStatus == 'I'", "source": "static", "confidence": 0.99 },
+    { "from": "fn:java:kr/go/hr/emp/service/impl/EmpServiceImpl.java#EmpServiceImpl.saveEmp", "to": "sql:EmpMapper.updateEmp", "kind": "executes", "order": 2, "condition": "rowStatus == 'U'", "source": "static", "confidence": 0.99 },
+    { "from": "sql:EmpMapper.insertEmp", "to": "tbl:HR.TB_EMP", "kind": "accesses", "crud": "C", "columns": ["EMP_NO", "EMP_NM", "DEPT_CD"], "source": "static", "confidence": 0.99 },
+    { "from": "sql:EmpMapper.updateEmp", "to": "tbl:HR.TB_EMP", "kind": "accesses", "crud": "U", "columns": ["EMP_NM", "DEPT_CD"], "source": "static", "confidence": 0.99 },
+    { "from": "el:HR:HR0101#btnSearch", "to": "fn:js:/js/hr/HR0101.js#fn_search", "kind": "event", "event": "click", "source": "static", "confidence": 0.99 },
+    { "from": "el:HR:HR0101#txtEmpNm", "to": "fn:js:/js/hr/HR0101.js#fn_search", "kind": "event", "event": "keydown", "source": "static", "confidence": 0.9 },
+    { "from": "el:HR:HR0101#txtEmpNm", "to": "tbl:HR.TB_EMP", "kind": "binds", "columns": ["EMP_NM"], "source": "static", "confidence": 0.6 },
+    { "from": "fn:js:/js/hr/HR0101.js#fn_search", "to": "fn:js:/js/cmm/common.js#gfn_ajax", "kind": "calls", "order": 1, "source": "static", "confidence": 0.99 },
+    { "from": "fn:js:/js/hr/HR0101.js#fn_search", "to": "api:POST /hr/emp/list.do", "kind": "request", "order": 2, "source": "dynamic", "confidence": 1.0 },
+    { "from": "api:POST /hr/emp/list.do", "to": "fn:java:kr/go/hr/emp/web/EmpController.java#EmpController.selectEmpList", "kind": "handles", "source": "static", "confidence": 0.99 },
+    { "from": "fn:java:kr/go/hr/emp/web/EmpController.java#EmpController.selectEmpList", "to": "sql:EmpMapper.selectEmpList", "kind": "executes", "source": "static", "confidence": 0.95 },
+    { "from": "sql:EmpMapper.selectEmpList", "to": "tbl:HR.TB_EMP", "kind": "accesses", "crud": "R", "source": "static", "confidence": 0.99 },
+    { "from": "sql:EmpMapper.selectEmpList", "to": "tbl:HR.TB_DEPT", "kind": "accesses", "crud": "R", "source": "static", "confidence": 0.99 },
+    { "from": "el:HR:HR0101#btnEmpPop", "to": "fn:js:/js/hr/HR0101.js#fn_openEmpPopup", "kind": "event", "event": "click", "source": "static", "confidence": 0.99 },
+    { "from": "fn:js:/js/hr/HR0101.js#fn_openEmpPopup", "to": "scr:HR:HR0101P01", "kind": "navigates", "source": "dynamic", "confidence": 1.0 },
+    { "from": "el:HR:HR0101P01#btnSelect", "to": "fn:js:/js/hr/HR0101P01.js#fn_select", "kind": "event", "event": "click", "source": "static", "confidence": 0.7 }
+  ],
+  "blockedRequests": [
+    { "elementKey": "el:HR:HR0101#btnSave", "method": "POST", "url": "http://localhost:8091/hr/emp/save.do", "at": "2026-10-14T10:00:05+09:00" }
+  ],
+  "failures": []
+}

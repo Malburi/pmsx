@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.ed.stat.service.impl.StatMapper">
+    <select id="selectEduStat" parameterType="string" resultType="map">
+        SELECT D.DEPT_NM, COUNT(DISTINCT C.COURSE_ID) AS COURSE_CNT,
+               SUM(CASE WHEN A.STATUS = 'DONE' THEN 1 ELSE 0 END) AS DONE_CNT
+          FROM TB_EDU_COURSE C
+          JOIN TB_DEPT D ON D.DEPT_CD = C.DEPT_CD
+          LEFT JOIN TB_EDU_APPLY A ON A.COURSE_ID = C.COURSE_ID
+         WHERE C.EDU_YEAR = #{year}
+         GROUP BY D.DEPT_NM
+    </select>
+</mapper>

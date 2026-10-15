@@ -1,0 +1,17 @@
+# 로컬 개발: H2 파일 DB (PostgreSQL 호환 모드)
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/db/pmsx;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;AUTO_SERVER=TRUE
+    username: sa
+    password:
+pmsx:
+  seed:
+    enabled: true
+    demo: true
+  license:
+    enforce: false
+  sm:
+    inbound-mail-key: local-dev-mail-key
+  # 데모 As-Is 수집 결과: 비우면 ./demo → ../samples/{hr-legacy,hr-nexacro,hr-spa}/out 최신 zip 을 찾는다
+  demo:
+    asis-packages: []

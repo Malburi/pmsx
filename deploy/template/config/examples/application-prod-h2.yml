@@ -1,0 +1,19 @@
+# 내장 H2 파일 DB 로 운영 (시범·소규모용). 데이터: 설치폴더/data/db
+# 사용: 이 파일 내용을 config/application-prod.yml 로 복사
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/db/pmsx;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password: ""
+
+server:
+  port: ${PMSX_PORT:8080}
+
+pmsx:
+  jwt:
+    secret: ${PMSX_JWT_SECRET:}       # 비우면 data/jwt-secret.key 자동 생성
+    cookie-secure: false        # HTTP 로 접속하는 경우
+  storage:
+    dir: ./data/files
+  license:
+    enforce: true

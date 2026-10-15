@@ -1,0 +1,44 @@
+# PMS-X 수집기 설정 - 샘플 급여시스템(PY, Nexacro N/14 혼합)
+# 상대 경로는 이 파일 위치 기준
+system:
+  code: PY
+  name: 급여시스템
+  uiTech: [nexacro]
+  serverTech: [spring, mybatis]
+  dbType: oracle
+
+source:
+  root: .
+  nexacro: nexacro                     # Nexacro 프로젝트 루트 (TypeDefinition·서비스 폴더 기준)
+  java: src/main/java
+  mapper: src/main/resources/mapper
+  includeSnippets: true
+
+nexacro:
+  # TypeDefinition.xml 의 Services 를 자동으로 읽는다. 아래는 덮어쓰기/보충용.
+  services: { PY: PY/, Lib: Lib/, Base: Base/ }     # 폼·스크립트 접두어 → 폴더
+  serviceUrls: { svc: / }                           # transaction URL 접두어(svc::) → 서버 경로
+  wireframe: true                                   # 런타임 없이 XFDL 좌표로 와이어프레임 캡처 생성
+
+# 프로젝트 공통 함수 → 요청/화면 이동 해석 규칙 (Nexacro 기본 transaction 은 자동 인식)
+frontApis:
+  gfn_transaction: { urlArg: 1, method: POST, callbackArg: 5 }
+frontNavigations:
+  gfn_openPopup: { urlArg: 1, popup: true, callbackArg: 3 }
+  gfn_openMenu:  { urlArg: 0, popup: false }
+
+db:
+  schema: PY
+  ddlFiles: [db/ddl.sql, db/procedures.sql]
+
+menu:
+  nexacroDataset: nexacro/Base/gds_menu.xml        # 메뉴 전역 Dataset export
+  columns: { id: MENU_ID, parent: UP_MENU_ID, name: MENU_NM, url: FORM_URL, order: SORT_ORD }
+
+capture:
+  enabled: false                                    # Nexacro 런타임 캡처 대신 와이어프레임 사용
+
+inference:
+  minEvidence: 1
+
+output: out

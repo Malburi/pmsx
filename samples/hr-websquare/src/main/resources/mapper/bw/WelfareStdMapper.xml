@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.go.bw.std.service.impl.WelfareStdMapper">
+
+    <select id="selectStd" parameterType="map" resultType="egovMap">
+        SELECT S.GRADE_CD, C.CODE_NM AS GRADE_NM, S.BASE_POINT, S.ADD_POINT
+          FROM TB_WELFARE_STD S
+          LEFT JOIN TB_CODE C ON C.GRP_CD = 'GRADE' AND C.CODE = S.GRADE_CD
+         WHERE S.STD_YEAR = #{STD_YEAR}
+         ORDER BY S.GRADE_CD
+    </select>
+
+    <select id="selectLimit" parameterType="map" resultType="egovMap">
+        SELECT REQ_TYPE, LIMIT_AMT FROM TB_WELFARE_LIMIT WHERE STD_YEAR = #{STD_YEAR}
+    </select>
+
+    <update id="mergeStd" parameterType="map">
+        MERGE INTO TB_WELFARE_STD T
+        USING (SELECT #{STD_YEAR} AS STD_YEAR, #{GRADE_CD} AS GRADE_CD FROM DUAL) S
+           ON (T.STD_YEAR = S.STD_YEAR AND T.GRADE_CD = S.GRADE_CD)
+        WHEN MATCHED THEN UPDATE SET T.BASE_POINT = #{BASE_POINT}, T.ADD_POINT = #{ADD_POINT}
+        WHEN NOT MATCHED THEN INSERT (STD_YEAR, GRADE_CD, BASE_POINT, ADD_POINT)
+             VALUES (#{STD_YEAR}, #{GRADE_CD}, #{BASE_POINT}, #{ADD_POINT})
+    </update>
+
+    <select id="callCopyYear" statementType="CALLABLE" parameterType="map">
+        { call SP_WELFARE_COPY_YEAR(#{STD_YEAR, mode=IN}) }
+    </select>
+</mapper>

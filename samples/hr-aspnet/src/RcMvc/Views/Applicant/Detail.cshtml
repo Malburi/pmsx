@@ -1,0 +1,29 @@
+@model RcMvc.Models.Applicant
+@{
+    ViewBag.Title = "지원자 상세";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>지원자 상세</title>
+    <script src="@Url.Content("~/Scripts/jquery-3.7.1.min.js")"></script>
+</head>
+<body class="popup">
+    <form id="frmApplicant">
+        @Html.HiddenFor(m => m.ApplicantId, new { id = "hdnId" })
+        <label for="txtName">지원자명</label>
+        @Html.TextBoxFor(m => m.Name, new { id = "txtName" })
+        <label for="txtEmail">이메일</label>
+        @Html.TextBoxFor(m => m.Email, new { id = "txtEmail" })
+        <button type="button" id="btnSave">저장</button>
+        <button type="button" id="btnClose" onclick="window.close()">닫기</button>
+    </form>
+    <script>
+        $("#btnSave").click(function () {
+            if (!confirm("저장하시겠습니까?")) return;
+            $.post('@Url.Action("Save", "Applicant")', $("#frmApplicant").serialize(), function () { window.close(); });
+        });
+    </script>
+</body>
+</html>

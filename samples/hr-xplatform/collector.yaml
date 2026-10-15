@@ -1,0 +1,40 @@
+# PMS-X 수집기 설정 - 샘플 근태(AT): XPlatform(AT0101·AT0101P01) + MiPlatform(AT0102) 혼합, Spring + MyBatis + Oracle
+# 상대 경로는 이 파일 위치 기준
+system:
+  code: AT
+  name: 근태관리
+  uiTech: [xplatform, miplatform]      # 한 파서가 *.xfdl(XPlatform)·<Window> *.xml(MiPlatform) 를 모두 처리
+  serverTech: [spring, mybatis]
+  dbType: oracle
+
+source:
+  root: .
+  xplatform: xp                        # 프로젝트 루트 (default_typedef.xml 의 Services 자동 인식)
+  java: src/main/java
+  mapper: src/main/resources/mapper
+  includeSnippets: true
+
+xplatform:
+  serviceUrls: { svc: / }              # transaction URL 접두어(svc::) → 서버 경로
+  wireframe: true
+
+frontApis:
+  gfn_transaction: { urlArg: 1, method: POST, callbackArg: 5 }
+frontNavigations:
+  gfn_openPopup: { urlArg: 1, popup: true, callbackArg: 3 }
+  Dialog: { urlArg: 0, popup: true }   # MiPlatform/XPlatform 모달 팝업
+
+db:
+  schema: AT
+  ddlFiles: [db/ddl.sql]
+
+menu:
+  csv: db/menu.csv
+
+capture:
+  enabled: false                       # 전용 런타임(ActiveX/XPlatform Runtime) 없이 와이어프레임 사용
+
+inference:
+  minEvidence: 1
+
+output: out

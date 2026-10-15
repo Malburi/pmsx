@@ -1,0 +1,18 @@
+body { margin: 0; font: 13px/1.5 "Malgun Gothic", sans-serif; background: #eef1f5; color: #222; }
+.layout { display: grid; grid-template-columns: 200px 1fr; min-height: 100vh; }
+.nav { background: #2f4a73; color: #fff; padding: 12px; }
+.nav a { display: block; color: #fff; text-decoration: none; padding: 6px 4px; }
+.nav h3 { font-size: 13px; margin: 12px 0 4px; color: #c9d7ef; }
+.page { padding: 16px 20px; }
+.page h2 { margin: 0 0 12px; font-size: 18px; color: #2f4a73; }
+.search { display: flex; gap: 8px; align-items: center; background: #fff; border: 1px solid #c3ccd8; padding: 10px; }
+.btns { display: flex; justify-content: flex-end; gap: 6px; margin: 10px 0; }
+button { padding: 4px 12px; border: 1px solid #7d889a; background: #f6f7f9; cursor: pointer; }
+input, select { padding: 3px 6px; border: 1px solid #8a94a6; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th { background: #c9d2df; border: 1px solid #9aa5b5; padding: 4px; }
+td { border: 1px solid #d5dbe4; padding: 4px; text-align: center; }
+.dialog-mask { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; }
+.dialog { background: #fff; padding: 16px; width: 420px; border: 1px solid #555; }
+.dialog .row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+.dialog .row label { width: 70px; }

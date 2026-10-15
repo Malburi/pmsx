@@ -1,0 +1,39 @@
+# PMS-X 수집기 설정 - hr-winforms 데스크톱 캡처 포함판 (collector.yaml 과 같고 capture.enabled 만 true)
+# 상대 경로는 이 파일 위치 기준
+system:
+  code: HW
+  name: 인사 데스크톱
+  uiTech: [winforms]
+  serverTech: [dotnet]
+  dbType: mssql
+
+source:
+  root: .
+  dotnet: src                     # C# 소스 루트 (bin/obj 는 자동 제외)
+  includeSnippets: true
+
+dotnet:
+  # 샘플 빌드용 스텁·목업은 분석 대상이 아님 (실제 프로젝트에는 없음)
+  exclude: ["*/Data/Stubs.cs", "*/Data/MockData.cs"]
+
+db:
+  schema: HW
+  dialect: tsql
+  ddlFiles: [db/ddl.sql]
+
+winforms:
+  wireframe: true                 # 캡처가 없으면 디자이너 좌표로 와이어프레임 생성
+
+capture:
+  enabled: true                   # 데스크톱 캡처 (먼저 dotnet build -c Release)
+  desktop:
+    exe: src/HrWin/bin/Release/net7.0-windows/HrWin.exe
+    mainWindowTitle: "인사관리 시스템"
+    startTimeoutSec: 20
+    clickWaitMs: 800
+  dangerLabels: [삭제, 저장, 등록, 승인, 결재, 전송, 발송, 확정, 마감]
+
+inference:
+  minEvidence: 1
+
+output: out

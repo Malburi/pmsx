@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-Is 화면 분석 뷰어</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --panel-2:#f8f9fb; --line:#e2e6ec; --text:#1d2430; --muted:#667085;
+  --accent:#2f6fed; --accent-weak:#e8f0fe;
+  --c-button:#2f6fed; --c-input:#0f9d76; --c-combo:#8b5cf6; --c-grid:#e07b00; --c-popup:#d6336c;
+  --l-ui:#2f6fed; --l-front:#0ea5e9; --l-api:#8b5cf6; --l-server:#0f9d76; --l-sql:#e07b00; --l-db:#b45309; --l-post:#64748b;
+  --ok:#12a150; --warn:#d97706; --bad:#dc2626;
+  --code-bg:#0f172a; --code-text:#e2e8f0;
+  --warn-bg:#fff4e5; --warn-fg:#9a5b00; --warn-line:#f5d6a1;
+  --ok-bg:#e7f6ec; --ok-fg:#0b7a3b; --ok-line:#b7e2c4;
+  --tip-bg:#111827; --tip-fg:#ffffff;
+  --legacy-bg:#d9dee7; --legacy-title:#3a5a8c; --legacy-panel:#eef1f5; --legacy-line:#9aa5b5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1218; --panel:#171b23; --panel-2:#1d222c; --line:#2a313d; --text:#e6e9ef; --muted:#97a0af;
+    --accent:#6c9bff; --accent-weak:#1e2a44;
+    --warn-bg:#2b2612; --warn-fg:#f0dc8a; --warn-line:#5c4d17;
+    --ok-bg:#12291b; --ok-fg:#86d9a5; --ok-line:#21573a;
+    --tip-bg:#e6e9ef; --tip-fg:#0f1218; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1218; --panel:#171b23; --panel-2:#1d222c; --line:#2a313d; --text:#e6e9ef; --muted:#97a0af;
+  --accent:#6c9bff; --accent-weak:#1e2a44;
+  --warn-bg:#2b2612; --warn-fg:#f0dc8a; --warn-line:#5c4d17;
+  --ok-bg:#12291b; --ok-fg:#86d9a5; --ok-line:#21573a;
+  --tip-bg:#e6e9ef; --tip-fg:#0f1218; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:13px/1.5 "Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif}
+button{font:inherit;color:inherit}
+html,body{height:100%}
+.app{display:grid;grid-template-rows:48px 1fr;height:100%;padding-block:0 12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.main{border:1px solid var(--line);border-top:0;border-radius:0 0 8px 8px;overflow:hidden}
+header{display:flex;align-items:center;gap:12px;padding:0 16px;min-width:0;background:var(--panel);border-bottom:1px solid var(--line)}
+header .logo{font-weight:700;color:var(--accent)}
+header .crumb{color:var(--muted)}
+header .sp{flex:1}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:12px;background:var(--panel-2);border:1px solid var(--line)}
+.chip.st-review{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-line)}
+.chip.st-done{background:var(--ok-bg);color:var(--ok-fg);border-color:var(--ok-line)}
+.chip.st-auto{background:var(--accent-weak);color:var(--accent);border-color:transparent}
+.iconbtn{border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:4px 10px;cursor:pointer}
+.main{display:grid;grid-template-columns:260px 1fr 420px;min-height:0}
+aside,section{min-height:0;overflow:auto}
+/* tree */
+.tree{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+.tree .search{padding:10px;border-bottom:1px solid var(--line)}
+.tree input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel-2);color:var(--text)}
+.tree ul{list-style:none;margin:0;padding:0 0 0 14px}
+.tree>.nodes{padding:8px 8px 8px 0;flex:1;overflow:auto}
+.tree>.nodes>ul{padding-left:8px}
+.tnode{display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:5px;cursor:pointer;white-space:nowrap}
+.tnode:hover{background:var(--panel-2)}
+.tnode.sel{background:var(--accent-weak);color:var(--accent);font-weight:600}
+.tnode .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.tnode .id{color:var(--muted);font-size:11px}
+.progress{padding:10px 12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.bar{height:6px;background:var(--panel-2);border-radius:3px;overflow:hidden;margin-top:4px}
+.bar>i{display:block;height:100%;background:var(--accent)}
+/* center */
+.center{display:flex;flex-direction:column;background:var(--bg)}
+.scrhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.scrhead h2{margin:0;font-size:15px}
+.scrhead .meta{color:var(--muted);font-size:12px}
+.tabs{display:flex;gap:2px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.tab{padding:8px 12px;border:0;background:none;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 16px;font-size:12px;color:var(--muted)}
+.legend{display:flex;gap:10px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.stage{padding:0 16px 16px;flex:1;overflow:auto}
+.capwrap{position:relative;transform-origin:0 0}
+.capture{position:relative;width:900px;height:560px;background:var(--legacy-bg);border:1px solid var(--legacy-line);box-shadow:0 2px 10px rgba(0,0,0,.08);font-family:"Gulim","Malgun Gothic",sans-serif;font-size:12px;color:#222}
+.capture .lg{position:absolute}
+.lg-title{left:0;top:0;width:900px;height:30px;background:var(--legacy-title);color:#fff;padding:6px 10px;font-weight:700}
+.lg-panel{background:var(--legacy-panel);border:1px solid var(--legacy-line)}
+.lg-btn{background:linear-gradient(#fdfdfd,#d7dce4);border:1px solid #7d889a;border-radius:2px;text-align:center;line-height:22px;height:24px}
+.lg-in{background:#fff;border:1px solid #8a94a6;height:22px;padding:2px 4px;color:#555}
+.lg-lab{line-height:22px}
+.lg-grid{background:#fff;border:1px solid #8a94a6;overflow:hidden}
+.lg-grid table{border-collapse:collapse;width:100%;font-size:11px}
+.lg-grid th{background:#c9d2df;border:1px solid #9aa5b5;padding:3px;font-weight:400}
+.lg-grid td{border:1px solid #d5dbe4;padding:3px;text-align:center;background:#fff}
+.lg-grid tr:nth-child(odd) td{background:#f5f7fa}
+.hs{position:absolute;border:2px solid var(--hc);background:color-mix(in srgb,var(--hc) 12%,transparent);border-radius:3px;cursor:pointer;transition:background .12s}
+.hs:hover{background:color-mix(in srgb,var(--hc) 28%,transparent)}
+.hs.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--hc) 45%,transparent);background:color-mix(in srgb,var(--hc) 30%,transparent)}
+.hs.unmatched{border-style:dashed}
+.hs b{position:absolute;left:-9px;top:-9px;min-width:18px;height:18px;border-radius:9px;background:var(--hc);color:#fff;font:700 11px/18px system-ui;text-align:center;padding:0 4px}
+.hs .tip{display:none;position:absolute;left:0;top:calc(100% + 6px);z-index:5;background:var(--tip-bg);color:var(--tip-fg);padding:6px 8px;border-radius:6px;font:12px/1.4 "Malgun Gothic",system-ui;white-space:nowrap}
+.hs:hover .tip{display:block}
+.hidebadge .hs b{display:none}
+table.list{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);font-size:12px}
+table.list th{background:var(--panel-2);text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);color:var(--muted);font-weight:600}
+table.list td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.list tr.click{cursor:pointer}
+table.list tr.click:hover td{background:var(--panel-2)}
+.badge{display:inline-block;padding:0 6px;border-radius:4px;font-size:11px;color:#fff}
+/* right */
+.detail{background:var(--panel);border-left:1px solid var(--line)}
+.empty{padding:40px 24px;color:var(--muted);text-align:center}
+.elhead{padding:14px 16px;border-bottom:1px solid var(--line)}
+.elhead h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.kv{display:grid;grid-template-columns:80px 1fr;gap:3px 8px;font-size:12px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;word-break:break-all}
+.mono{font-family:Consolas,"D2Coding",monospace}
+.rtabs{display:flex;border-bottom:1px solid var(--line);padding:0 8px;position:sticky;top:0;background:var(--panel);z-index:2}
+.rbody{padding:12px 16px}
+.flow{position:relative}
+.step{display:grid;grid-template-columns:62px 1fr;gap:8px;align-items:stretch}
+.lane{font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--lc);text-align:right;padding-top:9px}
+.card{border:1px solid var(--line);border-left:4px solid var(--lc);border-radius:6px;padding:6px 10px;background:var(--panel-2);cursor:pointer}
+.card:hover{border-color:var(--lc)}
+.card.sel{outline:2px solid var(--lc);outline-offset:1px}
+.card .t{font-weight:600;font-size:12.5px}
+.card .s{color:var(--muted);font-size:11.5px}
+.crud{display:inline-block;margin-left:4px;padding:0 5px;border-radius:3px;font:700 10px/16px system-ui;color:#fff}
+.crud.C{background:#12a150}.crud.R{background:#2f6fed}.crud.U{background:#d97706}.crud.D{background:#dc2626}
+.edge{display:grid;grid-template-columns:62px 1fr;gap:8px;height:24px}
+.edge .ln{position:relative;margin-left:16px}
+.edge .ln:before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--muted)}
+.edge.dashed .ln:before{border-left-style:dashed}
+.edge .ln>span{position:absolute;left:10px;top:3px;font-size:10px;color:var(--muted);white-space:nowrap}
+.src{font-size:10px;padding:0 5px;border-radius:3px;border:1px solid currentColor}
+.src.static{color:#2f6fed}.src.dynamic{color:#12a150}.src.manual{color:#8b5cf6}
+.snip{margin-top:12px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.snip .h{padding:6px 10px;background:var(--panel-2);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.snip pre{margin:0;padding:10px;background:var(--code-bg);color:var(--code-text);font:12px/1.5 Consolas,"D2Coding",monospace;overflow:auto;max-height:260px}
+.note{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-fg);border-radius:6px;padding:8px 10px;font-size:12px;margin-bottom:10px}
+.sec{margin-bottom:16px}
+.sec h4{margin:0 0 6px;font-size:12px;color:var(--muted)}
+.item{border:1px solid var(--line);border-radius:6px;padding:7px 10px;margin-bottom:6px;font-size:12px;background:var(--panel-2)}
+.item .row{display:flex;justify-content:space-between;gap:8px}
+@media (max-width:1100px){
+  html,body{height:auto}
+  .app{height:auto;grid-template-columns:minmax(0,1fr)}
+  .main{overflow:visible}
+  .center,.detail{min-width:0}
+  .main{grid-template-columns:minmax(0,1fr)}
+  .tree{max-height:260px;border-right:0;border-bottom:1px solid var(--line)}
+  .detail{border-left:0;border-top:1px solid var(--line)}
+  header .crumb{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <span class="logo">PMS-X</span>
+    <span class="crumb">○○공사 차세대 SI › As-Is 분석 › 화면 분석 뷰어</span>
+    <span class="sp"></span>
+    <span class="chip">목업 · 샘플 데이터</span>
+    <button class="iconbtn" id="themeBtn" title="테마 전환">◐</button>
+  </header>
+  <div class="main">
+    <aside class="tree">
+      <div class="search"><input id="q" placeholder="화면·버튼·함수·테이블 검색"></div>
+      <div class="nodes" id="tree"></div>
+      <div class="progress">인사시스템 분석 진척 <b id="pct"></b><div class="bar"><i id="pctbar"></i></div></div>
+    </aside>
+    <section class="center">
+      <div class="scrhead" id="scrhead"></div>
+      <div class="tabs" id="ctabs">
+        <button class="tab on" data-t="cap">캡처</button>
+        <button class="tab" data-t="comp">컴포넌트 목록</button>
+        <button class="tab" data-t="evt">이벤트 목록</button>
+        <button class="tab" data-t="crud">CRUD</button>
+      </div>
+      <div class="toolbar" id="toolbar">
+        <div class="legend" id="legend"></div>
+        <label><input type="checkbox" id="onlyBtn"> 버튼만</label>
+        <label><input type="checkbox" id="noBadge"> 번호 숨김</label>
+        <span>점선 = 미확정 매칭</span>
+      </div>
+      <div class="stage" id="stage"></div>
+    </section>
+    <aside class="detail" id="detail"></aside>
+  </div>
+</div>
+
+<script>
+const TYPE = {
+  button:{label:'버튼',color:'var(--c-button)'}, input:{label:'입력',color:'var(--c-input)'},
+  combo:{label:'콤보',color:'var(--c-combo)'}, grid:{label:'그리드',color:'var(--c-grid)'},
+  popup:{label:'팝업호출',color:'var(--c-popup)'}
+};
+const LANE = {
+  UI:{label:'화면',c:'var(--l-ui)'}, FRONT:{label:'프론트',c:'var(--l-front)'}, API:{label:'API',c:'var(--l-api)'},
+  SERVER:{label:'서버',c:'var(--l-server)'}, SQL:{label:'SQL',c:'var(--l-sql)'}, DB:{label:'테이블',c:'var(--l-db)'},
+  POST:{label:'후처리',c:'var(--l-post)'}
+};
+const SRC = {static:'정적',dynamic:'동적',manual:'수동'};
+
+const SEL_SQL = `<select id="selectEmpList" resultType="EmpVO">
+  SELECT E.EMP_NO, E.EMP_NM, D.DEPT_NM, E.HIRE_DT,
+         FN_CODE_NM('POS', E.POS_CD) AS POS_NM
+    FROM TB_EMP E
+    JOIN TB_DEPT D ON D.DEPT_CD = E.DEPT_CD
+   WHERE E.USE_YN = 'Y'
+  <if test="empNm != null"> AND E.EMP_NM LIKE '%'||#{empNm}||'%'</if>
+  <if test="deptCd != null"> AND E.DEPT_CD = #{deptCd}</if>
+   ORDER BY E.EMP_NO
+</select>`;
+
+const SCREENS = {
+  HR0101:{
+    id:'HR0101', name:'사원관리', path:'인사시스템 › 인사관리 › 사원관리', tech:'JSP + jQuery / Spring + MyBatis',
+    file:'/WEB-INF/jsp/hr/emp/HR0101.jsp', status:'review', owner:'김분석', reviewer:'이PL', captured:'2026-10-02 (3회차)',
+    elements:[
+      {n:1,id:'txtEmpNm',label:'사원명',type:'input',box:[90,46,150,24],bind:'검색조건 empNm',
+        events:[{ev:'keydown(Enter)',fn:'fn_search()',ref:'btnSearch'}]},
+      {n:2,id:'cboDept',label:'부서',type:'combo',box:[300,46,140,24],bind:'검색조건 deptCd · 코드 TB_DEPT',
+        events:[{ev:'onload(화면 로드)',fn:'fn_initCombo()',
+          flow:[
+            ['UI','화면 로드','$(document).ready',null],
+            ['FRONT','fn_initCombo()','HR0101.js:12',{lang:'js',file:'/js/hr/HR0101.js',line:12,code:`function fn_initCombo(){\n  gfn_setCombo('#cboDept', '/cmm/code/dept.do', {useYn:'Y'}, '전체');\n}`},{s:'static',c:.98}],
+            ['FRONT','gfn_setCombo()','공통 /js/cmm/common.js',null,{s:'static',c:.98}],
+            ['API','GET /cmm/code/dept.do','CmmCodeController',null,{s:'dynamic',c:1}],
+            ['SERVER','CmmCodeService.selectDeptList','',null,{s:'static',c:.95}],
+            ['SQL','CmmCodeMapper.selectDeptList','SELECT',null,{s:'static',c:.95}],
+            ['DB','TB_DEPT','DEPT_CD, DEPT_NM, USE_YN',null,{s:'static',c:.95},'R']
+          ]}]},
+      {n:3,id:'calHireDt',label:'입사일(기간)',type:'input',box:[530,46,210,24],bind:'검색조건 hireFrom~hireTo',events:[]},
+      {n:4,id:'btnSearch',label:'조회',type:'button',box:[690,84,60,24],bind:'-',
+        events:[{ev:'click',fn:'fn_search()',
+          flow:[
+            ['UI','[조회] 클릭','btnSearch.click',null],
+            ['FRONT','fn_search()','HR0101.js:20',{lang:'js',file:'/js/hr/HR0101.js',line:20,code:`function fn_search(){\n  var param = $('#frmSearch').serializeObject();\n  gfn_ajax('/hr/emp/list.do', param, function(res){\n    gfn_bindGrid('#grdEmp', res.list);\n    $('#totCnt').text(res.list.length);\n  });\n}`},{s:'static',c:.99}],
+            ['API','POST /hr/emp/list.do','param: empNm, deptCd, hireFrom, hireTo',null,{s:'dynamic',c:1}],
+            ['SERVER','EmpController.selectEmpList','@RequestMapping("/hr/emp/list.do")',{lang:'java',file:'src/main/java/kr/go/hr/emp/web/EmpController.java',line:41,code:`@RequestMapping("/hr/emp/list.do")\npublic ModelAndView selectEmpList(@RequestBody EmpVO vo) {\n    List<EmpVO> list = empService.selectEmpList(vo);\n    return new ModelAndView("jsonView", "list", list);\n}`},{s:'static',c:.99}],
+            ['SERVER','EmpServiceImpl.selectEmpList','',null,{s:'static',c:.99}],
+            ['SQL','EmpMapper.selectEmpList','SELECT · EmpMapper.xml',{lang:'sql',file:'src/main/resources/mapper/hr/EmpMapper.xml',line:8,code:SEL_SQL},{s:'static',c:.99}],
+            ['DB','TB_EMP','EMP_NO, EMP_NM, DEPT_CD, HIRE_DT, POS_CD, USE_YN',null,{s:'static',c:.99},'R'],
+            ['DB','TB_DEPT','DEPT_CD, DEPT_NM',null,{s:'static',c:.99},'R'],
+            ['POST','그리드 바인딩 + 건수 표시','grdEmp ← res.list',null,{s:'static',c:.9}]
+          ]}]},
+      {n:5,id:'btnNew',label:'신규',type:'button',box:[690,520,60,24],bind:'-',
+        events:[{ev:'click',fn:'fn_new()',
+          flow:[
+            ['UI','[신규] 클릭','btnNew.click',null],
+            ['FRONT','fn_new()','HR0101.js:31',{lang:'js',file:'/js/hr/HR0101.js',line:31,code:`function fn_new(){\n  gfn_addRow('#grdEmp', {useYn:'Y', hireDt: gfn_today()});\n}`},{s:'static',c:.99}],
+            ['POST','그리드 행 추가 (서버 호출 없음)','rowStatus = I',null,{s:'static',c:.95}]
+          ]}]},
+      {n:6,id:'btnSave',label:'저장',type:'button',box:[756,520,60,24],bind:'-',
+        events:[{ev:'click',fn:'fn_save()',
+          flow:[
+            ['UI','[저장] 클릭','btnSave.click',null],
+            ['FRONT','fn_save()','HR0101.js:36',{lang:'js',file:'/js/hr/HR0101.js',line:36,code:`function fn_save(){\n  var rows = gfn_getChangedRows('#grdEmp');\n  if(rows.length == 0){ alert('변경된 내용이 없습니다.'); return; }\n  if(!gfn_validate(rows, ['empNm','deptCd','hireDt'])) return;\n  if(!confirm('저장하시겠습니까?')) return;\n  gfn_ajax('/hr/emp/save.do', {rows: rows}, function(){\n    alert('저장되었습니다.');\n    fn_search();\n  });\n}`},{s:'static',c:.99}],
+            ['FRONT','필수값 검증','사원명 · 부서 · 입사일',null,{s:'static',c:.95}],
+            ['FRONT','확인창','“저장하시겠습니까?”',null,{s:'static',c:.95}],
+            ['API','POST /hr/emp/save.do','rows[] (rowStatus I/U) · 수집 시 차단됨',null,{s:'dynamic',c:1}],
+            ['SERVER','EmpController.saveEmp','',null,{s:'static',c:.99}],
+            ['SERVER','EmpServiceImpl.saveEmp','@Transactional · rowStatus 분기',{lang:'java',file:'src/main/java/kr/go/hr/emp/service/impl/EmpServiceImpl.java',line:58,code:`@Transactional\npublic void saveEmp(List<EmpVO> rows) {\n    for (EmpVO r : rows) {\n        if ("I".equals(r.getRowStatus())) {\n            empMapper.insertEmp(r);\n        } else if ("U".equals(r.getRowStatus())) {\n            empMapper.updateEmp(r);\n        }\n        empMapper.insertEmpHist(r);   // 변경 이력\n    }\n}`},{s:'static',c:.99}],
+            ['SQL','EmpMapper.insertEmp / updateEmp','INSERT · UPDATE',null,{s:'static',c:.99}],
+            ['DB','TB_EMP','EMP_NM, DEPT_CD, HIRE_DT, POS_CD',null,{s:'static',c:.99},'CU'],
+            ['SQL','EmpMapper.insertEmpHist','INSERT',null,{s:'static',c:.99}],
+            ['DB','TB_EMP_HIST','EMP_NO, CHG_DT, CHG_USER, BEFORE_JSON',null,{s:'static',c:.99},'C'],
+            ['POST','완료 메시지 → 재조회','fn_search() 호출 (④ 조회와 동일 흐름)',null,{s:'static',c:.95}]
+          ]}],
+        note:'입사일이 미래 날짜여도 저장됨 — 업무 규칙상 오류 (SR-2026-0142에서 수정 요청)'},
+      {n:7,id:'btnDelete',label:'삭제',type:'button',box:[822,520,60,24],bind:'-',
+        events:[{ev:'click',fn:'fn_delete()',
+          flow:[
+            ['UI','[삭제] 클릭','btnDelete.click · 위험 버튼으로 동적 클릭 제외',null],
+            ['FRONT','fn_delete()','HR0101.js:52',{lang:'js',file:'/js/hr/HR0101.js',line:52,code:`function fn_delete(){\n  var row = gfn_getSelectedRow('#grdEmp');\n  if(!row){ alert('삭제할 사원을 선택하세요.'); return; }\n  if(!confirm('삭제하시겠습니까?')) return;\n  gfn_ajax('/hr/emp/delete.do', {empNo: row.empNo}, fn_search);\n}`},{s:'static',c:.99}],
+            ['API','POST /hr/emp/delete.do','정적 분석으로만 추정 (클릭 안 함)',null,{s:'static',c:.85},null,true],
+            ['SERVER','EmpController.deleteEmp','',null,{s:'static',c:.95}],
+            ['SQL','EmpMapper.deleteEmp','UPDATE … SET USE_YN = \'N\' (논리 삭제)',{lang:'sql',file:'src/main/resources/mapper/hr/EmpMapper.xml',line:61,code:`<update id="deleteEmp">\n  UPDATE TB_EMP\n     SET USE_YN = 'N', UPD_DT = SYSDATE\n   WHERE EMP_NO = #{empNo}\n</update>`},{s:'static',c:.95}],
+            ['DB','TB_EMP','USE_YN, UPD_DT',null,{s:'static',c:.95},'U'],
+            ['POST','재조회','fn_search()',null,{s:'static',c:.9}]
+          ]}]},
+      {n:8,id:'btnExcel',label:'엑셀',type:'button',box:[756,84,60,24],bind:'-',
+        events:[{ev:'click',fn:'fn_excel()',
+          flow:[
+            ['UI','[엑셀] 클릭','btnExcel.click',null],
+            ['FRONT','fn_excel()','HR0101.js:60',null,{s:'static',c:.99}],
+            ['API','GET /hr/emp/excel.do','',null,{s:'dynamic',c:1}],
+            ['SERVER','EmpController.excelEmp → ExcelView','',null,{s:'static',c:.95}],
+            ['SQL','EmpMapper.selectEmpList','조회와 같은 SQL 재사용',null,{s:'static',c:.95}],
+            ['DB','TB_EMP','',null,{s:'static',c:.95},'R'],
+            ['DB','TB_DEPT','',null,{s:'static',c:.95},'R'],
+            ['POST','엑셀 파일 다운로드','사원목록_yyyyMMdd.xlsx',null,{s:'dynamic',c:1}]
+          ]}]},
+      {n:9,id:'btnEmpPop',label:'사원찾기(돋보기)',type:'popup',box:[244,46,24,24],bind:'-',
+        events:[{ev:'click',fn:'fn_openEmpPopup()',
+          flow:[
+            ['UI','[돋보기] 클릭','btnEmpPop.click',null],
+            ['FRONT','fn_openEmpPopup()','HR0101.js:70',{lang:'js',file:'/js/hr/HR0101.js',line:70,code:`function fn_openEmpPopup(){\n  gfn_popup('/hr/emp/HR0101P01.do', 600, 450, function(ret){\n    $('#txtEmpNm').val(ret.empNm);\n    fn_search();\n  });\n}`},{s:'static',c:.99}],
+            ['UI','팝업: HR0101P01 사원검색','화면 이동 맵에 연결됨',null,{s:'dynamic',c:1}],
+            ['POST','선택값 → 사원명 입력 → 재조회','',null,{s:'static',c:.9}]
+          ]}]},
+      {n:10,id:'grdEmp',label:'사원 목록 그리드',type:'grid',box:[16,148,868,360],bind:'ds_emp: EMP_NO, EMP_NM, DEPT_NM, POS_NM, HIRE_DT',
+        events:[{ev:'dblclick',fn:'fn_grdDblClick()',
+          flow:[
+            ['UI','행 더블클릭','grdEmp.dblclick',null],
+            ['FRONT','fn_grdDblClick()','HR0101.js:80',null,{s:'static',c:.9}],
+            ['UI','팝업: HR0102 사원상세','',null,{s:'manual',c:1}]
+          ]}]},
+      {n:11,id:'btnPrint',label:'인쇄',type:'button',box:[624,84,60,24],bind:'-',unmatched:true,events:[]}
+    ],
+    links:[
+      {k:'요구사항',id:'REQ-HR-012',t:'사원 정보 등록·수정·삭제',el:'btnSave'},
+      {k:'SR',id:'SR-2026-0142',t:'사원 저장 시 미래 입사일 입력 가능',el:'btnSave',st:'처리중'},
+      {k:'결함',id:'DEF-0031',t:'삭제 후 건수 표시 미갱신',el:'btnDelete',st:'조치완료'},
+      {k:'테스트',id:'TC-HR-0101-03',t:'사원 저장 정상/오류 케이스',el:'btnSave',st:'Pass'}
+    ]
+  }
+};
+
+const TREE = [
+  {t:'인사시스템',c:[
+    {t:'인사관리',c:[
+      {t:'사원관리',id:'HR0101',st:'review',c:[{t:'사원검색 (팝업)',id:'HR0101P01',st:'auto'}]},
+      {t:'사원상세 (팝업)',id:'HR0102',st:'auto'},
+      {t:'발령관리',id:'HR0103',st:'done'},
+      {t:'부서관리',id:'HR0104',st:'done'}]},
+    {t:'근태관리',c:[{t:'근태신청',id:'HR0201',st:'done'},{t:'근태승인',id:'HR0202',st:'auto'}]}]},
+  {t:'급여시스템',c:[
+    {t:'급여계산',c:[{t:'월급여계산',id:'PY0101',st:'auto'},{t:'급여명세',id:'PY0102',st:'auto'}]}]}
+];
+const ST = {auto:{l:'자동수집',c:'st-auto',dot:'#94a3b8'},review:{l:'검토중',c:'st-review',dot:'#d97706'},done:{l:'확정',c:'st-done',dot:'#12a150'}};
+
+let cur = 'HR0101', selEl = null, selStep = 0, ctab = 'cap', rtab = 'flow';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- tree ---------- */
+function renderTree(){
+  const q = $('#q').value.trim().toLowerCase();
+  const match = n => !q || n.t.toLowerCase().includes(q) || (n.id||'').toLowerCase().includes(q) ||
+    (SCREENS[n.id] && SCREENS[n.id].elements.some(e => (e.label+e.id+e.events.map(v=>v.fn).join()).toLowerCase().includes(q)))
+    || (n.c||[]).some(match);
+  const build = list => '<ul>' + list.filter(match).map(n => {
+    const st = n.st ? ST[n.st] : null;
+    return `<li><div class="tnode ${n.id===cur?'sel':''}" data-id="${n.id||''}">
+      ${st ? `<span class="dot" style="background:${st.dot}" title="${st.l}"></span>` : '▾'}
+      <span>${esc(n.t)}</span>${n.id?`<span class="id">${n.id}</span>`:''}</div>
+      ${n.c ? build(n.c) : ''}</li>`;
+  }).join('') + '</ul>';
+  $('#tree').innerHTML = build(TREE);
+  let all=0, done=0; const walk = l => l.forEach(n => { if(n.st){all++; if(n.st==='done')done++;} if(n.c) walk(n.c); });
+  walk(TREE.slice(0,1)); const p = Math.round(done/all*100);
+  $('#pct').textContent = `${done}/${all} 화면 (${p}%)`; $('#pctbar').style.width = p+'%';
+}
+$('#tree').addEventListener('click', e => {
+  const n = e.target.closest('.tnode'); if(!n || !n.dataset.id) return;
+  cur = n.dataset.id; selEl = null; selStep = 0; renderAll();
+});
+$('#q').addEventListener('input', renderTree);
+
+/* ---------- center ---------- */
+function renderHead(){
+  const s = SCREENS[cur];
+  if(!s){ $('#scrhead').innerHTML = `<h2>${cur}</h2><span class="meta">이 목업에는 HR0101 사원관리 화면만 샘플 데이터가 있습니다.</span>`; return; }
+  const st = ST[s.status];
+  $('#scrhead').innerHTML = `<h2>${s.name}</h2><span class="chip mono">${s.id}</span>
+    <span class="chip ${st.c}">${st.l}</span>
+    <span class="meta">${esc(s.path)} · ${esc(s.tech)} · 담당 ${s.owner} / 검토 ${s.reviewer} · 캡처 ${s.captured}</span>`;
+}
+function legacyScreen(){
+  const rows = [['20190012','홍길동','인사팀','과장','2019-03-02'],['20200105','김영희','재무팀','대리','2020-07-01'],
+    ['20210033','이철수','정보화팀','주임','2021-01-04'],['20220218','박민수','인사팀','사원','2022-09-15'],
+    ['20230007','최지은','총무팀','사원','2023-02-01'],['20240121','정하늘','정보화팀','사원','2024-07-08']];
+  return `
+  <div class="lg lg-title">■ 사원관리 [HR0101]</div>
+  <div class="lg lg-panel" style="left:8px;top:38px;width:884px;height:40px"></div>
+  <div class="lg lg-lab" style="left:40px;top:46px">사원명</div><div class="lg lg-in" style="left:90px;top:46px;width:150px"></div>
+  <div class="lg lg-btn" style="left:244px;top:46px;width:24px">🔍</div>
+  <div class="lg lg-lab" style="left:268px;top:46px;width:30px;text-align:right">부서</div><div class="lg lg-in" style="left:300px;top:46px;width:140px">전체 ▼</div>
+  <div class="lg lg-lab" style="left:476px;top:46px">입사일</div><div class="lg lg-in" style="left:530px;top:46px;width:210px">2019-01-01 ~ 2026-10-14</div>
+  <div class="lg lg-lab" style="left:16px;top:84px">▶ 사원 목록 (총 <b>6</b>건)</div>
+  <div class="lg lg-btn" style="left:624px;top:84px;width:60px">인쇄</div>
+  <div class="lg lg-btn" style="left:690px;top:84px;width:60px">조회</div>
+  <div class="lg lg-btn" style="left:756px;top:84px;width:60px">엑셀</div>
+  <div class="lg lg-grid" style="left:16px;top:148px;width:868px;height:360px"><table>
+    <tr><th>No</th><th>사원번호</th><th>사원명</th><th>부서</th><th>직위</th><th>입사일</th></tr>
+    ${rows.map((r,i)=>`<tr><td>${i+1}</td>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+  </table></div>
+  <div class="lg lg-btn" style="left:690px;top:520px;width:60px">신규</div>
+  <div class="lg lg-btn" style="left:756px;top:520px;width:60px">저장</div>
+  <div class="lg lg-btn" style="left:822px;top:520px;width:60px">삭제</div>`;
+}
+function renderCenter(){
+  const s = SCREENS[cur];
+  $('#toolbar').style.display = ctab==='cap' ? '' : 'none';
+  $('#legend').innerHTML = Object.values(TYPE).map(t=>`<span><i style="background:${t.color}"></i>${t.label}</span>`).join('');
+  if(!s){ $('#stage').innerHTML = `<div class="empty">샘플 데이터 없음 — 좌측에서 <b>사원관리 (HR0101)</b>를 선택하세요.</div>`; return; }
+  if(ctab==='cap'){
+    const only = $('#onlyBtn').checked;
+    const hs = s.elements.filter(e => !only || e.type==='button' || e.type==='popup').map(e => {
+      const [x,y,w,h] = e.box;
+      return `<div class="hs ${e.id===selEl?'sel':''} ${e.unmatched?'unmatched':''}" data-el="${e.id}"
+        style="--hc:${TYPE[e.type].color};left:${x-3}px;top:${y-3}px;width:${w+6}px;height:${h+6}px">
+        <b>${e.n}</b><span class="tip">${esc(e.label)} · ${e.id}${e.events[0]?' → '+e.events[0].fn:''}${e.unmatched?' (핸들러 미매칭)':''}</span></div>`;
+    }).join('');
+    $('#stage').innerHTML = `<div class="capwrap ${$('#noBadge').checked?'hidebadge':''}" id="capwrap"><div class="capture">${legacyScreen()}${hs}</div></div>`;
+    fitCapture();
+  } else if(ctab==='comp'){
+    $('#stage').innerHTML = `<table class="list"><tr><th>#</th><th>ID</th><th>라벨</th><th>타입</th><th>바인딩</th><th>이벤트</th></tr>
+      ${s.elements.map(e=>`<tr class="click" data-el="${e.id}"><td>${e.n}</td><td class="mono">${e.id}</td><td>${esc(e.label)}${e.unmatched?' <span class="chip st-review">미매칭</span>':''}</td>
+      <td><span class="badge" style="background:${TYPE[e.type].color}">${TYPE[e.type].label}</span></td><td>${esc(e.bind)}</td><td>${e.events.length}</td></tr>`).join('')}</table>`;
+  } else if(ctab==='evt'){
+    const rows = s.elements.flatMap(e => e.events.map(v => {
+      const f = v.flow||[]; const api = f.filter(x=>x[0]==='API').map(x=>x[1]).join('<br>');
+      const tb = f.filter(x=>x[0]==='DB').map(x=>`${x[1]}${(x[5]||'').split('').map(c=>`<span class="crud ${c}">${c}</span>`).join('')}`).join('<br>');
+      return `<tr class="click" data-el="${e.id}"><td>${e.n}</td><td>${esc(e.label)}</td><td>${esc(v.ev)}</td><td class="mono">${esc(v.fn)}</td><td class="mono">${api||'-'}</td><td>${tb||'-'}</td></tr>`;
+    })).join('');
+    $('#stage').innerHTML = `<table class="list"><tr><th>#</th><th>요소</th><th>이벤트</th><th>핸들러</th><th>API</th><th>테이블</th></tr>${rows}</table>`;
+  } else {
+    const tables = {}; const els = [];
+    s.elements.forEach(e => e.events.forEach(v => (v.flow||[]).filter(x=>x[0]==='DB').forEach(x => {
+      tables[x[1]] = 1; if(!els.includes(e)) els.push(e);
+    })));
+    const tl = Object.keys(tables);
+    const cell = (e,t) => [...new Set(e.events.flatMap(v=>(v.flow||[]).filter(x=>x[0]==='DB'&&x[1]===t).flatMap(x=>(x[5]||'').split(''))))].map(c=>`<span class="crud ${c}">${c}</span>`).join('');
+    $('#stage').innerHTML = `<table class="list"><tr><th>요소 \\ 테이블</th>${tl.map(t=>`<th class="mono">${t}</th>`).join('')}</tr>
+      ${els.map(e=>`<tr class="click" data-el="${e.id}"><td>${e.n}. ${esc(e.label)}</td>${tl.map(t=>`<td>${cell(e,t)}</td>`).join('')}</tr>`).join('')}</table>`;
+  }
+}
+function fitCapture(){
+  const w = $('#capwrap'); if(!w) return;
+  const avail = $('#stage').clientWidth - 32; const k = Math.min(1, avail/900);
+  w.style.transform = `scale(${k})`; w.style.height = (560*k)+'px'; w.style.width = (900*k)+'px';
+}
+new ResizeObserver(fitCapture).observe(document.querySelector('.center'));
+$('#stage').addEventListener('click', e => {
+  const t = e.target.closest('[data-el]'); if(!t) return;
+  selEl = t.dataset.el; selStep = 0; rtab = 'flow'; renderCenter(); renderDetail();
+});
+$('#ctabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if(!b) return; ctab = b.dataset.t;
+  document.querySelectorAll('#ctabs .tab').forEach(x=>x.classList.toggle('on', x===b)); renderCenter();
+});
+$('#onlyBtn').addEventListener('change', renderCenter);
+$('#noBadge').addEventListener('change', renderCenter);
+
+/* ---------- detail ---------- */
+function renderDetail(){
+  const s = SCREENS[cur]; const d = $('#detail');
+  if(!s || !selEl){
+    d.innerHTML = `<div class="empty">화면 캡처에서 <b>번호가 붙은 요소</b>를 클릭하면<br>기능 · 워크플로우 · 함수 · 사용 테이블이 여기에 표시됩니다.<br><br>추천: <b>⑥ 저장</b> 버튼</div>`; return;
+  }
+  const e = s.elements.find(x=>x.id===selEl); const ev = e.events[0]; const flow = ev && ev.flow || [];
+  const head = `<div class="elhead"><h3><span class="badge" style="background:${TYPE[e.type].color}">${e.n}</span>${esc(e.label)}
+      <span class="chip">${TYPE[e.type].label}</span></h3>
+    <dl class="kv"><dt>요소 ID</dt><dd class="mono">${e.id}</dd><dt>바인딩</dt><dd>${esc(e.bind)}</dd>
+    <dt>이벤트</dt><dd class="mono">${e.events.length ? e.events.map(v=>esc(v.ev)+' → '+esc(v.fn)).join('<br>') : '없음'}</dd>
+    <dt>좌표</dt><dd class="mono">x ${e.box[0]}, y ${e.box[1]}, ${e.box[2]}×${e.box[3]}</dd></dl></div>`;
+  const tabs = `<div class="rtabs">${[['flow','워크플로우'],['tbl','사용 테이블'],['hist','연결 이력·메모']].map(([k,l])=>`<button class="tab ${rtab===k?'on':''}" data-r="${k}">${l}</button>`).join('')}</div>`;
+  let body = '';
+  if(rtab==='flow'){
+    if(e.unmatched) body += `<div class="note">이 버튼은 캡처에서 발견됐지만 소스에서 이벤트 핸들러를 찾지 못했습니다. 분석자가 핸들러를 지정해 주세요. (핫스팟 편집기)</div>`;
+    if(e.note) body += `<div class="note">📝 ${esc(e.note)}</div>`;
+    if(!flow.length && !e.unmatched) body += `<div class="empty" style="padding:20px">연결된 동작이 없는 입력 요소입니다.</div>`;
+    body += '<div class="flow">' + flow.map((x,i) => {
+      const [lane,t,sub,src,edge,crud,dashed] = x; const L = LANE[lane];
+      const ed = i>0 && edge ? `<div class="edge ${dashed||edge.c<.9?'dashed':''}"><span></span><div class="ln"><span><span class="src ${edge.s}">${SRC[edge.s]}</span> 신뢰도 ${Math.round(edge.c*100)}%</span></div></div>` : (i>0?'<div class="edge"><span></span><div class="ln"></div></div>':'');
+      return `${ed}<div class="step" style="--lc:${L.c}"><div class="lane">${L.label}</div>
+        <div class="card ${i===selStep?'sel':''}" data-step="${i}"><div class="t mono">${esc(t)}${(crud||'').split('').map(c=>`<span class="crud ${c}">${c}</span>`).join('')}</div>
+        ${sub?`<div class="s">${esc(sub)}</div>`:''}</div></div>`;
+    }).join('') + '</div>';
+    const st = flow[selStep]; const src = st && st[3];
+    if(st) body += src ? `<div class="snip"><div class="h"><span class="mono">${esc(src.file)}:${src.line}</span><span>${src.lang.toUpperCase()}</span></div><pre>${esc(src.code)}</pre></div>`
+                       : `<div class="snip"><div class="h"><span>${esc(st[1])}</span></div><pre>// 노드를 클릭하면 소스가 표시됩니다.\n// (이 노드는 목업에 소스 샘플이 없습니다)</pre></div>`;
+  } else if(rtab==='tbl'){
+    const dbs = flow.filter(x=>x[0]==='DB');
+    body = dbs.length ? dbs.map(x=>`<div class="item"><div class="row"><b class="mono">${x[1]}</b><span>${(x[5]||'').split('').map(c=>`<span class="crud ${c}">${c}</span>`).join('')}</span></div>
+      <div class="s mono" style="color:var(--muted)">${esc(x[2])}</div></div>`).join('') +
+      `<div class="sec" style="margin-top:12px"><h4>관계</h4><div class="item mono">TB_EMP.DEPT_CD → TB_DEPT.DEPT_CD <span class="chip">추정 · JOIN 23회</span></div>
+       <div class="item mono">TB_EMP_HIST.EMP_NO → TB_EMP.EMP_NO <span class="chip st-done">FK 확정</span></div></div>`
+      : `<div class="empty" style="padding:20px">사용 테이블 없음</div>`;
+  } else {
+    const ls = s.links.filter(l=>l.el===e.id);
+    body = `<div class="sec"><h4>연결된 요구사항 · SR · 결함 · 테스트</h4>${ls.length ? ls.map(l=>`<div class="item"><div class="row"><span><span class="chip">${l.k}</span> <b class="mono">${l.id}</b></span><span>${l.st||''}</span></div><div>${esc(l.t)}</div></div>`).join('') : '<div class="s" style="color:var(--muted)">연결 없음</div>'}</div>
+      <div class="sec"><h4>업무 규칙 메모</h4><div class="item">${e.note ? esc(e.note) : '—'}<div style="color:var(--muted);font-size:11px;margin-top:4px">김분석 · 2026-10-05</div></div></div>
+      <div class="sec"><h4>분석 이력</h4><div class="item">2026-10-02 자동수집 (3회차)</div><div class="item">2026-10-05 김분석 — 메모 추가, 상태 → 검토중</div></div>`;
+  }
+  d.innerHTML = head + tabs + `<div class="rbody">${body}</div>`;
+}
+$('#detail').addEventListener('click', e => {
+  const r = e.target.closest('[data-r]'); if(r){ rtab = r.dataset.r; renderDetail(); return; }
+  const c = e.target.closest('[data-step]'); if(c){ selStep = +c.dataset.step; renderDetail(); }
+});
+
+$('#themeBtn').addEventListener('click', () => {
+  const r = document.documentElement; const dark = r.dataset.theme ? r.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = dark ? 'light' : 'dark';
+});
+
+function renderAll(){ renderTree(); renderHead(); renderCenter(); renderDetail(); }
+selEl = 'btnSave'; selStep = 1;
+renderAll();
+</script>
+</body>
+</html>

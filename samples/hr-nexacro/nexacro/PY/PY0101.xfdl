@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PY0101" width="1280" height="720" titletext="급여계산" onload="form_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="sta_title" taborder="0" text="급여계산" left="20" top="10" width="300" height="30" cssclass="sta_WF_title"/>
+        <Div id="div_search" taborder="1" left="20" top="50" width="1240" height="50" cssclass="div_WF_search">
+          <Layouts>
+            <Layout>
+              <Static id="sta_ym" taborder="0" text="귀속년월" left="10" top="13" width="70" height="24"/>
+              <Calendar id="cal_payYm" taborder="1" left="85" top="13" width="120" height="24" dateformat="yyyy-MM"/>
+              <Static id="sta_dept" taborder="2" text="부서" left="230" top="13" width="40" height="24"/>
+              <Combo id="cbo_dept" taborder="3" left="275" top="13" width="150" height="24" innerdataset="ds_dept" codecolumn="DEPT_CD" datacolumn="DEPT_NM" onitemchanged="cbo_dept_onitemchanged"/>
+              <Static id="sta_emp" taborder="4" text="사원" left="450" top="13" width="40" height="24"/>
+              <Edit id="edt_empNm" taborder="5" left="495" top="13" width="140" height="24"/>
+              <Button id="btn_empPop" taborder="6" text="찾기" left="640" top="13" width="50" height="24" onclick="btn_empPop_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta_list" taborder="2" text="급여 대상자" left="20" top="112" width="200" height="24" cssclass="sta_WF_subtitle"/>
+        <Button id="btn_search" taborder="3" text="조회" left="1000" top="110" width="60" height="26" onclick="btn_search_onclick"/>
+        <Button id="btn_calc" taborder="4" text="급여계산" left="1066" top="110" width="80" height="26" onclick="btn_calc_onclick"/>
+        <Button id="btn_excel" taborder="5" text="엑셀" left="1152" top="110" width="60" height="26" onclick="btn_excel_onclick"/>
+        <Grid id="grd_list" taborder="6" left="20" top="142" width="1240" height="480" binddataset="ds_list" autofittype="col" oncelldblclick="grd_list_oncelldblclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/><Column size="120"/><Column size="150"/><Column size="120"/><Column size="120"/><Column size="120"/><Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="26" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사번"/><Cell col="1" text="성명"/><Cell col="2" text="부서"/><Cell col="3" text="기본급"/><Cell col="4" text="수당합계"/><Cell col="5" text="공제합계"/><Cell col="6" text="실지급액"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:EMP_NO"/><Cell col="1" text="bind:EMP_NM"/><Cell col="2" text="bind:DEPT_NM"/><Cell col="3" text="bind:BASE_AMT"/><Cell col="4" text="bind:ALLOW_AMT"/><Cell col="5" text="bind:DEDUCT_AMT"/><Cell col="6" text="bind:NET_AMT"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn_save" taborder="7" text="저장" left="1130" top="634" width="60" height="26" onclick="btn_save_onclick"/>
+        <Button id="btn_close" taborder="8" text="마감" left="1196" top="634" width="64" height="26" onclick="btn_close_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_search">
+        <ColumnInfo>
+          <Column id="PAY_YM" type="STRING" size="6"/>
+          <Column id="DEPT_CD" type="STRING" size="10"/>
+          <Column id="EMP_NM" type="STRING" size="50"/>
+        </ColumnInfo>
+        <Rows><Row/></Rows>
+      </Dataset>
+      <Dataset id="ds_list">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="10"/>
+          <Column id="EMP_NM" type="STRING" size="50"/>
+          <Column id="DEPT_NM" type="STRING" size="100"/>
+          <Column id="BASE_AMT" type="BIGDECIMAL" size="15"/>
+          <Column id="ALLOW_AMT" type="BIGDECIMAL" size="15"/>
+          <Column id="DEDUCT_AMT" type="BIGDECIMAL" size="15"/>
+          <Column id="NET_AMT" type="BIGDECIMAL" size="15"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_dept">
+        <ColumnInfo>
+          <Column id="DEPT_CD" type="STRING" size="10"/>
+          <Column id="DEPT_NM" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div_search.form.cal_payYm" propid="value" datasetid="ds_search" columnid="PAY_YM"/>
+      <BindItem id="item1" compid="div_search.form.cbo_dept" propid="value" datasetid="ds_search" columnid="DEPT_CD"/>
+      <BindItem id="item2" compid="div_search.form.edt_empNm" propid="value" datasetid="ds_search" columnid="EMP_NM"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+include "Lib::lib_comm.xjs";
+
+/* 화면 로드 */
+this.form_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+    this.gfn_initForm(obj);
+    this.fn_init();
+};
+
+this.fn_init = function()
+{
+    this.gfn_transaction("selectDept", "svc::py/cmm/selectDeptList.do", "", "ds_dept=ds_dept", "", "fn_callback");
+};
+
+/* 조회 */
+this.fn_search = function()
+{
+    this.gfn_transaction("selectList", "svc::py/calc/selectList.do", "ds_search=ds_search", "ds_list=ds_list", "", "fn_callback");
+};
+
+this.btn_search_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.fn_search();
+};
+
+this.cbo_dept_onitemchanged = function(obj:nexacro.Combo, e:nexacro.ItemChangeEventInfo)
+{
+    this.fn_search();
+};
+
+/* 급여계산: SP 호출 */
+this.btn_calc_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    if (!this.confirm("급여를 계산하시겠습니까?")) return;
+    var sArg = "payYm=" + nexacro.wrapQuote(this.ds_search.getColumn(0, "PAY_YM"));
+    this.transaction("calc", "svc::py/calc/calculate.do", "", "", sArg, "fn_callback");
+};
+
+this.btn_save_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    if (!this.gfn_isUpdated(this.ds_list)) {
+        this.alert("변경된 내용이 없습니다.");
+        return;
+    }
+    if (!this.confirm("저장하시겠습니까?")) return;
+    this.gfn_transaction("save", "svc::py/calc/save.do", "ds_list=ds_list:U", "", "", "fn_callback");
+};
+
+this.btn_close_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    if (!this.confirm("급여를 마감하시겠습니까?")) return;
+    this.gfn_transaction("close", "svc::py/calc/close.do", "ds_search=ds_search", "", "", "fn_callback");
+};
+
+this.btn_excel_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.gfn_exportExcel(this.grd_list, "급여계산");
+};
+
+/* 사원 찾기 팝업 */
+this.btn_empPop_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.gfn_openPopup("empPop", "PY::PY0101P01.xfdl", {empNm: this.div_search.form.edt_empNm.value}, "fn_popCallback");
+};
+
+this.fn_popCallback = function(sPopupId, sRtn)
+{
+    if (sRtn) {
+        this.div_search.form.edt_empNm.set_value(sRtn);
+        this.fn_search();
+    }
+};
+
+/* 급여명세 화면으로 이동 */
+this.grd_list_oncelldblclick = function(obj:nexacro.Grid, e:nexacro.GridClickEventInfo)
+{
+    this.gfn_openMenu("PY::PY0102.xfdl", {empNo: this.ds_list.getColumn(e.row, "EMP_NO")});
+};
+
+this.fn_callback = function(svcId, errCd, errMsg)
+{
+    if (errCd < 0) {
+        this.gfn_alert(errMsg);
+        return;
+    }
+    switch (svcId) {
+        case "calc":
+        case "save":
+        case "close":
+            this.gfn_alert("처리되었습니다.");
+            this.fn_search();
+            break;
+    }
+};
+]]></Script>
+  </Form>
+</FDL>
