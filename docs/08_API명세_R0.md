@@ -163,3 +163,6 @@ interface SearchHit {
 | 404 | `NOT_FOUND` | 대상 없음 |
 | 409 | `CONFLICT` | 중복 (시스템 코드 등) |
 | 500 | `INTERNAL` | 서버 오류 (상세는 로그) |
+
+## v1.1 변경 (2026-10-16)
+- `SystemCreate` 의 `uiTech`·`serverTech`·`dbType` 은 **선택**. 비워 두면(또는 `dbType: "auto"`) 첫 수집 패키지 업로드 때 `model.json` 의 `system.uiTech`·`serverTech`·`dbType` 으로 채운다. 이미 값이 있으면 덮어쓰지 않는다. → [17. 시스템 등록·기술 자동 감지 가이드](17_시스템등록_기술자동감지_가이드.md)

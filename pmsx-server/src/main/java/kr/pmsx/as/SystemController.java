@@ -2,7 +2,6 @@ package kr.pmsx.as;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.OffsetDateTime;
@@ -31,9 +30,10 @@ public class SystemController {
             @NotBlank(message = "시스템 코드를 입력해주세요.")
             @Pattern(regexp = "[A-Za-z0-9_]{1,30}", message = "영문·숫자·_ 30자 이내로 입력해주세요.") String code,
             @NotBlank(message = "시스템명을 입력해주세요.") @Size(max = 200) String name,
-            @NotNull List<String> uiTech,
-            @NotNull List<String> serverTech,
-            @NotBlank(message = "DB 종류를 선택해주세요.") String dbType,
+            // 비워 두면 첫 수집 패키지(model.json system.*)의 감지 값으로 자동 채운다 (IngestService.fillDetectedTech)
+            List<String> uiTech,
+            List<String> serverTech,
+            @Size(max = 30) String dbType,
             @Size(max = 500) String testUrl) {
     }
 
@@ -98,9 +98,21 @@ public class SystemController {
                 INSERT INTO AS_SYSTEM (SYSTEM_ID, PROJECT_ID, CODE, NAME, UI_TECH, SERVER_TECH, DB_TYPE, TEST_URL,
                                        CREATED_AT, CREATED_BY)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                id, projectId, req.code(), req.name(), String.join(",", req.uiTech()),
-                String.join(",", req.serverTech()), req.dbType(), req.testUrl(), Times.now(), user.userId());
+                id, projectId, req.code(), req.name(), joinOrNull(req.uiTech()),
+                joinOrNull(req.serverTech()), blankToNull(req.dbType()), req.testUrl(), Times.now(), user.userId());
         return find(id);
+    }
+
+    private static String joinOrNull(List<String> values) {
+        if (values == null) {
+            return null;
+        }
+        String joined = String.join(",", values.stream().filter(v -> v != null && !v.isBlank()).toList());
+        return joined.isEmpty() ? null : joined;
+    }
+
+    private static String blankToNull(String value) {
+        return value == null || value.isBlank() || "auto".equalsIgnoreCase(value) ? null : value;
     }
 
     SystemSummary find(String systemId) {

@@ -1,2 +1,3 @@
-out/
+out/*
+!out/pmsx-HR-20261015-024237.zip
 writes.log

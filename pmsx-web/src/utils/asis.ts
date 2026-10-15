@@ -47,7 +47,8 @@ export const crudColor = (c: string) => `crud-${c.toLowerCase()}`
 export const UI_TECH_OPTIONS = [
   'jsp-jquery', 'nexacro', 'miplatform', 'xplatform', 'websquare', 'vue', 'react', 'winforms', 'aspnet-webforms', 'aspnet-mvc', 'other',
 ]
-export const SERVER_TECH_OPTIONS = ['spring-mybatis', 'spring-jpa', 'egov', 'dotnet', 'other']
+// 수집기가 감지해 model.json system.serverTech 로 내보내는 값과 같게 유지 (비워 두면 첫 업로드 때 자동 채움)
+export const SERVER_TECH_OPTIONS = ['spring', 'struts1', 'dotnet', 'spring-mybatis', 'spring-jpa', 'egov', 'other']
 export const DB_TYPE_OPTIONS = ['oracle', 'tibero', 'mssql', 'postgresql', 'mysql', 'mariadb', 'other']
 
 // 박스를 캡처 크기 기준 백분율로 바꿔 배율과 상관없이 같은 위치에 그린다.

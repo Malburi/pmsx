@@ -292,6 +292,8 @@ pmsx-collector.exe run -c collector.yaml                            :: 결과 �
 pmsx-collector.exe upload -c collector.yaml --server https://pmsx.local --user analyst
 ```
 
+시스템 등록은 **코드와 이름만** 하면 된다. 화면·서버 기술과 DB 종류는 수집기 `init` 이 소스에서 감지하고, 첫 업로드 때 서버가 비어 있는 칸을 자동으로 채운다 → [시스템 등록·기술 자동 감지 가이드](docs/17_시스템등록_기술자동감지_가이드.md)
+
 테스트 서버가 없어도 된다 — HTML 계열 화면은 **정적 렌더링**, Nexacro·WebSquare·WinForms 는 **와이어프레임**으로 화면 그림을 만든다.
 단계별 설정·화면 그림 선택 기준·문제 해결은 **[새 시스템 As-Is 추가 매뉴얼](docs/16_신규시스템_AsIs추가_매뉴얼.md)** 참고.
 
@@ -337,6 +339,7 @@ pmsx/
 | 14 | [개발 결과 보고](docs/14_개발결과보고.md) | 릴리스별 결과·검증·한계 |
 | 15 | [사용자 가이드](docs/15_사용자가이드.md) | 역할별 사용법 |
 | 16 | [새 시스템 As-Is 추가 매뉴얼](docs/16_신규시스템_AsIs추가_매뉴얼.md) | 수집 절차·설정·문제 해결 |
+| 17 | [시스템 등록·기술 자동 감지 가이드](docs/17_시스템등록_기술자동감지_가이드.md) | 코드·이름만 등록 → 수집기 init 감지 → 첫 업로드 때 자동 반영 |
 
 모듈별 상세: [`pmsx-collector/README.md`](pmsx-collector/README.md) · [`pmsx-server/README.md`](pmsx-server/README.md) · [`pmsx-web/README.md`](pmsx-web/README.md) · [`deploy/README.md`](deploy/README.md)
 

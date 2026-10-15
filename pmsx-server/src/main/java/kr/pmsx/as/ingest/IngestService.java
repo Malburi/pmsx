@@ -127,8 +127,11 @@ public class IngestService {
             }
             RunSummary summary;
             try {
-                summary = tx.execute(
-                        status -> load(user, systemId, model, packageFileId, reportFileId, captureFileIds));
+                summary = tx.execute(status -> {
+                    RunSummary loaded = load(user, systemId, model, packageFileId, reportFileId, captureFileIds);
+                    fillDetectedTech(systemId, model);
+                    return loaded;
+                });
             } catch (DataIntegrityViolationException e) {
                 // 모델 안의 키 중복 등 — 수집기 결과 문제로 보고 400 으로 돌려준다
                 log.warn("패키지 적재 중 무결성 오류", e);
@@ -622,6 +625,24 @@ public class IngestService {
     private static String edgeKey(JsonNode e) {
         return e.get("from").asText() + SEP + e.get("to").asText() + SEP + e.get("kind").asText() + SEP
                 + txt(e, "event", "");
+    }
+
+    /**
+     * 시스템 등록 때 비워 둔 화면 기술·서버 기술·DB 종류를 수집기가 감지한 값(model.json system.*)으로 채운다.
+     * 사용자가 이미 입력한 값은 덮어쓰지 않는다.
+     */
+    private void fillDetectedTech(String systemId, JsonNode model) {
+        JsonNode sys = model.path("system");
+        String ui = joinArray(sys.path("uiTech"));
+        String server = joinArray(sys.path("serverTech"));
+        String db = sys.path("dbType").asText("");
+        jdbc.update("""
+                UPDATE AS_SYSTEM
+                   SET UI_TECH = CASE WHEN UI_TECH IS NULL OR UI_TECH = '' THEN ? ELSE UI_TECH END,
+                       SERVER_TECH = CASE WHEN SERVER_TECH IS NULL OR SERVER_TECH = '' THEN ? ELSE SERVER_TECH END,
+                       DB_TYPE = CASE WHEN DB_TYPE IS NULL OR DB_TYPE = '' THEN ? ELSE DB_TYPE END
+                 WHERE SYSTEM_ID = ?""",
+                ui, server, db.isBlank() ? null : db, systemId);
     }
 
     private static String txt(JsonNode n, String field, String def) {

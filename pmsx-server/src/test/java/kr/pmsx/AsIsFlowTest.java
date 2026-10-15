@@ -306,6 +306,45 @@ class AsIsFlowTest {
     }
 
     @Test
+    void 기술을_비워_등록하면_첫_업로드의_감지값으로_채운다() throws Exception {
+        String admin = TestSupport.login(mvc, om, "admin");
+        String projectId = TestSupport.seedProjectId(mvc, om, admin);
+        // 코드·이름만으로 등록 (기술·DB 비움)
+        JsonNode created = body(mvc.perform(post("/api/v1/projects/" + projectId + "/systems")
+                        .header("Authorization", admin).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"code\":\"AUTO\",\"name\":\"자동감지\"}"))
+                .andExpect(status().isCreated()));
+        assertThat(created.get("uiTech")).isEmpty();
+        // 사용자가 입력한 값은 덮어쓰지 않는다
+        JsonNode manual = body(mvc.perform(post("/api/v1/projects/" + projectId + "/systems")
+                        .header("Authorization", admin).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"code\":\"KEEP\",\"name\":\"수동\",\"uiTech\":[\"custom-ui\"],\"dbType\":\"tibero\"}"))
+                .andExpect(status().isCreated()));
+
+        upload(admin, created.get("systemId").asText(), TestSupport.fixtureZip(om, m -> {
+            m.with("system").put("code", "AUTO").put("dbType", "oracle");
+            m.with("system").putArray("uiTech").add("jsp-jquery");
+            m.with("system").putArray("serverTech").add("spring");
+        })).andExpect(status().isCreated());
+        upload(admin, manual.get("systemId").asText(), TestSupport.fixtureZip(om, m -> {
+            m.with("system").put("code", "KEEP").put("dbType", "oracle");
+            m.with("system").putArray("uiTech").add("jsp-jquery");
+            m.with("system").putArray("serverTech").add("spring");
+        })).andExpect(status().isCreated());
+
+        JsonNode auto = body(mvc.perform(get("/api/v1/systems/" + created.get("systemId").asText())
+                .header("Authorization", admin)).andExpect(status().isOk()));
+        assertThat(auto.get("uiTech").get(0).asText()).isEqualTo("jsp-jquery");
+        assertThat(auto.get("serverTech").get(0).asText()).isEqualTo("spring");
+        assertThat(auto.get("dbType").asText()).isEqualTo("oracle");
+        JsonNode kept = body(mvc.perform(get("/api/v1/systems/" + manual.get("systemId").asText())
+                .header("Authorization", admin)).andExpect(status().isOk()));
+        assertThat(kept.get("uiTech").get(0).asText()).isEqualTo("custom-ui");
+        assertThat(kept.get("serverTech").get(0).asText()).isEqualTo("spring");
+        assertThat(kept.get("dbType").asText()).isEqualTo("tibero");
+    }
+
+    @Test
     void 없는_대상은_NOT_FOUND() throws Exception {
         String admin = TestSupport.login(mvc, om, "admin");
         mvc.perform(get("/api/v1/screens/NOPE").header("Authorization", admin))

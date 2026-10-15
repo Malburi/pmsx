@@ -9,10 +9,10 @@ AGENTS.md
 CLAUDE.md
 # 실제 고객 소스 파일럿 결과 (소스 스니펫 포함 — 절대 커밋 금지)
 pilot/
-# 라이선스 발급용 개인키 (개발 키라도 공개 금지)
+# 라이선스 발급용 개인키 (개발 키라도 공개 금지) — 공개키(public.key)·개발 라이선스(dev-license.key)는 필요하므로 포함
 **/dev-keys/private*
+*private*.key
 *.pem
-*.key
 
 # ── 빌드·실행 산출물 ─────────────────────────────────────────────
 deploy/out/
@@ -39,7 +39,11 @@ pmsx-server/run/
 **/obj/
 
 # ── 샘플 수집 결과·런타임 로그 ─────────────────────────────────
-samples/*/out/
+samples/*/out/*
+# 시연용 As-Is 데모 패키지 (bin/start-demo · 개발 모드 bootRun 이 적재) — 최신 1개씩만 포함
+!samples/hr-legacy/out/pmsx-HR-20261015-024237.zip
+!samples/hr-nexacro/out/pmsx-PY-20261015-024143.zip
+!samples/hr-spa/out/pmsx-ED-20261015-024307.zip
 samples/**/writes.log
 samples/hr-spa/web/dist/
 *.log

@@ -17,15 +17,16 @@ const dialog = ref(false)
 const formRef = ref<{ validate: () => Promise<{ valid: boolean }>; reset: () => void } | null>(null)
 const saving = ref(false)
 const formError = ref<string | null>(null)
-const form = reactive<SystemCreate>({ code: '', name: '', uiTech: [], serverTech: [], dbType: 'oracle', testUrl: '' })
+const form = reactive<SystemCreate>({ code: '', name: '', uiTech: [], serverTech: [], dbType: '', testUrl: '' })
 
 // ─────────── 헬퍼 ───────────
 const required = (v: unknown) => (Array.isArray(v) ? v.length > 0 : !!String(v ?? '').trim()) || t('validation.required')
 const codeFormat = (v: string) => /^[A-Z][A-Z0-9_]{1,19}$/.test(v) || t('validation.systemCode')
+const dbTypeItems = computed(() => [{ title: t('asis.systems.autoDetect'), value: '' }, ...DB_TYPE_OPTIONS.map((v) => ({ title: v, value: v }))])
 const urlFormat = (v: string) => !v || /^https?:\/\/\S+$/.test(v) || t('validation.url')
 
 const openDialog = () => {
-  Object.assign(form, { code: '', name: '', uiTech: [], serverTech: [], dbType: 'oracle', testUrl: '' })
+  Object.assign(form, { code: '', name: '', uiTech: [], serverTech: [], dbType: '', testUrl: '' })
   formError.value = null
   dialog.value = true
 }
@@ -85,6 +86,9 @@ const headers = computed(() => [
               <div class="d-flex flex-wrap ga-1 py-1">
                 <VChip v-for="ui in item.uiTech" :key="ui" size="x-small" variant="tonal" color="primary">{{ ui }}</VChip>
                 <VChip v-for="sv in item.serverTech" :key="sv" size="x-small" variant="tonal">{{ sv }}</VChip>
+                <VChip v-if="!item.uiTech.length && !item.serverTech.length" size="x-small" variant="tonal" color="info">
+                  {{ t('asis.systems.autoDetectPending') }}
+                </VChip>
               </div>
             </template>
             <template #item.progress="{ item }">
@@ -148,13 +152,13 @@ const headers = computed(() => [
                 <VTextField v-model="form.name" :label="t('asis.systems.name')" :rules="[required]" data-test="system-name" />
               </VCol>
               <VCol cols="12" sm="6">
-                <VSelect v-model="form.uiTech" :items="UI_TECH_OPTIONS" :label="t('asis.systems.uiTech')" :rules="[required]" multiple chips closable-chips />
+                <VSelect v-model="form.uiTech" :items="UI_TECH_OPTIONS" :label="t('asis.systems.uiTech')" :hint="t('asis.systems.autoDetectHint')" persistent-hint multiple chips closable-chips />
               </VCol>
               <VCol cols="12" sm="6">
-                <VSelect v-model="form.serverTech" :items="SERVER_TECH_OPTIONS" :label="t('asis.systems.serverTech')" :rules="[required]" multiple chips closable-chips />
+                <VSelect v-model="form.serverTech" :items="SERVER_TECH_OPTIONS" :label="t('asis.systems.serverTech')" :hint="t('asis.systems.autoDetectHint')" persistent-hint multiple chips closable-chips />
               </VCol>
               <VCol cols="12" sm="6">
-                <VSelect v-model="form.dbType" :items="DB_TYPE_OPTIONS" :label="t('asis.systems.dbType')" :rules="[required]" />
+                <VSelect v-model="form.dbType" :items="dbTypeItems" :label="t('asis.systems.dbType')" :hint="t('asis.systems.autoDetectHint')" persistent-hint />
               </VCol>
               <VCol cols="12" sm="6">
                 <VTextField v-model="form.testUrl" :label="t('asis.systems.testUrl')" :rules="[urlFormat]" placeholder="https://" />
